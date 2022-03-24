@@ -1,7 +1,6 @@
 import * as ethers from "ethers";
 import * as playwright from "playwright-aws-lambda";
 import ReactDOM from "react-dom/server";
-import sharp from "sharp";
 
 const frameColors = [
   "bg-gradient-to-br from-green-600 to-blue-500",
@@ -79,10 +78,10 @@ export default async (req, res) => {
   await page.setContent(html, { waitUntil: "domcontentloaded" });
 
   const imagePng = await page.screenshot({ type: "png" });
-  const imageWebp = await sharp(imagePng).webp({ quality: 75 }).toBuffer();
+  // const imageWebp = await sharp(imagePng).webp({ quality: 75 }).toBuffer();
   !debug && (await browser.close());
 
   res.setHeader("Cache-Control", "s-maxage=31536000, stale-while-revalidate");
   res.setHeader("Content-Type", "image/webp");
-  res.end(imageWebp);
+  res.end(imagePng);
 };
