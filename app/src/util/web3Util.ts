@@ -28,7 +28,7 @@ export const getWeb3Provider = async (): Promise<
   [Web3ProviderInterface, ethers.providers.Web3Provider]
 > => {
   const web3Modal = new Web3Modal({
-    providerOptions: await providerOptions(),
+    providerOptions: {},
     cacheProvider: true,
   });
   const instance = (await web3Modal.connect()) as Web3ProviderInterface;

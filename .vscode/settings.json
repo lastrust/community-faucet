@@ -9,5 +9,8 @@
   "solidity.packageDefaultDependenciesDirectory": "contract/node_modules",
   "[javascriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "files.exclude": {
+    "**/.env": true
   }
 }

@@ -1,12 +1,17 @@
-import { ethers } from "hardhat";
+import { ethers, upgrades } from "hardhat";
 
 async function main() {
-  const BusinessCard = await ethers.getContractFactory("BusinessCard");
-  const businessCard = await BusinessCard.deploy();
+  const StudentFaucet = await ethers.getContractFactory("StudentFaucet");
+  const instance = await upgrades.deployProxy(StudentFaucet, [
+    "AStarStudentFaucet",
+    "ASF",
+    "Hello",
+    ethers.utils.parseEther("0.02"),
+  ]);
 
-  await businessCard.deployed();
+  await instance.deployed();
 
-  console.log("BusinessCard deployed to:", businessCard.address);
+  console.log("StudentFaucet deployed to:", instance.address);
 }
 
 main().catch((error) => {

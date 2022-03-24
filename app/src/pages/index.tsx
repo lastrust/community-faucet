@@ -1,33 +1,65 @@
+import { useContract } from "@/hooks/useContract";
 import { useWeb3 } from "@/hooks/useWeb3";
+import { ethers } from "ethers";
 import type { NextPage } from "next";
+import { useState } from "react";
 
 const Home: NextPage = () => {
-  const { account, isLoading, connectWallet } = useWeb3();
+  const { account, isLoading, connectWallet, provider } = useWeb3();
+  const [contractBalance, setContractBalance] = useState<string | null>(null);
+  const contract = useContract(async (contract) => {
+    if (provider) {
+      setContractBalance(
+        ethers.utils.formatEther(await provider.getBalance(contract.address))
+      );
+    }
+  });
+
   return (
-    <div className="container mx-auto text-gray-800 flex flex-col h-full justify-center items-center">
-      <h1 className="text-6xl font-bold">Hello Web3 World!!</h1>
-      <p className="text-lg">
-        This template contains
-        Next.js,Hardhat,TypeScript,TailwindCSS,ESlint,Prettier and Web3Provider
-        created by inaridiy.eth.
-      </p>
-      {isLoading ? (
-        <button className="text-white bg-gray-600 text-4xl p-4" disabled>
-          Loading
-        </button>
-      ) : account ? (
-        <div className="text-3xl">
-          {`wellcome ${account.ethName || account.abbreviatedId}`}
+    <>
+      <div className="hero hero-content mt-32 flex-col text-center">
+        <div className="max-w-xl">
+          <h1 className="text-5xl font-bold">AStar Student Faucet</h1>
+          <p className="py-6">
+            This is Student-only Faucet more powerful than official Faucet. It
+            is informal but run by students. And this Faucet is made possible by
+            the support of volunteers. Therefore, it sometimes becomes
+            unavailable.
+          </p>
         </div>
-      ) : (
-        <button
-          className="text-white bg-gray-800 text-4xl p-4 hover:scale-95 transition duration-150"
-          onClick={() => void connectWallet}
-        >
-          Connect Wallet
-        </button>
-      )}
-    </div>
+        <div className="flex w-full max-w-2xl items-center gap-4">
+          <div className="input-group w-full max-w-sm">
+            <input
+              type="text"
+              placeholder="Type Your Address"
+              className="input input-primary w-full"
+            />
+            <button className="btn btn-primary">Get</button>
+          </div>
+          <div className="text-xl font-bold">OR</div>
+          <button className="btn btn-secondary">Support Faucet</button>
+        </div>
+      </div>
+      <div className="flex justify-center">
+        <div className="stats bg-base-100 shadow-lg">
+          <div className="stat place-items-center">
+            <div className="stat-title">Faucet Balance</div>
+            <div className="stat-value">{`${contractBalance || "0"}ASTR`}</div>
+            <div className="stat-desc">Remaining funds for Faucet</div>
+          </div>
+          <div className="stat place-items-center">
+            <div className="stat-title">Users</div>
+            <div className="stat-value text-secondary">4,200</div>
+            <div className="stat-desc text-secondary">↗︎ 40 (2%)</div>
+          </div>
+          <div className="stat place-items-center">
+            <div className="stat-title">New Registers</div>
+            <div className="stat-value">1,200</div>
+            <div className="stat-desc">↘︎ 90 (14%)</div>
+          </div>
+        </div>
+      </div>
+    </>
   );
 };
 
