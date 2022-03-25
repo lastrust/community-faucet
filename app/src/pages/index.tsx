@@ -17,7 +17,7 @@ const Home: NextPage = () => {
 
   return (
     <>
-      <div className="hero hero-content mt-32 flex-col text-center">
+      <div className="hero hero-content mx-auto mt-32 flex-col text-center">
         <div className="max-w-xl">
           <h1 className="text-5xl font-bold">AStar Student Faucet</h1>
           <p className="py-6">
