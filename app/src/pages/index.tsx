@@ -1,5 +1,6 @@
 import { useContract } from "@/hooks/useContract";
 import { useWeb3 } from "@/hooks/useWeb3";
+import { targetChain } from "@/util/web3Util";
 import { ethers } from "ethers";
 import type { NextPage } from "next";
 import { useState } from "react";
@@ -7,12 +8,15 @@ import { useState } from "react";
 const Home: NextPage = () => {
   const { account, isLoading, connectWallet, provider } = useWeb3();
   const [contractBalance, setContractBalance] = useState<string | null>(null);
-  const contract = useContract(async (contract) => {
-    if (provider) {
-      setContractBalance(
-        ethers.utils.formatEther(await provider.getBalance(contract.address))
-      );
-    }
+  const contract = useContract({
+    rpc: targetChain().rpcUrls[0],
+    cb: async (contract) => {
+      if (provider) {
+        setContractBalance(
+          ethers.utils.formatEther(await provider.getBalance(contract.address))
+        );
+      }
+    },
   });
 
   return (
@@ -44,7 +48,10 @@ const Home: NextPage = () => {
         <div className="stats bg-base-100 shadow-lg">
           <div className="stat place-items-center">
             <div className="stat-title">Faucet Balance</div>
-            <div className="stat-value">{`${contractBalance || "0"}ASTR`}</div>
+            <div className="stat-value">
+              {contractBalance}
+              <span className="text-2xl">ASTR</span>
+            </div>
             <div className="stat-desc">Remaining funds for Faucet</div>
           </div>
           <div className="stat place-items-center">
