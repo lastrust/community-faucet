@@ -1,4 +1,3 @@
-import * as ethers from "ethers";
 import * as playwright from "playwright-aws-lambda";
 import ReactDOM from "react-dom/server";
 
@@ -59,10 +58,6 @@ const Content = (props) => (
 const debug = false;
 
 export default async (req, res) => {
-  const provider = new ethers.providers.JsonRpcProvider(
-    "https://rpc-mumbai.maticvigil.com/"
-  );
-
   const browser = await playwright.launchChromium({ headless: !debug });
   const page = await browser.newPage({ viewport: { width: 800, height: 400 } });
 
