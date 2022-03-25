@@ -22,7 +22,7 @@ const Stats = () => {
         <div className="stat place-items-center">
           <div className="stat-title">Faucet Balance</div>
           <div className="stat-value">
-            {contractBalance}
+            {Number(contractBalance).toFixed(2)}
             <span className="text-2xl">ASTR</span>
           </div>
           <div className="stat-desc">Remaining funds for Faucet</div>

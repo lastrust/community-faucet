@@ -20,12 +20,11 @@ contract StudentFaucet is
     }
     string private _baseTokenURI;
     uint256 private _dropSize;
+    mapping(uint256 => SupportData) _supports;
     event Support(
         uint256 indexed id,
         address indexed supporter,
-        uint256 indexed value,
-        string name,
-        string icon
+        uint256 indexed value
     );
     event Drop(address indexed target, uint256 indexed value);
 
@@ -70,7 +69,16 @@ contract StudentFaucet is
     function support(string memory name_, string memory icon_) public payable {
         uint256 newTokenId = totalSupply();
         _mint(msg.sender, newTokenId);
-        emit Support(newTokenId, msg.sender, msg.value, name_, icon_);
+        _supports[newTokenId] = SupportData(name_, icon_, msg.value);
+        emit Support(newTokenId, msg.sender, msg.value);
+    }
+
+    function supportData(uint256 tokenId_)
+        public
+        view
+        returns (SupportData memory)
+    {
+        return _supports[tokenId_];
     }
 
     function pause() public onlyOwner {

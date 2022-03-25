@@ -68,12 +68,13 @@ export const switchChain = async (
   }
 };
 
-export const targetChain = () => {
-  const chainId = process.env.NEXT_PUBLIC_TARGET_CHAIN_ID;
-  invariant(chainId, "This should not throw!");
-  invariant(chainId in chainParameters, "This should not throw!");
-  return chainParameters[chainId as keyof typeof chainParameters];
-};
+export const targetChain =
+  (): typeof chainParameters[keyof typeof chainParameters] => {
+    const chainId = process.env.NEXT_PUBLIC_TARGET_CHAIN_ID;
+    invariant(chainId, "This should not throw!");
+    invariant(chainId in chainParameters, "This should not throw!");
+    return chainParameters[chainId as keyof typeof chainParameters];
+  };
 
 export const chainParameters = {
   "0x89": {

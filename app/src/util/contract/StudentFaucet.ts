@@ -18,6 +18,20 @@ import { FunctionFragment, Result, EventFragment } from "@ethersproject/abi";
 import { Listener, Provider } from "@ethersproject/providers";
 import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
 
+export declare namespace StudentFaucet {
+  export type SupportDataStruct = {
+    name: string;
+    icon: string;
+    value: BigNumberish;
+  };
+
+  export type SupportDataStructOutput = [string, string, BigNumber] & {
+    name: string;
+    icon: string;
+    value: BigNumber;
+  };
+}
+
 export interface StudentFaucetInterface extends utils.Interface {
   contractName: "StudentFaucet";
   functions: {
@@ -39,6 +53,7 @@ export interface StudentFaucetInterface extends utils.Interface {
     "safeTransferFrom(address,address,uint256)": FunctionFragment;
     "setApprovalForAll(address,bool)": FunctionFragment;
     "support(string,string)": FunctionFragment;
+    "supportData(uint256)": FunctionFragment;
     "supportsInterface(bytes4)": FunctionFragment;
     "symbol()": FunctionFragment;
     "tokenByIndex(uint256)": FunctionFragment;
@@ -100,6 +115,10 @@ export interface StudentFaucetInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "support",
     values: [string, string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "supportData",
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "supportsInterface",
@@ -172,6 +191,10 @@ export interface StudentFaucetInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "support", data: BytesLike): Result;
   decodeFunctionResult(
+    functionFragment: "supportData",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "supportsInterface",
     data: BytesLike
   ): Result;
@@ -205,7 +228,7 @@ export interface StudentFaucetInterface extends utils.Interface {
     "Drop(address,uint256)": EventFragment;
     "OwnershipTransferred(address,address)": EventFragment;
     "Paused(address)": EventFragment;
-    "Support(uint256,address,uint256,string,string)": EventFragment;
+    "Support(uint256,address,uint256)": EventFragment;
     "Transfer(address,address,uint256)": EventFragment;
     "Unpaused(address)": EventFragment;
   };
@@ -254,14 +277,8 @@ export type PausedEvent = TypedEvent<[string], { account: string }>;
 export type PausedEventFilter = TypedEventFilter<PausedEvent>;
 
 export type SupportEvent = TypedEvent<
-  [BigNumber, string, BigNumber, string, string],
-  {
-    id: BigNumber;
-    supporter: string;
-    value: BigNumber;
-    name: string;
-    icon: string;
-  }
+  [BigNumber, string, BigNumber],
+  { id: BigNumber; supporter: string; value: BigNumber }
 >;
 
 export type SupportEventFilter = TypedEventFilter<SupportEvent>;
@@ -395,6 +412,11 @@ export interface StudentFaucet extends BaseContract {
       overrides?: PayableOverrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
+    supportData(
+      tokenId_: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[StudentFaucet.SupportDataStructOutput]>;
+
     supportsInterface(
       interfaceId: BytesLike,
       overrides?: CallOverrides
@@ -524,6 +546,11 @@ export interface StudentFaucet extends BaseContract {
     overrides?: PayableOverrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  supportData(
+    tokenId_: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<StudentFaucet.SupportDataStructOutput>;
+
   supportsInterface(
     interfaceId: BytesLike,
     overrides?: CallOverrides
@@ -643,6 +670,11 @@ export interface StudentFaucet extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    supportData(
+      tokenId_: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<StudentFaucet.SupportDataStructOutput>;
+
     supportsInterface(
       interfaceId: BytesLike,
       overrides?: CallOverrides
@@ -721,19 +753,15 @@ export interface StudentFaucet extends BaseContract {
     "Paused(address)"(account?: null): PausedEventFilter;
     Paused(account?: null): PausedEventFilter;
 
-    "Support(uint256,address,uint256,string,string)"(
+    "Support(uint256,address,uint256)"(
       id?: BigNumberish | null,
       supporter?: string | null,
-      value?: BigNumberish | null,
-      name?: null,
-      icon?: null
+      value?: BigNumberish | null
     ): SupportEventFilter;
     Support(
       id?: BigNumberish | null,
       supporter?: string | null,
-      value?: BigNumberish | null,
-      name?: null,
-      icon?: null
+      value?: BigNumberish | null
     ): SupportEventFilter;
 
     "Transfer(address,address,uint256)"(
@@ -840,6 +868,11 @@ export interface StudentFaucet extends BaseContract {
       name_: string,
       icon_: string,
       overrides?: PayableOverrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    supportData(
+      tokenId_: BigNumberish,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     supportsInterface(
@@ -976,6 +1009,11 @@ export interface StudentFaucet extends BaseContract {
       name_: string,
       icon_: string,
       overrides?: PayableOverrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    supportData(
+      tokenId_: BigNumberish,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     supportsInterface(

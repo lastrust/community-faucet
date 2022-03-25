@@ -1,4 +1,3 @@
-import { expect } from "chai";
 import { ethers, upgrades, waffle } from "hardhat";
 import { StudentFaucet } from "typechain";
 
@@ -18,11 +17,17 @@ describe("test of StudentFaucet", () => {
   it("support test", async () => {
     const instance = await getContract();
     const provider = waffle.provider;
-    const [owner] = await getAddress();
-    instance.support("Kimura", "Tanaka.png", { value: 1000 });
-    expect((await provider.getBalance(instance.address)).toNumber()).to.equal(
-      1000
+    const [owner, addr] = await getAddress();
+    await instance.support("Kimura", "Tanaka.png", { value: 1000 });
+    await instance.support("Kimura2", "Tanaka2.png", { value: 3000 });
+    await instance
+      .connect(addr)
+      .support("Syoko", "Imamura.png", { value: 5000 });
+
+    console.log(
+      await instance.queryFilter(
+        instance.filters.Support(ethers.BigNumber.from("1"))
+      )
     );
-    console.log(await instance.tokenURI(0));
   });
 });
