@@ -1,22 +1,7 @@
 import { ethers } from "ethers";
+import invariant from "tiny-invariant";
 import Web3Modal from "web3modal";
 import { Account, Web3ProviderInterface } from "../types/web3Types";
-
-const providerOptions = async () => ({
-  walletconnect: {
-    package: (await import("@walletconnect/web3-provider")).default,
-    options: {
-      rpc: {
-        1: `https://mainnet.infura.io/v3/${
-          process.env.NEXT_PUBLIC_INFURA_PROJECT_ID || ""
-        }`,
-        80001: `https://rpc-mumbai.matic.today`,
-        81: `https://rpc.shibuya.astar.network:8545`,
-        592: `https://rpc.astar.network:8545`,
-      },
-    },
-  },
-});
 
 export const getInfuraProvider = () =>
   new ethers.providers.InfuraProvider(
@@ -53,16 +38,15 @@ export const fetchAccount = async (id: string): Promise<Account> => {
 export const fetchAccounts = (accountIds: string[]): Promise<Account[]> =>
   Promise.all(accountIds.map(fetchAccount));
 
-export const selectFirstAccount = (accounts: Account[]): Account | null =>
-  accounts[0] || null;
+export const selectFirst = <T>(accounts: T[]): T | null => accounts[0] || null;
 
 export const getConnectedAccount = async (
   provider: ethers.providers.Web3Provider
 ): Promise<Account | null> =>
-  selectFirstAccount(await fetchAccounts(await getAccountIds(provider)));
+  selectFirst(await fetchAccounts(await getAccountIds(provider)));
 
 export const getAccountByIds = async (ids: string[]): Promise<Account | null> =>
-  selectFirstAccount(await fetchAccounts(ids));
+  selectFirst(await fetchAccounts(ids));
 
 export const getChainId = (
   provider: ethers.providers.Web3Provider
@@ -82,6 +66,13 @@ export const switchChain = async (
     await provider.send("wallet_addEthereumChain", [chainParameter]);
     await provider.send("wallet_switchEthereumChain", [{ chainId }]);
   }
+};
+
+export const targetChain = () => {
+  const chainId = process.env.NEXT_PUBLIC_TARGET_CHAIN_ID;
+  invariant(chainId, "This should not throw!");
+  invariant(chainId in chainParameters, "This should not throw!");
+  return chainParameters[chainId as keyof typeof chainParameters];
 };
 
 export const chainParameters = {

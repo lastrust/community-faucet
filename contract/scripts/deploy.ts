@@ -5,7 +5,7 @@ async function main() {
   const instance = await upgrades.deployProxy(StudentFaucet, [
     "AStarStudentFaucet",
     "ASF",
-    "Hello",
+    "https://www.as-faucet.xyz/api/metadata?id=",
     ethers.utils.parseEther("0.02"),
   ]);
 

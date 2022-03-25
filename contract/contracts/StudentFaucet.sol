@@ -21,6 +21,7 @@ contract StudentFaucet is
     string private _baseTokenURI;
     uint256 private _dropSize;
     event Support(
+        uint256 indexed id,
         address indexed supporter,
         uint256 indexed value,
         string name,
@@ -69,7 +70,7 @@ contract StudentFaucet is
     function support(string memory name_, string memory icon_) public payable {
         uint256 newTokenId = totalSupply();
         _mint(msg.sender, newTokenId);
-        emit Support(msg.sender, msg.value, name_, icon_);
+        emit Support(newTokenId, msg.sender, msg.value, name_, icon_);
     }
 
     function pause() public onlyOwner {
