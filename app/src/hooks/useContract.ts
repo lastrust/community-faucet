@@ -7,7 +7,10 @@ export const useContract = ({
   cb,
   rpc,
 }: {
-  cb?: (contract: StudentFaucet) => void | Promise<void>;
+  cb?: (
+    contract: StudentFaucet,
+    provider: ethers.providers.JsonRpcProvider
+  ) => void | Promise<void>;
   rpc?: string;
 }) => {
   const [contract, setContract] = useState<StudentFaucet | null>(null);
@@ -34,7 +37,11 @@ export const useContract = ({
   }, [provider, isTargetChain]);
   useEffect(() => {
     if (contract) {
-      cb && void cb(contract);
+      cb &&
+        void cb(
+          contract,
+          provider || new ethers.providers.JsonRpcProvider(rpc)
+        );
     }
   }, [contract]);
 

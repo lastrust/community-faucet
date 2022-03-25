@@ -38,7 +38,7 @@ const tokenUri = async (req: NextApiRequest, res: NextApiResponse) => {
     description: `Proof NFT of ${name}'s ${astr}ASTR donation to the AStar Student Faucet`,
     image: `https://www.as-faucet.xyz/api/nftimage?${imageQuery.toString()}`,
     external_url: ``,
-    name: `${""}'s  Meishi`,
+    name: `Proof of ${name}'s donation`,
     attributes: [
       { trait_type: "name", value: name },
       { trait_type: "icon", value: icon },
