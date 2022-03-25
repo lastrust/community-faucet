@@ -1,5 +1,5 @@
 import { Web3Provider } from "@/components/Web3Provider";
-import { useWeb3 } from "@/hooks/useWeb3";
+import { useWeb3 } from "@/hooks";
 import { switchChain } from "@/util/web3Util";
 import NextLink from "next/link";
 import React, { useState } from "react";
