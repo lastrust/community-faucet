@@ -31,10 +31,12 @@ const Content = (props) => (
         <div className="flex h-full w-full items-center rounded-lg bg-black px-4 shadow-2xl">
           <div className="flex grow flex-col gap-8">
             <div className="flex items-center gap-2">
-              <img
-                src={props.icon}
-                className="h-28 w-28 rounded-full bg-white object-cover"
-              />
+              {props.icon && (
+                <img
+                  src={props.icon}
+                  className="h-28 w-28 rounded-full bg-white object-cover"
+                />
+              )}
               <p className="text-4xl font-bold text-white">{props.title}</p>
             </div>
             <div className="flex items-center gap-2">
@@ -44,7 +46,7 @@ const Content = (props) => (
             </div>
           </div>
           <div
-            class={`vertical-hr h-full border-l-2 border-dashed border-gray-400 px-4 text-center font-mono text-6xl font-extrabold text-white`}
+            className={`vertical-hr h-full border-l-2 border-dashed border-gray-400 px-4 text-center font-mono text-6xl font-extrabold text-white`}
           >
             {props.value}
             <span className="text-5xl">ASTR</span>
@@ -62,10 +64,11 @@ export default async (req, res) => {
   const page = await browser.newPage({ viewport: { width: 800, height: 400 } });
 
   const props = {
-    title: "inaridiy.eth",
+    title: "Unknown supporter",
     grade: 0,
-    value: 100,
-    icon: `https://lh3.googleusercontent.com/nq68MZh2ZssfDMCvGL-iyx-3a4kXmU8jmtBO0vWgYAsPNiHxxWmoONT4dalD9cIAig_CxDMkvueN5GpDh2btDZkgTGZufONV8CJwzGk=s0`,
+    value: 0,
+    icon: "",
+    ...req.query,
   };
   const markup = ReactDOM.renderToStaticMarkup(<Content {...props} />);
   const html = `<!doctype html>${markup}`;
