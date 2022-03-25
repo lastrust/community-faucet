@@ -1,10 +1,15 @@
 import { StudentFaucet, StudentFaucet__factory } from "@/util/contract";
+import { ethers } from "ethers";
 import { useEffect, useState } from "react";
 import { useWeb3 } from "./useWeb3";
 
-export const useContract = (
-  cb?: (contract: StudentFaucet) => void | Promise<void>
-) => {
+export const useContract = ({
+  cb,
+  rpc,
+}: {
+  cb?: (contract: StudentFaucet) => void | Promise<void>;
+  rpc?: string;
+}) => {
   const [contract, setContract] = useState<StudentFaucet | null>(null);
   const { provider, isTargetChain } = useWeb3();
   useEffect(() => {
@@ -14,6 +19,13 @@ export const useContract = (
       const ArticlesContract = StudentFaucet__factory.connect(
         contractAddress,
         signer
+      );
+      setContract(ArticlesContract);
+    } else if (rpc && contractAddress) {
+      const jsonRpcProvider = new ethers.providers.JsonRpcProvider(rpc);
+      const ArticlesContract = StudentFaucet__factory.connect(
+        contractAddress,
+        jsonRpcProvider
       );
       setContract(ArticlesContract);
     } else {
