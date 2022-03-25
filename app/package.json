@@ -19,6 +19,7 @@
     "react-dom": "^17.0.2",
     "react-icons": "^4.3.1",
     "sharp": "^0.30.3",
+    "tiny-invariant": "^1.2.0",
     "web3modal": "^1.9.5"
   },
   "devDependencies": {
