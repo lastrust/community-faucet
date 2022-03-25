@@ -33,19 +33,21 @@ export const Header: React.FC<{
   setIsDark: (v: boolean) => void;
 }> = (props) => {
   return (
-    <nav className="navbar fixed flex justify-between backdrop-blur-sm">
-      <NextLink href="/">
-        <a className="btn btn-ghost text-2xl normal-case text-base-content">
-          <span className="hidden sm:block">AStar Student Faucet</span>
-          <span className="sm:hidden ">ASFaucet</span>
-        </a>
-      </NextLink>
-      <div className="flex-none gap-2  text-base-content">
-        <AccoutWithAth />
-        <div className="h-8 w-0.5 bg-base-content"></div>
-        <div className="flex-none">
-          <ChainState />
-          <ToggleTheme {...props} />
+    <nav className="navbar fixed backdrop-blur-sm">
+      <div className="mx-auto flex w-full max-w-screen-xl justify-between">
+        <NextLink href="/">
+          <a className="btn btn-ghost text-2xl normal-case text-base-content">
+            <span className="hidden sm:block">AStar Student Faucet</span>
+            <span className="sm:hidden ">ASFaucet</span>
+          </a>
+        </NextLink>
+        <div className="flex items-center gap-2 text-base-content">
+          <AccoutWithAth />
+          <div className="h-8 w-0.5 bg-base-content"></div>
+          <div className="flex-none">
+            <ChainState />
+            <ToggleTheme {...props} />
+          </div>
         </div>
       </div>
     </nav>
