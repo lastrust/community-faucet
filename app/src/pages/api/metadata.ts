@@ -26,12 +26,19 @@ const tokenUri = async (req: NextApiRequest, res: NextApiResponse) => {
   invariant(supportData);
   const { value, name, icon } = supportData;
   const astr = ethers.utils.formatEther(value);
-  const grade = Math.min(3, Math.floor(Math.log10(Number(astr)))).toString();
+  const grade = Math.max(
+    1,
+    Math.min(3, Math.floor(Math.log10(Number(astr))))
+  ).toString();
+  const idString = ("0".repeat(3) + String(id)).slice(
+    -Math.max(String(id).length, 3)
+  );
   const imageQuery = new URLSearchParams([
     ["title", name],
     ["icon", icon],
     ["value", ethers.utils.formatEther(value.toString())],
     ["grade", grade],
+    ["id", idString],
   ]);
 
   const metadata = {

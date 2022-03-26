@@ -40,7 +40,10 @@ const Content = (props) => (
               <p className="text-4xl font-bold text-white">{props.title}</p>
             </div>
             <div className="flex items-center gap-2">
-              <p className="text-4xl font-light italic text-white">
+              <label className="font-mono text-5xl font-bold text-white">
+                #{props.id}
+              </label>
+              <p className="text-3xl font-light italic text-gray-300">
                 AStar Student Faucet
               </p>
             </div>
@@ -67,6 +70,7 @@ export default async (req, res) => {
     title: "Unknown supporter",
     grade: 0,
     value: 0,
+    id: "000",
     icon: "",
     ...req.query,
   };
