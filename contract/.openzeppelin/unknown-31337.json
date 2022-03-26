@@ -2,19 +2,19 @@
   "manifestVersion": "3.2",
   "admin": {
     "address": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
-    "txHash": "0x2d65efcb4fca46831c7dd79c19b92550afa84c03ab46a3723e8e6e6f0044b310"
+    "txHash": "0x01eaea0c5608ab32fcc821b8ade53adc7f80903c4cc1353baef447307f148848"
   },
   "proxies": [
     {
       "address": "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
-      "txHash": "0xe5ab84d5e0647e25db0f7cab4e01c9c0a44e64a4bd19c46a02352b137c295199",
+      "txHash": "0x994622a2746a9d4ebf5392e91c87b5c126ce648703bd7b8a3871720cc86f8a25",
       "kind": "transparent"
     }
   ],
   "impls": {
-    "55b8fda5010917f7f11b6080e70f81ae456bc82b0246bcf1737f424263687255": {
+    "1048936d6480c8a3d70fcefc8281181fd63499cbf70490b25936b99ecade55c6": {
       "address": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
-      "txHash": "0x0029cbe6a173d7c25a82d08f3e7dd158748365ce999674e74bcde0073ebe44ed",
+      "txHash": "0x31c8e98f8cb057b7e228bd28b39f3950485e0edaf9b160047b5c442426f91e51",
       "layout": {
         "storage": [
           {
@@ -183,7 +183,7 @@
             "slot": "301",
             "type": "t_string_storage",
             "contract": "StudentFaucet",
-            "src": "contracts\\StudentFaucet.sol:21"
+            "src": "contracts\\StudentFaucet.sol:29"
           },
           {
             "label": "_dropSize",
@@ -191,7 +191,31 @@
             "slot": "302",
             "type": "t_uint256",
             "contract": "StudentFaucet",
-            "src": "contracts\\StudentFaucet.sol:22"
+            "src": "contracts\\StudentFaucet.sol:30"
+          },
+          {
+            "label": "_totalDrop",
+            "offset": 0,
+            "slot": "303",
+            "type": "t_uint256",
+            "contract": "StudentFaucet",
+            "src": "contracts\\StudentFaucet.sol:31"
+          },
+          {
+            "label": "_numOfSupporters",
+            "offset": 0,
+            "slot": "304",
+            "type": "t_uint256",
+            "contract": "StudentFaucet",
+            "src": "contracts\\StudentFaucet.sol:32"
+          },
+          {
+            "label": "_supports",
+            "offset": 0,
+            "slot": "305",
+            "type": "t_mapping(t_uint256,t_struct(SupportData)2403_storage)",
+            "contract": "StudentFaucet",
+            "src": "contracts\\StudentFaucet.sol:33"
           }
         ],
         "types": {
@@ -243,6 +267,10 @@
             "label": "mapping(uint256 => address)",
             "numberOfBytes": "32"
           },
+          "t_mapping(t_uint256,t_struct(SupportData)2403_storage)": {
+            "label": "mapping(uint256 => struct StudentFaucet.SupportData)",
+            "numberOfBytes": "32"
+          },
           "t_mapping(t_uint256,t_uint256)": {
             "label": "mapping(uint256 => uint256)",
             "numberOfBytes": "32"
@@ -250,6 +278,30 @@
           "t_string_storage": {
             "label": "string",
             "numberOfBytes": "32"
+          },
+          "t_struct(SupportData)2403_storage": {
+            "label": "struct StudentFaucet.SupportData",
+            "members": [
+              {
+                "label": "name",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "icon",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "value",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              }
+            ],
+            "numberOfBytes": "96"
           },
           "t_uint256": {
             "label": "uint256",

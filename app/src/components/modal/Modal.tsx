@@ -1,4 +1,4 @@
-import { stopPropagation } from "@/util/inputUtil";
+import { stopPropagation } from "@/util";
 import React, { useEffect } from "react";
 
 const ModalBase: React.FC<{

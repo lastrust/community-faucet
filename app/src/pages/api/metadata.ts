@@ -26,7 +26,7 @@ const tokenUri = async (req: NextApiRequest, res: NextApiResponse) => {
   invariant(supportData);
   const { value, name, icon } = supportData;
   const astr = ethers.utils.formatEther(value);
-  const grade = Math.max(3, Math.floor(Math.log10(Number(astr)))).toString();
+  const grade = Math.min(3, Math.floor(Math.log10(Number(astr)))).toString();
   const imageQuery = new URLSearchParams([
     ["title", name],
     ["icon", icon],

@@ -1,41 +1,56 @@
-import { useContract, useWeb3 } from "@/hooks";
+import { useContract, useInputs } from "@/hooks";
+import { usefulFixed } from "@/util";
 import { targetChain } from "@/util/web3Util";
 import { ethers } from "ethers";
 import { useState } from "react";
 
 const Stats = () => {
-  const { provider } = useWeb3();
   const [contractBalance, setContractBalance] = useState<string | null>(null);
+  const { value, margeValue } = useInputs({
+    contractBalance: "0.0",
+    totalDrop: "0.0",
+    supporter: "0",
+  });
+
   useContract({
     rpc: targetChain().rpcUrls[0],
-    cb: async (contract) => {
-      if (provider) {
-        setContractBalance(
-          ethers.utils.formatEther(await provider.getBalance(contract.address))
-        );
-      }
+    cb: async (contract, provider) => {
+      margeValue({
+        contractBalance: usefulFixed(
+          ethers.utils.formatEther(await provider.getBalance(contract.address)),
+          1
+        ),
+        totalDrop: usefulFixed(
+          ethers.utils.formatEther(await contract.totalDrop()),
+          1
+        ),
+        supporter: (await contract.numberOfSupporter()).toString(),
+      });
     },
   });
   return (
-    <div className="flex justify-center">
+    <div className="mx-2 flex justify-center">
       <div className="stats bg-base-100 shadow-lg">
         <div className="stat place-items-center">
           <div className="stat-title">Faucet Balance</div>
           <div className="stat-value">
-            {Number(contractBalance).toFixed(2)}
+            {value.contractBalance}
             <span className="text-2xl">ASTR</span>
           </div>
-          <div className="stat-desc">Remaining funds for Faucet</div>
+          <div className="stat-desc">Remaining funds</div>
         </div>
         <div className="stat place-items-center">
-          <div className="stat-title">Users</div>
-          <div className="stat-value text-secondary">4,200</div>
-          <div className="stat-desc text-secondary">↗︎ 40 (2%)</div>
+          <div className="stat-title">Total Drop</div>
+          <div className="stat-value text-secondary">
+            {value.totalDrop}
+            <span className="text-2xl">ASTR</span>
+          </div>
+          <div className="stat-desc text-secondary">AStar from here</div>
         </div>
         <div className="stat place-items-center">
-          <div className="stat-title">New Registers</div>
-          <div className="stat-value">1,200</div>
-          <div className="stat-desc">↘︎ 90 (14%)</div>
+          <div className="stat-title">Supporter</div>
+          <div className="stat-value">{value.supporter}</div>
+          <div className="stat-desc">Faucet Supporter</div>
         </div>
       </div>
     </div>

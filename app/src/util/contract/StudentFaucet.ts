@@ -45,6 +45,7 @@ export interface StudentFaucetInterface extends utils.Interface {
     "initialize(string,string,string,uint256)": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
     "name()": FunctionFragment;
+    "numberOfSupporter()": FunctionFragment;
     "owner()": FunctionFragment;
     "ownerOf(uint256)": FunctionFragment;
     "pause()": FunctionFragment;
@@ -59,6 +60,7 @@ export interface StudentFaucetInterface extends utils.Interface {
     "tokenByIndex(uint256)": FunctionFragment;
     "tokenOfOwnerByIndex(address,uint256)": FunctionFragment;
     "tokenURI(uint256)": FunctionFragment;
+    "totalDrop()": FunctionFragment;
     "totalSupply()": FunctionFragment;
     "transferFrom(address,address,uint256)": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
@@ -93,6 +95,10 @@ export interface StudentFaucetInterface extends utils.Interface {
     values: [string, string]
   ): string;
   encodeFunctionData(functionFragment: "name", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "numberOfSupporter",
+    values?: undefined
+  ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "ownerOf",
@@ -137,6 +143,7 @@ export interface StudentFaucetInterface extends utils.Interface {
     functionFragment: "tokenURI",
     values: [BigNumberish]
   ): string;
+  encodeFunctionData(functionFragment: "totalDrop", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "totalSupply",
     values?: undefined
@@ -173,6 +180,10 @@ export interface StudentFaucetInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "numberOfSupporter",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "ownerOf", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "pause", data: BytesLike): Result;
@@ -208,6 +219,7 @@ export interface StudentFaucetInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "tokenURI", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "totalDrop", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "totalSupply",
     data: BytesLike
@@ -368,6 +380,8 @@ export interface StudentFaucet extends BaseContract {
 
     name(overrides?: CallOverrides): Promise<[string]>;
 
+    numberOfSupporter(overrides?: CallOverrides): Promise<[BigNumber]>;
+
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     ownerOf(
@@ -440,6 +454,8 @@ export interface StudentFaucet extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[string]>;
 
+    totalDrop(overrides?: CallOverrides): Promise<[BigNumber]>;
+
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transferFrom(
@@ -504,6 +520,8 @@ export interface StudentFaucet extends BaseContract {
   ): Promise<boolean>;
 
   name(overrides?: CallOverrides): Promise<string>;
+
+  numberOfSupporter(overrides?: CallOverrides): Promise<BigNumber>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
@@ -571,6 +589,8 @@ export interface StudentFaucet extends BaseContract {
 
   tokenURI(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
+  totalDrop(overrides?: CallOverrides): Promise<BigNumber>;
+
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   transferFrom(
@@ -633,6 +653,8 @@ export interface StudentFaucet extends BaseContract {
 
     name(overrides?: CallOverrides): Promise<string>;
 
+    numberOfSupporter(overrides?: CallOverrides): Promise<BigNumber>;
+
     owner(overrides?: CallOverrides): Promise<string>;
 
     ownerOf(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
@@ -694,6 +716,8 @@ export interface StudentFaucet extends BaseContract {
     ): Promise<BigNumber>;
 
     tokenURI(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
+
+    totalDrop(overrides?: CallOverrides): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -826,6 +850,8 @@ export interface StudentFaucet extends BaseContract {
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
+    numberOfSupporter(overrides?: CallOverrides): Promise<BigNumber>;
+
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
     ownerOf(
@@ -898,6 +924,8 @@ export interface StudentFaucet extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    totalDrop(overrides?: CallOverrides): Promise<BigNumber>;
+
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferFrom(
@@ -966,6 +994,8 @@ export interface StudentFaucet extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    numberOfSupporter(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1038,6 +1068,8 @@ export interface StudentFaucet extends BaseContract {
       tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
+
+    totalDrop(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 

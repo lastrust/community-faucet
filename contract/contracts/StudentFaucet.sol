@@ -13,20 +13,24 @@ contract StudentFaucet is
     PausableUpgradeable,
     ERC721EnumerableUpgradeable
 {
-    struct SupportData {
-        string name;
-        string icon;
-        uint256 value;
-    }
-    string private _baseTokenURI;
-    uint256 private _dropSize;
-    mapping(uint256 => SupportData) _supports;
     event Support(
         uint256 indexed id,
         address indexed supporter,
         uint256 indexed value
     );
     event Drop(address indexed target, uint256 indexed value);
+
+    struct SupportData {
+        string name;
+        string icon;
+        uint256 value;
+    }
+
+    string private _baseTokenURI;
+    uint256 private _dropSize;
+    uint256 private _totalDrop;
+    uint256 private _numOfSupporters;
+    mapping(uint256 => SupportData) _supports;
 
     function initialize(
         string memory name_,
@@ -53,6 +57,10 @@ contract StudentFaucet is
         _dropSize = dropSize_;
     }
 
+    function totalDrop() public view returns (uint256) {
+        return _totalDrop;
+    }
+
     function dropSize() public view returns (uint256) {
         return _dropSize;
     }
@@ -60,16 +68,22 @@ contract StudentFaucet is
     function drop(address to_) public onlyOwner {
         emit Drop(to_, _dropSize);
         payable(to_).transfer(_dropSize);
+        _totalDrop += _dropSize;
         if (msg.sender.balance < _dropSize) {
             //送信ようWalletのガス代が不足してきたら補充
             payable(msg.sender).transfer(_dropSize * 100);
         }
     }
 
+    function numberOfSupporter() public view returns (uint256) {
+        return _numOfSupporters;
+    }
+
     function support(string memory name_, string memory icon_) public payable {
         uint256 newTokenId = totalSupply();
         _mint(msg.sender, newTokenId);
         _supports[newTokenId] = SupportData(name_, icon_, msg.value);
+        _numOfSupporters++;
         emit Support(newTokenId, msg.sender, msg.value);
     }
 

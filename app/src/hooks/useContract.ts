@@ -19,18 +19,18 @@ export const useContract = ({
     const contractAddress = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS;
     if (provider && contractAddress && isTargetChain) {
       const signer = provider.getSigner();
-      const ArticlesContract = StudentFaucet__factory.connect(
+      const FaucetContract = StudentFaucet__factory.connect(
         contractAddress,
         signer
       );
-      setContract(ArticlesContract);
+      setContract(FaucetContract);
     } else if (rpc && contractAddress) {
       const jsonRpcProvider = new ethers.providers.JsonRpcProvider(rpc);
-      const ArticlesContract = StudentFaucet__factory.connect(
+      const FaucetContract = StudentFaucet__factory.connect(
         contractAddress,
         jsonRpcProvider
       );
-      setContract(ArticlesContract);
+      setContract(FaucetContract);
     } else {
       setContract(null);
     }
