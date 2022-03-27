@@ -11,7 +11,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <NextSeo
           title="AStar Student Faucet"
           description="Unofficial student-only AStar Student Faucet."
-          openGraph={{ images: [{ url: "https://as-faucet/ogp.png" }] }}
+          openGraph={{ images: [{ url: "https://www.as-faucet.xyz/ogp.png" }] }}
           twitter={{
             cardType: "summary_large_image",
           }}
