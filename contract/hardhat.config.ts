@@ -32,17 +32,17 @@ const config: HardhatUserConfig = {
     },
     mumbai: {
       url: "https://rpc-mumbai.maticvigil.com",
-      accounts: ["0x" + process.env.PRIVATE_KEY],
+      accounts: [process.env.PRIVATE_KEY || ""],
     },
     shibuya: {
       url: "https://rpc.shibuya.astar.network:8545",
       chainId: 81,
-      accounts: ["0x" + process.env.PRIVATE_KEY],
+      accounts: [process.env.PRIVATE_KEY || ""],
     },
     astar: {
       url: "https://rpc.astar.network:8545",
       chainId: 592,
-      accounts: ["0x" + process.env.PRIVATE_KEY],
+      accounts: [process.env.PRIVATE_KEY || ""],
     },
   },
   gasReporter: {

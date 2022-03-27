@@ -2,9 +2,9 @@ import React, { createContext, useEffect, useState } from "react";
 import { Web3ContextInterface } from "../types/web3Types";
 import {
   checkIsTargetChain,
-  getConnectedAccount,
   getAccountByIds,
   getChainId,
+  getConnectedAccount,
   getWeb3Provider,
 } from "../util/web3Util";
 
@@ -78,7 +78,6 @@ export const Web3Provider: React.FC<
   };
 
   const handleAccountsChanged = async (_accountIds: string[]) => {
-    console.log(_accountIds);
     try {
       setIsLoading(true);
       setAccount(await getAccountByIds(_accountIds));

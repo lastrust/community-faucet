@@ -58,7 +58,7 @@ const SupportModal: React.FC<{
           className="input input-bordered"
           value={value.name}
           onChange={handler("name")}
-          disabled={isLoading}
+          disabled={isLoading || transaction}
         />
         <label className="label">
           <span className="label-text text-lg font-bold">Icon URL(option)</span>
@@ -69,7 +69,7 @@ const SupportModal: React.FC<{
           className="input input-bordered"
           value={value.icon}
           onChange={handler("icon")}
-          disabled={isLoading}
+          disabled={isLoading || transaction}
         />
         <label className="label">
           <span className="label-text text-lg font-bold">
@@ -83,7 +83,7 @@ const SupportModal: React.FC<{
             className="input input-bordered w-full"
             value={value.value}
             onChange={handler("value")}
-            disabled={isLoading}
+            disabled={isLoading || transaction}
           />
           <span>ASTR</span>
         </label>

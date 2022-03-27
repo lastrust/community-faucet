@@ -16,11 +16,11 @@ const Stats = () => {
       margeValue({
         contractBalance: usefulFixed(
           ethers.utils.formatEther(await provider.getBalance(contract.address)),
-          1
+          2
         ),
         totalDrop: usefulFixed(
           ethers.utils.formatEther(await contract.totalDrop()),
-          1
+          2
         ),
         supporter: (await contract.numberOfSupporter()).toString(),
       });

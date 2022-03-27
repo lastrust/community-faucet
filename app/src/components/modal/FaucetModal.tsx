@@ -11,10 +11,28 @@ const FaucetModal: React.FC<{
   const [isStudent, setIsStudent] = useState(false);
   const [nextTime, setNextTime] = useState<number>(Infinity);
   const [amount, setAmount] = useState<number | string>(0);
-  const { account } = useWeb3();
+  const [isLoading, setIsLoading] = useState(false);
+  const { account, provider } = useWeb3();
   const contract = useContract({});
   const handler = (e: React.ChangeEvent<HTMLInputElement>) =>
     setIsStudent(e.target.checked);
+
+  const faucet = async () => {
+    if (account && contract && provider) {
+      setIsLoading(true);
+      const message = `AStar Faucet\n\nTime: ${new Date().getTime()}\nAddress: ${
+        account.id
+      }`;
+      const signature = await provider.getSigner().signMessage(message);
+      await fetch("/api/drop", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message, signature }),
+      });
+      setIsLoading(false);
+      props.onChange(false);
+    }
+  };
 
   useEffect(() => {
     if (account && contract) {
@@ -34,7 +52,10 @@ const FaucetModal: React.FC<{
   }, [contract, account]);
   return (
     <ModalBase id="faucet" {...props}>
-      <h3 className="mb-4 text-center text-3xl font-bold">Faucet</h3>
+      <h3 className="text-center text-3xl font-bold">Faucet</h3>
+      {nextTime < 0 && (
+        <p className="mb-4 text-center">You have already received the ASTR.</p>
+      )}
       <div className="stats w-full justify-center bg-primary text-primary-content">
         <div className="stat place-items-center">
           <div className="stat-title">Next Drop Time</div>
@@ -50,7 +71,7 @@ const FaucetModal: React.FC<{
       </div>
       <div className="form-control">
         <label className="label cursor-pointer">
-          <span className="label-text text-xl">I am a student.</span>
+          <span className="label-text text-xl">You are a student, right?</span>
           <input type="checkbox" className="checkbox" onChange={handler} />
         </label>
       </div>
@@ -58,6 +79,8 @@ const FaucetModal: React.FC<{
         <UsefulButton
           className="btn btn-primary"
           disabled={!isStudent || nextTime < 0}
+          isLoading={isLoading}
+          onClick={() => void faucet()}
         >
           Get AStar
         </UsefulButton>

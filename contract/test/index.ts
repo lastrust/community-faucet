@@ -8,7 +8,7 @@ const getContract = async () => {
     "ASF",
     "Hello",
     ethers.utils.parseEther("0.1"),
-    0,
+    60 * 60 * 24 * 7,
   ]);
   return instance as StudentFaucet;
 };
@@ -31,6 +31,6 @@ describe("test of StudentFaucet", () => {
     console.log(await instance.numberOfSupporter());
     console.log(await provider.getBalance(await addr2.getAddress()));
     console.log(await instance.totalDrop());
-    await instance.drop(await addr2.getAddress());
+    // await instance.drop(await addr2.getAddress());
   });
 });
