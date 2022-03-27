@@ -29,7 +29,7 @@ const FaucetModal: React.FC<{
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message, signature }),
       });
-      console.log(res);
+      console.log(await res.json());
       setIsLoading(false);
       props.onChange(false);
     }
