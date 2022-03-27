@@ -2,7 +2,7 @@ import Image from "next/image";
 
 const Info = () => {
   return (
-    <div className="container my-16 mx-auto max-w-2xl shadow-xl sm:card">
+    <div className="container mx-auto mt-16 max-w-2xl shadow-xl sm:card sm:mb-16">
       <div className="card-body bg-primary text-primary-content">
         <h3 className="text-center text-4xl font-bold">What is the Faucet?</h3>
         <p className="text-center text-lg">

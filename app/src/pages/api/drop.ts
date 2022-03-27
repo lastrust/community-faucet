@@ -47,7 +47,7 @@ const tokenUri = async (req: NextApiRequest, res: NextApiResponse) => {
     res.json({ status: "success" });
   } catch (e) {
     console.log(e);
-    res.status(500).json({ status: e });
+    res.status(500).json({ status: String(e) });
   }
 };
 
