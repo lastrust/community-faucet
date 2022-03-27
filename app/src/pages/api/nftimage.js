@@ -84,6 +84,6 @@ export default async (req, res) => {
   !debug && (await browser.close());
 
   res.setHeader("Cache-Control", "s-maxage=31536000, stale-while-revalidate");
-  res.setHeader("Content-Type", "image/webp");
+  res.setHeader("Content-Type", "image/png");
   res.end(imagePng);
 };

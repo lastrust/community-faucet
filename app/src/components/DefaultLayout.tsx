@@ -33,7 +33,7 @@ export const Header: React.FC<{
   setIsDark: (v: boolean) => void;
 }> = (props) => {
   return (
-    <nav className="navbar fixed backdrop-blur-sm">
+    <nav className="navbar fixed">
       <div className="mx-auto flex w-full max-w-screen-xl justify-between">
         <NextLink href="/">
           <a className="btn btn-ghost text-2xl normal-case text-base-content">
