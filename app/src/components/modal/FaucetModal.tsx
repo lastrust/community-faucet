@@ -24,11 +24,12 @@ const FaucetModal: React.FC<{
         account.id
       }`;
       const signature = await provider.getSigner().signMessage(message);
-      await fetch("/api/drop", {
+      const res = await fetch("/api/drop", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message, signature }),
       });
+      console.log(res);
       setIsLoading(false);
       props.onChange(false);
     }

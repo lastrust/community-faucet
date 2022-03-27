@@ -40,14 +40,10 @@ const tokenUri = async (req: NextApiRequest, res: NextApiResponse) => {
       signer
     );
 
-    const tx = await contract.drop(address, {
-      gasLimit: "100000",
-    });
-
     res.json({ status: "success" });
   } catch (e) {
     console.log(e);
-    res.status(500).json({ status: "Some kind of error occurs." });
+    res.status(500).json({ status: e });
   }
 };
 

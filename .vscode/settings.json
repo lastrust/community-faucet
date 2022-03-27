@@ -11,6 +11,6 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "files.exclude": {
-    "**/.env*": true
+    // "**/.env*": true
   }
 }
