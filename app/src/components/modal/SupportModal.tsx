@@ -15,13 +15,18 @@ const SupportModal: React.FC<{
   });
   const [maxValue, setMaxValue] = useState("");
   const { account, isLoading, provider } = useWeb3();
+  const [transaction, setTransaction] = useState(false);
   const contract = useContract({});
 
   const support = async () => {
     if (contract) {
-      await contract.support(value.name, value.icon, {
+      setTransaction(true);
+      const transaction = await contract.support(value.name, value.icon, {
         value: ethers.utils.parseEther(value.value),
       });
+      await transaction.wait();
+      setTransaction(false);
+      props.onChange(false);
     }
   };
 
@@ -86,6 +91,7 @@ const SupportModal: React.FC<{
       <div className="modal-action">
         <UsefulButton
           className="btn btn-primary"
+          isLoading={transaction}
           onClick={() => void support()}
         >
           Submit

@@ -8,6 +8,7 @@ const getContract = async () => {
     "ASF",
     "Hello",
     ethers.utils.parseEther("0.1"),
+    0,
   ]);
   return instance as StudentFaucet;
 };
@@ -17,7 +18,7 @@ describe("test of StudentFaucet", () => {
   it("support test", async () => {
     const instance = await getContract();
     const provider = waffle.provider;
-    const [owner, addr, addr2] = await getAddress();
+    const [, addr, addr2] = await getAddress();
     await instance.support("Kimura", "Tanaka.png", {
       value: ethers.utils.parseEther("2.3"),
     });
@@ -27,13 +28,9 @@ describe("test of StudentFaucet", () => {
       .support("Syoko", "Imamura.png", { value: 5000 });
     await instance.drop(await addr2.getAddress());
 
-    console.log(
-      await instance.queryFilter(
-        instance.filters.Support(ethers.BigNumber.from("1"))
-      )
-    );
     console.log(await instance.numberOfSupporter());
     console.log(await provider.getBalance(await addr2.getAddress()));
     console.log(await instance.totalDrop());
+    await instance.drop(await addr2.getAddress());
   });
 });

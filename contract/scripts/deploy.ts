@@ -7,6 +7,7 @@ async function main() {
     "ASF",
     "https://www.as-faucet.xyz/api/metadata?id=",
     ethers.utils.parseEther("0.02"),
+    7 * 24 * 60 * 60,
   ]);
 
   await instance.deployed();

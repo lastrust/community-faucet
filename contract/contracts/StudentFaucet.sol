@@ -29,20 +29,36 @@ contract StudentFaucet is
     string private _baseTokenURI;
     uint256 private _dropSize;
     uint256 private _totalDrop;
+    uint256 private _interval;
     uint256 private _numOfSupporters;
     mapping(uint256 => SupportData) _supports;
+    mapping(address => uint256) _lastReceiptDates;
 
     function initialize(
         string memory name_,
         string memory symbol_,
         string memory baseTokenURI_,
-        uint256 dropSize_
+        uint256 dropSize_,
+        uint256 interval_
     ) public initializer {
         __ERC721_init(name_, symbol_);
         __Ownable_init();
         __Pausable_init();
         _baseTokenURI = baseTokenURI_;
         _dropSize = dropSize_;
+        _interval = interval_;
+    }
+
+    function setInterval(uint256 interval_) public onlyOwner {
+        _interval = interval_;
+    }
+
+    function interval() public view returns (uint256) {
+        return _interval;
+    }
+
+    function lastReceiptDate(address id) public view returns (uint256) {
+        return _lastReceiptDates[id];
     }
 
     function changeBaseURI(string memory baseTokenURI_) public onlyOwner {
@@ -66,9 +82,14 @@ contract StudentFaucet is
     }
 
     function drop(address to_) public onlyOwner {
+        require(
+            block.timestamp - _lastReceiptDates[to_] > _interval,
+            "You have received"
+        );
         emit Drop(to_, _dropSize);
         payable(to_).transfer(_dropSize);
         _totalDrop += _dropSize;
+        _lastReceiptDates[to_] = block.timestamp;
         if (msg.sender.balance < _dropSize) {
             //送信ようWalletのガス代が不足してきたら補充
             payable(msg.sender).transfer(_dropSize * 100);

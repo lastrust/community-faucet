@@ -112,7 +112,7 @@ export const Footer: React.FC = () => (
       <a href="https://twitter.com/unknown_gakusei">
         <BsTwitter size="1.5rem" />
       </a>
-      <a href="https://github.com/inaridiy/BusinessCardNFT">
+      <a href="https://github.com/inaridiy/AStar-Student-Faucet">
         <BsGithub size="1.5rem" />
       </a>
       <a href="https://app.cyberconnect.me/address/inaridiy.eth">

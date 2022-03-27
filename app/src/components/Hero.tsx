@@ -1,11 +1,25 @@
+import { useWeb3 } from "@/hooks";
+import { ethers } from "ethers";
 import { useState } from "react";
+import FaucetModal from "./modal/FaucetModal";
 import SupportModal from "./modal/SupportModal";
 
 const Hero = () => {
   const [openSupport, setOpenSupport] = useState(false);
+  const [openFaucet, setOpenFaucet] = useState(false);
+  const { provider } = useWeb3();
+  const sign = async () => {
+    if (provider) {
+      const singer = provider.getSigner();
+      const signature = await singer.signMessage("Hello World");
+      const verity = ethers.utils.verifyMessage("Hello World", signature);
+      console.log(verity);
+    }
+  };
   return (
     <>
       <SupportModal open={openSupport} onChange={setOpenSupport} />
+      <FaucetModal open={openFaucet} onChange={setOpenFaucet} />
       <div className="hero hero-content mx-auto flex-col text-center sm:mt-32">
         <div className="max-w-xl">
           <h1 className="text-5xl font-bold">AStar Student Faucet</h1>
@@ -17,7 +31,12 @@ const Hero = () => {
           </p>
         </div>
         <div className="flex w-full max-w-2xl items-center justify-center gap-4">
-          <button className="btn btn-primary">Get ASTR</button>
+          <button
+            className="btn btn-primary"
+            onClick={() => setOpenFaucet(!openFaucet)}
+          >
+            Get ASTR
+          </button>
           <div className="text-xl font-bold">OR</div>
           <button
             className="btn btn-secondary"

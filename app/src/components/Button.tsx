@@ -1,9 +1,13 @@
 import { useWeb3 } from "@/hooks";
 import { switchChain } from "@/util/web3Util";
+import React from "react";
 
-export const UsefulButton: React.FC<JSX.IntrinsicElements["button"]> = (
-  props
-) => {
+export const UsefulButton: React.FC<
+  JSX.IntrinsicElements["button"] & {
+    isLoading?: boolean;
+    loadingBtn?: React.ReactNode;
+  }
+> = ({ isLoading: isLoadingProps, loadingBtn, ...props }) => {
   const {
     isLoading,
     account,
@@ -19,7 +23,9 @@ export const UsefulButton: React.FC<JSX.IntrinsicElements["button"]> = (
       void connectWallet();
     }
   };
-  if (isLoading) {
+  if (isLoadingProps && loadingBtn) {
+    return <>{loadingBtn}</>;
+  } else if (isLoading || isLoadingProps) {
     return <button className="btn loading btn-primary">Loading</button>;
   } else if (!isTargetChain) {
     return (

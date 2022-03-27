@@ -42,8 +42,10 @@ export interface StudentFaucetInterface extends utils.Interface {
     "drop(address)": FunctionFragment;
     "dropSize()": FunctionFragment;
     "getApproved(uint256)": FunctionFragment;
-    "initialize(string,string,string,uint256)": FunctionFragment;
+    "initialize(string,string,string,uint256,uint256)": FunctionFragment;
+    "interval()": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
+    "lastReceiptDate(address)": FunctionFragment;
     "name()": FunctionFragment;
     "numberOfSupporter()": FunctionFragment;
     "owner()": FunctionFragment;
@@ -53,6 +55,7 @@ export interface StudentFaucetInterface extends utils.Interface {
     "renounceOwnership()": FunctionFragment;
     "safeTransferFrom(address,address,uint256)": FunctionFragment;
     "setApprovalForAll(address,bool)": FunctionFragment;
+    "setInterval(uint256)": FunctionFragment;
     "support(string,string)": FunctionFragment;
     "supportData(uint256)": FunctionFragment;
     "supportsInterface(bytes4)": FunctionFragment;
@@ -88,11 +91,16 @@ export interface StudentFaucetInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "initialize",
-    values: [string, string, string, BigNumberish]
+    values: [string, string, string, BigNumberish, BigNumberish]
   ): string;
+  encodeFunctionData(functionFragment: "interval", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "isApprovedForAll",
     values: [string, string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "lastReceiptDate",
+    values: [string]
   ): string;
   encodeFunctionData(functionFragment: "name", values?: undefined): string;
   encodeFunctionData(
@@ -117,6 +125,10 @@ export interface StudentFaucetInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "setApprovalForAll",
     values: [string, boolean]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setInterval",
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "support",
@@ -175,8 +187,13 @@ export interface StudentFaucetInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "interval", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "isApprovedForAll",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "lastReceiptDate",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
@@ -198,6 +215,10 @@ export interface StudentFaucetInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "setApprovalForAll",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setInterval",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "support", data: BytesLike): Result;
@@ -369,14 +390,22 @@ export interface StudentFaucet extends BaseContract {
       symbol_: string,
       baseTokenURI_: string,
       dropSize_: BigNumberish,
+      interval_: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
+
+    interval(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     isApprovedForAll(
       owner: string,
       operator: string,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
+
+    lastReceiptDate(
+      id: string,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
 
@@ -417,6 +446,11 @@ export interface StudentFaucet extends BaseContract {
     setApprovalForAll(
       operator: string,
       approved: boolean,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    setInterval(
+      interval_: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
@@ -510,14 +544,19 @@ export interface StudentFaucet extends BaseContract {
     symbol_: string,
     baseTokenURI_: string,
     dropSize_: BigNumberish,
+    interval_: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
+
+  interval(overrides?: CallOverrides): Promise<BigNumber>;
 
   isApprovedForAll(
     owner: string,
     operator: string,
     overrides?: CallOverrides
   ): Promise<boolean>;
+
+  lastReceiptDate(id: string, overrides?: CallOverrides): Promise<BigNumber>;
 
   name(overrides?: CallOverrides): Promise<string>;
 
@@ -555,6 +594,11 @@ export interface StudentFaucet extends BaseContract {
   setApprovalForAll(
     operator: string,
     approved: boolean,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  setInterval(
+    interval_: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -642,14 +686,19 @@ export interface StudentFaucet extends BaseContract {
       symbol_: string,
       baseTokenURI_: string,
       dropSize_: BigNumberish,
+      interval_: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
+
+    interval(overrides?: CallOverrides): Promise<BigNumber>;
 
     isApprovedForAll(
       owner: string,
       operator: string,
       overrides?: CallOverrides
     ): Promise<boolean>;
+
+    lastReceiptDate(id: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<string>;
 
@@ -683,6 +732,11 @@ export interface StudentFaucet extends BaseContract {
     setApprovalForAll(
       operator: string,
       approved: boolean,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    setInterval(
+      interval_: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -839,14 +893,19 @@ export interface StudentFaucet extends BaseContract {
       symbol_: string,
       baseTokenURI_: string,
       dropSize_: BigNumberish,
+      interval_: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
+
+    interval(overrides?: CallOverrides): Promise<BigNumber>;
 
     isApprovedForAll(
       owner: string,
       operator: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
+
+    lastReceiptDate(id: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -887,6 +946,11 @@ export interface StudentFaucet extends BaseContract {
     setApprovalForAll(
       operator: string,
       approved: boolean,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    setInterval(
+      interval_: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
@@ -984,12 +1048,20 @@ export interface StudentFaucet extends BaseContract {
       symbol_: string,
       baseTokenURI_: string,
       dropSize_: BigNumberish,
+      interval_: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
+
+    interval(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     isApprovedForAll(
       owner: string,
       operator: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    lastReceiptDate(
+      id: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -1032,6 +1104,11 @@ export interface StudentFaucet extends BaseContract {
     setApprovalForAll(
       operator: string,
       approved: boolean,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setInterval(
+      interval_: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
