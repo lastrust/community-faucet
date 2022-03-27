@@ -2,10 +2,8 @@ import { useContract, useInputs } from "@/hooks";
 import { usefulFixed } from "@/util";
 import { targetChain } from "@/util/web3Util";
 import { ethers } from "ethers";
-import { useState } from "react";
 
 const Stats = () => {
-  const [contractBalance, setContractBalance] = useState<string | null>(null);
   const { value, margeValue } = useInputs({
     contractBalance: "0.0",
     totalDrop: "0.0",

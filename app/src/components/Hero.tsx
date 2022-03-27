@@ -1,5 +1,3 @@
-import { useWeb3 } from "@/hooks";
-import { ethers } from "ethers";
 import { useState } from "react";
 import FaucetModal from "./modal/FaucetModal";
 import SupportModal from "./modal/SupportModal";
@@ -7,15 +5,7 @@ import SupportModal from "./modal/SupportModal";
 const Hero = () => {
   const [openSupport, setOpenSupport] = useState(false);
   const [openFaucet, setOpenFaucet] = useState(false);
-  const { provider } = useWeb3();
-  const sign = async () => {
-    if (provider) {
-      const singer = provider.getSigner();
-      const signature = await singer.signMessage("Hello World");
-      const verity = ethers.utils.verifyMessage("Hello World", signature);
-      console.log(verity);
-    }
-  };
+
   return (
     <>
       <SupportModal open={openSupport} onChange={setOpenSupport} />
