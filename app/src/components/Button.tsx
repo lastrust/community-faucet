@@ -27,7 +27,7 @@ export const UsefulButton: React.FC<
     return <>{loadingBtn}</>;
   } else if (isLoading || isLoadingProps) {
     return <button className="btn loading btn-primary">Loading</button>;
-  } else if (!isTargetChain) {
+  } else if (!isTargetChain && account) {
     return (
       <button className="btn btn-error" onClick={handleErrorClick}>
         Chain connected is different
