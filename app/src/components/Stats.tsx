@@ -13,17 +13,21 @@ const Stats = () => {
   useContract({
     rpc: targetChain().rpcUrls[0],
     cb: async (contract, provider) => {
-      margeValue({
-        contractBalance: usefulFixed(
-          ethers.utils.formatEther(await provider.getBalance(contract.address)),
-          2
-        ),
-        totalDrop: usefulFixed(
-          ethers.utils.formatEther(await contract.totalDrop()),
-          2
-        ),
-        supporter: (await contract.numberOfSupporter()).toString(),
-      });
+      if (contract && provider) {
+        margeValue({
+          contractBalance: usefulFixed(
+            ethers.utils.formatEther(
+              await provider.getBalance(contract.address)
+            ),
+            2
+          ),
+          totalDrop: usefulFixed(
+            ethers.utils.formatEther(await contract.totalDrop()),
+            2
+          ),
+          supporter: (await contract.numberOfSupporter()).toString(),
+        });
+      }
     },
   });
   return (

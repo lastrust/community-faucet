@@ -37,30 +37,27 @@ export const Header: React.FC<{
     <nav className="navbar fixed">
       <div className="mx-auto flex w-full max-w-screen-xl justify-between">
         <NextLink href="/">
-          <a className="btn btn-ghost text-2xl normal-case text-base-content">
+          <a className="btn btn-ghost btn-sm text-xl normal-case text-base-content sm:text-2xl">
             <span className="hidden sm:block">AStar Student Faucet</span>
-            <span className="sm:hidden ">ASFaucet</span>
+            <span className="sm:hidden">ASFaucet</span>
           </a>
         </NextLink>
         <div className="flex items-center text-base-content sm:gap-2">
-          <AccoutWithAth />
-          <div className="h-8 w-0.5 bg-base-content"></div>
-          <div className="flex-none">
-            <ChainState />
-            <ToggleTheme {...props} />
-          </div>
+          <AccountWithAth />
+          <div className="ml-2 h-8 w-0.5 bg-base-content"></div>
+          <ToggleTheme {...props} />
         </div>
       </div>
     </nav>
   );
 };
-export const AccoutWithAth = () => {
+export const AccountWithAth = () => {
   const { connectWallet, account, isLoading } = useWeb3();
   if (isLoading) {
-    return <button className="btn loading  btn-ghost">Loading</button>;
+    return <button className="btn loading btn-ghost">Loading</button>;
   } else if (account) {
     return (
-      <div className="text-lg font-bold">
+      <div className=" text-lg font-bold">
         {account.ethName || account.abbreviatedId}
       </div>
     );
