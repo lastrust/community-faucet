@@ -41,7 +41,7 @@ export const Header: React.FC<{
             <span className="sm:hidden ">ASFaucet</span>
           </a>
         </NextLink>
-        <div className="flex items-center gap-2 text-base-content">
+        <div className="flex items-center text-base-content sm:gap-2">
           <AccoutWithAth />
           <div className="h-8 w-0.5 bg-base-content"></div>
           <div className="flex-none">
@@ -73,7 +73,8 @@ export const AccoutWithAth = () => {
 };
 
 export const ChainState: React.FC = () => {
-  const { isTargetChain, isMetaMask, provider, connectWallet } = useWeb3();
+  const { isTargetChain, isMetaMask, provider, connectWallet, account } =
+    useWeb3();
   const handleClick = () => {
     if (provider && isMetaMask) {
       void switchChain(provider);
@@ -81,12 +82,12 @@ export const ChainState: React.FC = () => {
       void connectWallet();
     }
   };
-  return isTargetChain ? (
-    <></>
-  ) : (
+  return !isTargetChain && account ? (
     <button className="btn btn-ghost btn-square" onClick={handleClick}>
       <VscDebugDisconnect size="2rem" color="#f21361" />
     </button>
+  ) : (
+    <></>
   );
 };
 
