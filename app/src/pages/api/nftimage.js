@@ -77,7 +77,7 @@ export default async (req, res) => {
   const markup = ReactDOM.renderToStaticMarkup(<Content {...props} />);
   const html = `<!doctype html>${markup}`;
 
-  await page.setContent(html, { waitUntil: "domcontentloaded" });
+  await page.setContent(html, { waitUntil: "networkidle" });
 
   const imagePng = await page.screenshot({ type: "png" });
   // const imageWebp = await sharp(imagePng).webp({ quality: 75 }).toBuffer();

@@ -3,6 +3,7 @@ import { useWeb3 } from "@/hooks";
 import { switchChain } from "@/util/web3Util";
 import NextLink from "next/link";
 import React, { useState } from "react";
+import { AiFillDatabase } from "react-icons/ai";
 import { BsGear, BsGithub, BsMoon, BsSun, BsTwitter } from "react-icons/bs";
 import { VscDebugDisconnect } from "react-icons/vsc";
 
@@ -116,8 +117,8 @@ export const Footer: React.FC = () => (
       <a href="https://github.com/inaridiy/AStar-Student-Faucet">
         <BsGithub size="1.5rem" />
       </a>
-      <a href="https://app.cyberconnect.me/address/inaridiy.eth">
-        <LogoCyberConnect size="1.5rem" />
+      <a href="https://astar.subscan.io/account/0x26DA9C05A9f7bcEFb9e342Bb35FA8aE338F9cCed?tab=transfer">
+        <AiFillDatabase size="1.5rem" />
       </a>
     </div>
   </footer>
