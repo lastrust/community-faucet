@@ -25,7 +25,7 @@ const tokenUri = async (req: NextApiRequest, res: NextApiResponse) => {
     const isMatchAddress =
       recoveredAddress.toLowerCase() === address.toLowerCase();
     const isInTime = Date.now() - Number(time) < allowedTime;
-    invariant(isMatchAddress && isInTime, "Invalid signature");
+    invariant(isMatchAddress, "Invalid signature");
 
     invariant(
       process.env.PRIVATE_KEY && process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
