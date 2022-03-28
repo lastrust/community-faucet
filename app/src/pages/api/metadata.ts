@@ -27,7 +27,7 @@ const tokenUri = async (req: NextApiRequest, res: NextApiResponse) => {
   const { value, name, icon } = supportData;
   const astr = ethers.utils.formatEther(value);
   const grade = Math.max(
-    1,
+    0,
     Math.min(3, Math.floor(Math.log10(Number(astr))))
   ).toString();
   const idString = ("0".repeat(3) + String(id)).slice(
