@@ -18,7 +18,7 @@ const FaucetModal: React.FC<{
     setIsStudent(e.target.checked);
 
   const faucet = async () => {
-    if (account && contract && provider) {
+    if (account && provider) {
       setIsLoading(true);
       const message = `AStar Faucet\n\nTime: ${new Date().getTime()}\nAddress: ${
         account.id
@@ -79,6 +79,7 @@ const FaucetModal: React.FC<{
       <div className="modal-action">
         <UsefulButton
           className="btn btn-primary"
+          forSign={true}
           disabled={!isStudent || nextTime < 0}
           isLoading={isLoading}
           onClick={() => void faucet()}

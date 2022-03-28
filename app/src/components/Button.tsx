@@ -6,8 +6,9 @@ export const UsefulButton: React.FC<
   JSX.IntrinsicElements["button"] & {
     isLoading?: boolean;
     loadingBtn?: React.ReactNode;
+    forSign?: boolean;
   }
-> = ({ isLoading: isLoadingProps, loadingBtn, ...props }) => {
+> = ({ isLoading: isLoadingProps, loadingBtn, forSign, ...props }) => {
   const {
     isLoading,
     account,
@@ -27,7 +28,7 @@ export const UsefulButton: React.FC<
     return <>{loadingBtn}</>;
   } else if (isLoading || isLoadingProps) {
     return <button className="btn loading btn-primary">Loading</button>;
-  } else if (!isTargetChain && account) {
+  } else if (!isTargetChain && account && !forSign) {
     return (
       <button className="btn btn-error" onClick={handleErrorClick}>
         Chain connected is different
