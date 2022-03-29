@@ -47,6 +47,18 @@ export const chainParameters = {
     },
     rpcUrls: ["https://rpc.astar.network:8545"],
   },
+  "0x150": {
+    chainId: "0x150",
+    blockExplorerUrls: ["https://blockscout.com/shiden/"],
+    chainName: "Shiden Network",
+    iconUrls: [],
+    nativeCurrency: {
+      decimals: 18,
+      name: "SDN",
+      symbol: "SDN",
+    },
+    rpcUrls: ["https://evm.shiden.astar.network"],
+  },
 };
 
 export const providerOptions = async () => ({
@@ -60,6 +72,7 @@ export const providerOptions = async () => ({
         80001: `https://rpc-mumbai.matic.today`,
         81: `https://rpc.shibuya.astar.network:8545`,
         592: `https://rpc.astar.network:8545`,
+        336: `https://evm.shiden.astar.network`,
       },
     },
   },
@@ -70,5 +83,10 @@ export const contractList = {
     address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as string,
     rpc: chainParameters["0x250"].rpcUrls[0],
     chainId: "0x250",
+  },
+  shiden: {
+    address: process.env["NEXT_PUBLIC_SHIDEN_CONTRACT_ADDRESS"] as string,
+    rpc: chainParameters["0x150"].rpcUrls[0],
+    chainId: "0x150",
   },
 };
