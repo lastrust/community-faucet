@@ -13,7 +13,7 @@ const FaucetModal: React.FC<{
   const [amount, setAmount] = useState<number | string>(0);
   const [isLoading, setIsLoading] = useState(false);
   const { account, provider } = useWeb3();
-  const contract = useContract({});
+  const contract = useContract({ fetchOnly: true });
   const handler = (e: React.ChangeEvent<HTMLInputElement>) =>
     setIsStudent(e.target.checked);
 

@@ -51,7 +51,7 @@ export const chainParameters = {
 
 export const contractList = {
   astar: {
-    address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
+    address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as string,
     rpc: chainParameters["0x250"].rpcUrls[0],
     chainId: "0x250",
   },
