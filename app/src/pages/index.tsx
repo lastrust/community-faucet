@@ -1,15 +1,14 @@
-import Hero from "@/components/Hero";
-import Info from "@/components/Info";
-import Stats from "@/components/Stats";
+import AstarHero from "@/components/astar/AstarHero";
+import AstarStats from "@/components/astar/AstarStats";
+import DefaultLayout from "@/components/DefaultLayout";
 import type { NextPage } from "next";
 
 const Home: NextPage = () => {
   return (
-    <>
-      <Hero />
-      <Stats />
-      <Info />
-    </>
+    <DefaultLayout title={["AStar Student Faucet", "ASFaucet"]}>
+      <AstarHero />
+      <AstarStats />
+    </DefaultLayout>
   );
 };
 

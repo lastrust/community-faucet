@@ -1,4 +1,3 @@
-import { Web3Provider } from "@/components/Web3Provider";
 import { useWeb3 } from "@/hooks";
 import { switchChain } from "@/util/web3Util";
 import NextLink from "next/link";
@@ -6,10 +5,15 @@ import React, { useState } from "react";
 import { AiFillDatabase } from "react-icons/ai";
 import { BsGear, BsGithub, BsMoon, BsSun, BsTwitter } from "react-icons/bs";
 import { VscDebugDisconnect } from "react-icons/vsc";
+import Info from "./Info";
 
 export default function DefaultLayout({
   children,
+  theme = ["winter", "forest"],
+  title,
 }: {
+  title: [string, string];
+  theme?: [string, string];
   children: React.ReactNode;
 }) {
   const [isDark, setIsDark] = useState(false);
@@ -17,13 +21,14 @@ export default function DefaultLayout({
     <>
       <div
         className="relative flex min-h-full flex-col bg-base-200 transition-all"
-        data-theme={isDark ? "forest" : "winter"}
+        data-theme={isDark ? theme[1] : theme[0]}
       >
-        <Web3Provider>
-          <Header {...{ isDark, setIsDark }} />
-          <div className="mt-16 text-base-content">{children}</div>
-          <Footer />
-        </Web3Provider>
+        <Header {...{ isDark, setIsDark, title }} />
+        <div className="mt-16 text-base-content">
+          {children}
+          <Info />
+        </div>
+        <Footer />
       </div>
     </>
   );
@@ -31,15 +36,16 @@ export default function DefaultLayout({
 
 export const Header: React.FC<{
   isDark: boolean;
+  title: [string, string];
   setIsDark: (v: boolean) => void;
 }> = (props) => {
   return (
     <nav className="navbar fixed">
       <div className="mx-auto flex w-full max-w-screen-xl justify-between">
         <NextLink href="/">
-          <a className="btn btn-ghost btn-sm text-xl normal-case text-base-content sm:text-2xl">
-            <span className="hidden sm:block">AStar Student Faucet</span>
-            <span className="sm:hidden">ASFaucet</span>
+          <a className="btn btn-ghost text-xl normal-case text-base-content sm:text-2xl">
+            <span className="hidden sm:block">{props.title[0]}</span>
+            <span className="sm:hidden">{props.title[1]}</span>
           </a>
         </NextLink>
         <div className="flex items-center text-base-content sm:gap-2">

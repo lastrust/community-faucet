@@ -1,6 +1,8 @@
+import NextLink from "next/link";
 import { useState } from "react";
-import FaucetModal from "./modal/FaucetModal";
-import SupportModal from "./modal/SupportModal";
+import { BiLinkExternal } from "react-icons/bi";
+import FaucetModal from "../modal/FaucetModal";
+import SupportModal from "../modal/SupportModal";
 
 const Hero = () => {
   const [openSupport, setOpenSupport] = useState(false);
@@ -13,6 +15,12 @@ const Hero = () => {
       <div className="hero hero-content mx-auto flex-col text-center sm:mt-32">
         <div className="max-w-xl">
           <h1 className="text-5xl font-bold">AStar Student Faucet</h1>
+          <div className="flex items-center justify-center text-center">
+            <BiLinkExternal size="1.5rem" />
+            <NextLink href="/shiden">
+              <a className="link link-hover">Shiden Student Faucet</a>
+            </NextLink>
+          </div>
           <p className="py-6">
             This is Student-only Faucet more powerful than official Faucet. It
             is informal but run by students. And this Faucet is made possible by

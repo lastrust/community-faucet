@@ -3,7 +3,7 @@ import { usefulFixed } from "@/util";
 import { targetChain } from "@/util/web3Util";
 import { ethers } from "ethers";
 
-const Stats = () => {
+const AstarStats = () => {
   const { value, margeValue } = useInputs({
     contractBalance: "0.0",
     totalDrop: "0.0",
@@ -58,4 +58,4 @@ const Stats = () => {
     </div>
   );
 };
-export default Stats;
+export default AstarStats;

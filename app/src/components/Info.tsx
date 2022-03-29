@@ -21,7 +21,7 @@ const Info = () => {
           <br />
           Therefore, it was created as a replacement for the official Faucet.
           <br />
-          Moreover, this Faucet spills 10 times more ASTR than the official
+          Moreover, this Faucet spills 10 times more ASTR|SDN than the official
           Faucet.
         </p>
       </div>
