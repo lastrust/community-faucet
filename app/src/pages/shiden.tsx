@@ -7,8 +7,8 @@ const Home: NextPage = () => {
       title={["Shiden Student Faucet", "SSFaucet"]}
       theme={["retro", "night"]}
     >
-      <div className="hero hero-content max-w-xl">
-        <h2 className="text-4xl font-bold">Coming Soon....</h2>
+      <div className="hero hero-content mx-auto max-w-xl flex-col text-center sm:mt-32">
+        <h2 className="text-5xl font-bold">Coming Soon....</h2>
       </div>
     </DefaultLayout>
   );
