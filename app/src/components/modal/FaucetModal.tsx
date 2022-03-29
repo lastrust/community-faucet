@@ -13,7 +13,7 @@ const FaucetModal: React.FC<{
   const [amount, setAmount] = useState<number | string>(0);
   const [isLoading, setIsLoading] = useState(false);
   const { account, provider } = useWeb3();
-  const contract = useContract({ fetchOnly: true });
+  const contract = useContract("astar", { fetchOnly: true });
   const handler = (e: React.ChangeEvent<HTMLInputElement>) =>
     setIsStudent(e.target.checked);
 
@@ -29,7 +29,6 @@ const FaucetModal: React.FC<{
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message, signature }),
       });
-      console.log(await res.json());
       setIsLoading(false);
       props.onChange(false);
     }

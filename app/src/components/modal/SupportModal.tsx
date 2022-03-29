@@ -1,4 +1,4 @@
-import { useContract, useInputs, useWeb3 } from "@/hooks";
+import { useContract, useInputs, useJsonProvider, useWeb3 } from "@/hooks";
 import { ethers } from "ethers";
 import { useEffect, useState } from "react";
 import { UsefulButton } from "../Button";
@@ -14,9 +14,10 @@ const SupportModal: React.FC<{
     value: "",
   });
   const [maxValue, setMaxValue] = useState("");
-  const { account, isLoading, provider } = useWeb3();
+  const { account, isLoading } = useWeb3();
+  const jsonProvider = useJsonProvider("astar");
   const [transaction, setTransaction] = useState(false);
-  const contract = useContract({});
+  const contract = useContract("astar");
 
   const support = async () => {
     if (contract) {
@@ -35,15 +36,14 @@ const SupportModal: React.FC<{
   }, [account]);
   useEffect(() => {
     account &&
-      provider &&
-      provider
+      jsonProvider
         .getBalance(account.id)
         .then((balance) =>
           setMaxValue(
             String(Number(ethers.utils.formatEther(balance)).toFixed(2))
           )
         );
-  }, [provider, account]);
+  }, [account]);
 
   return (
     <ModalBase id="support" {...props}>

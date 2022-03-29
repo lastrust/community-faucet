@@ -1,6 +1,5 @@
 import { useContract, useInputs } from "@/hooks";
 import { usefulFixed } from "@/util";
-import { targetChain } from "@/util/web3Util";
 import { ethers } from "ethers";
 
 const AstarStats = () => {
@@ -10,24 +9,20 @@ const AstarStats = () => {
     supporter: "0",
   });
 
-  useContract({
-    rpc: targetChain().rpcUrls[0],
+  useContract("astar", {
+    fetchOnly: true,
     cb: async (contract, provider) => {
-      if (contract && provider) {
-        margeValue({
-          contractBalance: usefulFixed(
-            ethers.utils.formatEther(
-              await provider.getBalance(contract.address)
-            ),
-            2
-          ),
-          totalDrop: usefulFixed(
-            ethers.utils.formatEther(await contract.totalDrop()),
-            2
-          ),
-          supporter: (await contract.numberOfSupporter()).toString(),
-        });
-      }
+      margeValue({
+        contractBalance: usefulFixed(
+          ethers.utils.formatEther(await provider.getBalance(contract.address)),
+          2
+        ),
+        totalDrop: usefulFixed(
+          ethers.utils.formatEther(await contract.totalDrop()),
+          2
+        ),
+        supporter: (await contract.numberOfSupporter()).toString(),
+      });
     },
   });
   return (
