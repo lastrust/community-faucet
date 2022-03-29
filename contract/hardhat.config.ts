@@ -44,6 +44,11 @@ const config: HardhatUserConfig = {
       chainId: 592,
       accounts: [process.env.PRIVATE_KEY || ""],
     },
+    shiden: {
+      url: "https://evm.shiden.astar.network",
+      chainId: 336,
+      accounts: [process.env.PRIVATE_KEY || ""],
+    },
   },
   gasReporter: {
     enabled: process.env.REPORT_GAS !== undefined,
