@@ -52,8 +52,12 @@ export const getChainId = (
   provider: ethers.providers.Web3Provider
 ): Promise<string> => provider.send("eth_chainId", []) as Promise<string>;
 
-export const checkIsTargetChain = (chainId: string | number) =>
-  Number(chainId) === Number(process.env.NEXT_PUBLIC_TARGET_CHAIN_ID);
+export const checkIsTargetChain = (
+  chainId: string | number,
+  targetId?: string | number
+) =>
+  Number(chainId) ===
+  Number(targetId || process.env.NEXT_PUBLIC_TARGET_CHAIN_ID);
 
 export const switchChain = async (
   provider: ethers.providers.Web3Provider,
