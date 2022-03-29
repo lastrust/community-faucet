@@ -56,16 +56,18 @@ const FaucetModal: React.FC<{
       {nextTime < 0 && (
         <p className="mb-4 text-center">You have already received the ASTR.</p>
       )}
-      <div className="stats w-full justify-center bg-primary text-primary-content">
-        <div className="stat place-items-center">
-          <div className="stat-title">Next Drop Time</div>
-          <CountDown time={Math.max(0, -nextTime)} />
-        </div>
-        <div className="stat place-items-center">
-          <div className="stat-title">Faucet Amount</div>
-          <div className="stat-value">
-            {amount}
-            <span className="text-2xl">ASTR</span>
+      <div className="overflow-x-scroll  ">
+        <div className="stats justify-center bg-primary text-primary-content">
+          <div className="stat place-items-center">
+            <div className="stat-title">Next Drop Time</div>
+            <CountDown time={Math.max(0, -nextTime)} />
+          </div>
+          <div className="stat place-items-center">
+            <div className="stat-title">Faucet Amount</div>
+            <div className="stat-value">
+              {amount}
+              <span className="text-2xl">ASTR</span>
+            </div>
           </div>
         </div>
       </div>
@@ -94,7 +96,7 @@ export default FaucetModal;
 
 export const CountDown: React.FC<{ time: number }> = ({ time }) => {
   return (
-    <div className="flex gap-1">
+    <div className="text flex whitespace-nowrap sm:gap-1">
       <div>
         <span className="countdown font-mono text-4xl">
           {Math.floor(time / (60 * 60 * 24))}
