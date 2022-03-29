@@ -3,9 +3,9 @@ import { ethers, upgrades } from "hardhat";
 async function main() {
   const StudentFaucet = await ethers.getContractFactory("StudentFaucet");
   const instance = await upgrades.deployProxy(StudentFaucet, [
-    "AStarStudentFaucet",
-    "ASF",
-    "https://www.as-faucet.xyz/api/metadata?id=",
+    "ShidenStudentFaucet",
+    "SSF",
+    "https://www.as-faucet.xyz/api/metadata?c=shiden&id=",
     ethers.utils.parseEther("0.02"),
     7 * 24 * 60 * 60,
   ]);
