@@ -7,7 +7,9 @@ const Home: NextPage = () => {
       title={["Shiden Student Faucet", "SSFaucet"]}
       theme={["retro", "night"]}
     >
-      <></>
+      <div className="hero hero-content max-w-xl">
+        <h2 className="text-4xl font-bold">Coming Soon....</h2>
+      </div>
     </DefaultLayout>
   );
 };

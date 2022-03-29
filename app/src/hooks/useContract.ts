@@ -37,11 +37,7 @@ export const useContract = ({
   }, [provider, isTargetChain]);
   useEffect(() => {
     if (contract) {
-      cb &&
-        void cb(
-          contract,
-          provider || new ethers.providers.JsonRpcProvider(rpc)
-        );
+      cb && void cb(contract, new ethers.providers.JsonRpcProvider(rpc));
     }
   }, [contract]);
 
