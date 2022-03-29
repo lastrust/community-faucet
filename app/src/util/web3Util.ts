@@ -54,8 +54,8 @@ export const getChainId = (
 ): Promise<string> => provider.send("eth_chainId", []) as Promise<string>;
 
 export const checkIsTargetChain = (
-  chainId: string | number,
-  targetId?: string | number
+  chainId: string | number | null | undefined,
+  targetId?: string | number | null | undefined
 ) =>
   Number(chainId) ===
   Number(targetId || process.env.NEXT_PUBLIC_TARGET_CHAIN_ID);

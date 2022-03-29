@@ -59,7 +59,9 @@ export const Web3Provider: React.FC<
       const accountPromise = async () =>
         setAccount(await getConnectedAccount(_provider));
       const providerPromise = async () => {
-        setIsTargetChain(checkIsTargetChain(await getChainId(_provider)));
+        const chainId = await getChainId(_provider);
+        setChainId(chainId);
+        setIsTargetChain(checkIsTargetChain(chainId));
         setProvider(_provider);
       };
       await Promise.all([accountPromise(), providerPromise()]);
