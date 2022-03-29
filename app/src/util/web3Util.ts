@@ -2,7 +2,7 @@ import { ethers } from "ethers";
 import invariant from "tiny-invariant";
 import Web3Modal from "web3modal";
 import { Account, Web3ProviderInterface } from "../types/web3Types";
-import { chainParameters } from "./config";
+import { chainParameters, providerOptions } from "./config";
 
 export const getInfuraProvider = () =>
   new ethers.providers.InfuraProvider(
@@ -14,7 +14,7 @@ export const getWeb3Provider = async (): Promise<
   [Web3ProviderInterface, ethers.providers.Web3Provider]
 > => {
   const web3Modal = new Web3Modal({
-    providerOptions: {},
+    providerOptions: await providerOptions(),
     cacheProvider: true,
   });
   const instance = (await web3Modal.connect()) as Web3ProviderInterface;
