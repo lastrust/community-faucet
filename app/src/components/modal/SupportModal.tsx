@@ -1,4 +1,5 @@
 import { useContract, useInputs, useJsonProvider, useWeb3 } from "@/hooks";
+import { contractList, contractTypes } from "@/util/config";
 import { ethers } from "ethers";
 import { useEffect, useState } from "react";
 import { UsefulButton } from "../Button";
@@ -7,6 +8,7 @@ import ModalBase from "./Modal";
 const SupportModal: React.FC<{
   open: boolean;
   onChange: (open: boolean) => void;
+  type: contractTypes;
 }> = (props) => {
   const { value, handler, setter } = useInputs({
     name: "",
@@ -15,9 +17,9 @@ const SupportModal: React.FC<{
   });
   const [maxValue, setMaxValue] = useState("");
   const { account, isLoading } = useWeb3();
-  const jsonProvider = useJsonProvider("astar");
+  const jsonProvider = useJsonProvider(props.type);
   const [transaction, setTransaction] = useState(false);
-  const contract = useContract("astar");
+  const contract = useContract(props.type);
 
   const support = async () => {
     if (contract) {
@@ -91,6 +93,7 @@ const SupportModal: React.FC<{
       <div className="modal-action">
         <UsefulButton
           className="btn btn-primary"
+          target={contractList[props.type].chainId}
           isLoading={transaction}
           onClick={() => void support()}
         >

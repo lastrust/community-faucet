@@ -1,14 +1,14 @@
 import DefaultLayout from "@/components/DefaultLayout";
-import ShidenHero from "@/components/hero/ShidenHero";
+import AstarHero from "@/components/hero/AstarHero";
 import StatsBase from "@/components/StatsBase";
 import type { NextPage } from "next";
 
 const Home: NextPage = () => {
   return (
-    <DefaultLayout theme={["lofi", "night"]}>
-      <ShidenHero />
+    <DefaultLayout theme={["cupcake", "dracula"]}>
+      <AstarHero />
       <div className="mx-2 flex justify-center">
-        <StatsBase type="shiden" symbol="SDN" />
+        <StatsBase type="astar" symbol="ASTR" />
       </div>
     </DefaultLayout>
   );

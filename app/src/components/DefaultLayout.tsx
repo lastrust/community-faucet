@@ -5,14 +5,11 @@ import React, { useState } from "react";
 import { AiFillDatabase } from "react-icons/ai";
 import { BsGear, BsGithub, BsMoon, BsSun, BsTwitter } from "react-icons/bs";
 import { VscDebugDisconnect } from "react-icons/vsc";
-import Info from "./Info";
 
 export default function DefaultLayout({
   children,
   theme = ["winter", "forest"],
-  title,
 }: {
-  title: [string, string];
   theme?: [string, string];
   children: React.ReactNode;
 }) {
@@ -23,11 +20,8 @@ export default function DefaultLayout({
         className="relative flex min-h-full flex-col bg-base-200 transition-all"
         data-theme={isDark ? theme[1] : theme[0]}
       >
-        <Header {...{ isDark, setIsDark, title }} />
-        <div className="mt-16 text-base-content">
-          {children}
-          <Info />
-        </div>
+        <Header {...{ isDark, setIsDark }} />
+        <div className="mt-16 text-base-content">{children}</div>
         <Footer />
       </div>
     </>
@@ -36,7 +30,6 @@ export default function DefaultLayout({
 
 export const Header: React.FC<{
   isDark: boolean;
-  title: [string, string];
   setIsDark: (v: boolean) => void;
 }> = (props) => {
   return (
@@ -44,8 +37,8 @@ export const Header: React.FC<{
       <div className="mx-auto flex w-full max-w-screen-xl justify-between">
         <NextLink href="/">
           <a className="btn btn-ghost text-xl normal-case text-base-content sm:text-2xl">
-            <span className="hidden sm:block">{props.title[0]}</span>
-            <span className="sm:hidden">{props.title[1]}</span>
+            <span className="hidden sm:block">Student Faucet</span>
+            <span className="sm:hidden">SSFaucet</span>
           </a>
         </NextLink>
         <div className="flex items-center text-base-content sm:gap-2">
@@ -111,7 +104,7 @@ export const Footer: React.FC = () => (
   <footer className="footer mt-auto items-center bg-neutral p-4 text-neutral-content">
     <div className="grid-flow-col items-center">
       <BsGear size="36" />
-      <p> AStar Student Faucet © 2022 - All right reserved</p>
+      <p> Student Faucet © 2022 - All right reserved</p>
     </div>
     <div className="grid-flow-col gap-4 md:place-self-center md:justify-self-end">
       <a href="https://twitter.com/unknown_gakusei">

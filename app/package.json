@@ -9,6 +9,7 @@
     "sync": "yarn typechain --target ethers-v5 --out-dir src/util/contract '../contract/artifacts/contracts/StudentFaucet.sol/StudentFaucet.json'"
   },
   "dependencies": {
+    "axios": "^0.26.1",
     "daisyui": "^2.11.1",
     "ethers": "^5.5.4",
     "next": "12.0.10",
@@ -18,6 +19,7 @@
     "prettier-plugin-tailwindcss": "^0.1.8",
     "react": "17.0.2",
     "react-dom": "^17.0.2",
+    "react-google-recaptcha-v3": "^1.9.7",
     "react-icons": "^4.3.1",
     "sharp": "^0.30.3",
     "tiny-invariant": "^1.2.0",

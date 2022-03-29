@@ -61,6 +61,8 @@ export const chainParameters = {
   },
 };
 
+export type ChainIds = keyof typeof chainParameters;
+
 export const providerOptions = async () => ({
   walletconnect: {
     package: (await import("@walletconnect/web3-provider")).default,
@@ -82,11 +84,13 @@ export const contractList = {
   astar: {
     address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as string,
     rpc: chainParameters["0x250"].rpcUrls[0],
-    chainId: "0x250",
+    chainId: "0x250" as ChainIds,
   },
   shiden: {
     address: process.env["NEXT_PUBLIC_SHIDEN_CONTRACT_ADDRESS"] as string,
     rpc: chainParameters["0x150"].rpcUrls[0],
-    chainId: "0x150",
+    chainId: "0x150" as ChainIds,
   },
 };
+
+export type contractTypes = keyof typeof contractList;

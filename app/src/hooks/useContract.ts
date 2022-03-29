@@ -1,4 +1,4 @@
-import { contractList } from "@/util/config";
+import { contractList, contractTypes } from "@/util/config";
 import { StudentFaucet, StudentFaucet__factory } from "@/util/contract";
 import { ethers } from "ethers";
 import { useEffect, useState } from "react";
@@ -65,5 +65,5 @@ export const useContract: useContract = (
   return contract;
 };
 
-export const useJsonProvider = (type: keyof typeof contractList) =>
+export const useJsonProvider = (type: contractTypes) =>
   new ethers.providers.JsonRpcBatchProvider(contractList[type].rpc);

@@ -1,6 +1,7 @@
 import { useContract, useWeb3 } from "@/hooks";
 import { ethers } from "ethers";
 import React, { useEffect, useState } from "react";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import { UsefulButton } from "../Button";
 import ModalBase from "./Modal";
 
@@ -13,21 +14,23 @@ const FaucetModal: React.FC<{
   const [amount, setAmount] = useState<number | string>(0);
   const [isLoading, setIsLoading] = useState(false);
   const { account, provider } = useWeb3();
+  const { executeRecaptcha } = useGoogleReCaptcha();
   const contract = useContract("astar", { fetchOnly: true });
   const handler = (e: React.ChangeEvent<HTMLInputElement>) =>
     setIsStudent(e.target.checked);
 
   const faucet = async () => {
-    if (account && provider) {
+    if (account && provider && executeRecaptcha) {
       setIsLoading(true);
+      const token = await executeRecaptcha("faucet_astar");
       const message = `AStar Faucet\n\nTime: ${new Date().getTime()}\nAddress: ${
         account.id
       }`;
       const signature = await provider.getSigner().signMessage(message);
-      const res = await fetch("/api/drop", {
+      await fetch("/api/drop", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message, signature }),
+        body: JSON.stringify({ message, signature, token }),
       });
       setIsLoading(false);
       props.onChange(false);
