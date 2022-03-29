@@ -38,7 +38,7 @@ export const UsefulButton: React.FC<
     return <button {...props} />;
   } else {
     return (
-      <button className="btn btn-primary" onClick={() => void connectWallet}>
+      <button className="btn btn-primary" onClick={() => void connectWallet()}>
         Connect Wallet
       </button>
     );
