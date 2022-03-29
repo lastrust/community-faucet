@@ -56,7 +56,7 @@ const FaucetModal: React.FC<{
       {nextTime < 0 && (
         <p className="mb-4 text-center">You have already received the ASTR.</p>
       )}
-      <div className="overflow-x-scroll  ">
+      <div className="overflow-x-auto  ">
         <div className="stats justify-center bg-primary text-primary-content">
           <div className="stat place-items-center">
             <div className="stat-title">Next Drop Time</div>
