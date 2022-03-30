@@ -12,9 +12,9 @@ function MyApp({ Component, pageProps }: AppProps) {
     >
       <Web3Provider>
         <NextSeo
-          title="AStar Student Faucet"
-          description="Unofficial student-only AStar Student Faucet."
-          openGraph={{ images: [{ url: "https://www.as-faucet.xyz/ogp.png" }] }}
+          title="Student Faucet"
+          description="Unofficial student-only Student Faucet."
+          openGraph={{ images: [{ url: "https://www.as-faucet.xyz/sf.png" }] }}
           twitter={{
             cardType: "summary_large_image",
           }}
