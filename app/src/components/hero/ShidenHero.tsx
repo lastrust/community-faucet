@@ -34,7 +34,7 @@ const ShidenHero = () => {
             className="btn btn-primary"
             onClick={() => setOpenFaucet(!openFaucet)}
           >
-            Get ASTR
+            Get SDN
           </button>
           <div className="text-xl font-bold">OR</div>
           <button
