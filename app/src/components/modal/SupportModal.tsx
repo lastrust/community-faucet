@@ -87,7 +87,7 @@ const SupportModal: React.FC<{
             onChange={handler("value")}
             disabled={isLoading || transaction}
           />
-          <span>ASTR</span>
+          <span>{props.type === "astar" ? "ASTR" : "SDN"}</span>
         </label>
       </div>
 
