@@ -27,7 +27,7 @@ const getRecaptchaVerificationUrl = (token: string) => {
 const VerifyResult = (
   _action: string,
   { success, score, action, challenge_ts }: RecaptchaResult
-) => success && Number(score) > 0.9 && action === _action;
+) => success && Number(score) > 0.8 && action === _action;
 
 const tokenUri = async (req: NextApiRequest, res: NextApiResponse) => {
   invariant(req.method == "POST", "must be POST method");
