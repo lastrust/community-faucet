@@ -35,7 +35,7 @@ const config: HardhatUserConfig = {
       accounts: [process.env.PRIVATE_KEY || ""],
     },
     polygon: {
-      url: "https://rpc-mainnet.matic.network",
+      url: "https://matic-mainnet.chainstacklabs.com",
       accounts: [process.env.PRIVATE_KEY || ""],
     },
     shibuya: {
