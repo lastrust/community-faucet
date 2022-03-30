@@ -48,7 +48,7 @@ const tokenUri = async (req: NextApiRequest, res: NextApiResponse) => {
     timeLine.slice(6),
     addressLine.slice(9),
   ];
-  invariant(type !== "shiden");
+  //invariant(type !== "shiden");
 
   const recoveredAddress = ethers.utils.verifyMessage(message, signature);
   const isMatchAddress =
