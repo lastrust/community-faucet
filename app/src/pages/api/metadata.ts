@@ -76,7 +76,7 @@ const tokenUri = async (req: NextApiRequest, res: NextApiResponse) => {
         { trait_type: "grade", value: grade },
       ],
     };
-    res.status(400).json(metadata);
+    res.status(200).json(metadata);
   } else {
     res.status(400).json({});
   }
