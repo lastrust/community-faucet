@@ -79,7 +79,9 @@ const FaucetModal: React.FC<{
       </div>
       <div className="form-control">
         <label className="label cursor-pointer">
-          <span className="label-text text-xl">You are a student, right?</span>
+          <span className="label-text text-xl font-bold text-red-700">
+            You are a student, right?
+          </span>
           <input type="checkbox" className="checkbox" onChange={handler} />
         </label>
       </div>

@@ -21,7 +21,10 @@ const ShidenHero = () => {
       />
       <div className="hero hero-content mx-auto flex-col text-center sm:mt-32">
         <div className="max-w-xl">
-          <h1 className="text-5xl font-bold">Shiden Student Faucet</h1>
+          <h1 className="text-5xl font-bold">
+            Shiden <span className="text-6xl text-red-500">{`"Student"`}</span>
+            Faucet
+          </h1>
           <p className="py-6">
             This is Student-only Faucet more powerful than official Faucet. It
             is informal but run by students. And this Faucet is made possible by
