@@ -10,7 +10,7 @@ const sscard = async (req: NextApiRequest, res: NextApiResponse) => {
   const queryString = new URLSearchParams(
     Object.entries(req.query as Record<string, string>)
   ).toString();
-  await page.goto(`http://localhost:3000/cards/${type}?${queryString}`, {
+  await page.goto(`https://as-faucet.xyz/cards/${type}?${queryString}`, {
     waitUntil: "networkidle",
   });
   const image = await page.screenshot({ type: "png" });
