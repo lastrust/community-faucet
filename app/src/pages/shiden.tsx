@@ -1,17 +1,9 @@
 import DefaultLayout from "@/components/DefaultLayout";
-import ShidenHero from "@/components/hero/ShidenHero";
 import StatsBase from "@/components/StatsBase";
-import { useContract } from "@/hooks";
 import type { NextPage } from "next";
 import { NextSeo } from "next-seo";
 
 const Home: NextPage = () => {
-  useContract("shiden", {
-    fetchOnly: true,
-    cb: async (contract) => {
-      console.log(await contract.tokenURI(1));
-    },
-  });
   return (
     <>
       <NextSeo
@@ -23,7 +15,12 @@ const Home: NextPage = () => {
         }}
       />
       <DefaultLayout theme={["lofi", "night"]}>
-        <ShidenHero />
+        {/* <ShidenHero /> */}
+        <div>
+          <h1 className="text-center text-8xl font-bold text-red-500">
+            Under Maintenance
+          </h1>
+        </div>
         <div className="mx-2 flex justify-center">
           <StatsBase type="shiden" symbol="SDN" />
         </div>

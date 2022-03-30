@@ -27,12 +27,13 @@ const getRecaptchaVerificationUrl = (token: string) => {
 const VerifyResult = (
   _action: string,
   { success, score, action, challenge_ts }: RecaptchaResult
-) => success && Number(score) > 0.8 && action === _action;
+) => success && Number(score) > 0.9 && action === _action;
 
 const tokenUri = async (req: NextApiRequest, res: NextApiResponse) => {
   invariant(req.method == "POST", "must be POST method");
 
   const { message, signature, token } = req.body as BodyType;
+
   invariant(message && signature && token, "Body is not correct.");
 
   const { data: recaptchaResult } = (await axios(
@@ -47,6 +48,7 @@ const tokenUri = async (req: NextApiRequest, res: NextApiResponse) => {
     timeLine.slice(6),
     addressLine.slice(9),
   ];
+  invariant(type !== "shiden");
 
   const recoveredAddress = ethers.utils.verifyMessage(message, signature);
   const isMatchAddress =
