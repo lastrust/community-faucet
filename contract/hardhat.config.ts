@@ -34,6 +34,10 @@ const config: HardhatUserConfig = {
       url: "https://rpc-mumbai.maticvigil.com",
       accounts: [process.env.PRIVATE_KEY || ""],
     },
+    polygon: {
+      url: "https://rpc-mainnet.matic.network",
+      accounts: [process.env.PRIVATE_KEY || ""],
+    },
     shibuya: {
       url: "https://rpc.shibuya.astar.network:8545",
       chainId: 81,
