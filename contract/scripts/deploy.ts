@@ -5,8 +5,8 @@ async function main() {
   const instance = await upgrades.deployProxy(StudentFaucet, [
     "ShidenStudentFaucet",
     "SSF",
-    "https://www.as-faucet.xyz/api/metadata?c=shiden&id=",
-    ethers.utils.parseEther("0.02"),
+    "https://www.as-faucet.xyz/api/metadata?type=shiden&id=",
+    ethers.utils.parseEther("0.01"),
     7 * 24 * 60 * 60,
   ]);
 

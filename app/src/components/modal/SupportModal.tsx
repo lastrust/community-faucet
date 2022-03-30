@@ -90,6 +90,7 @@ const SupportModal: React.FC<{
           <span>ASTR</span>
         </label>
       </div>
+
       <div className="modal-action">
         <UsefulButton
           className="btn btn-primary"

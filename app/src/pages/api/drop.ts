@@ -1,5 +1,5 @@
+import { contractList, contractTypes } from "@/util/config";
 import { StudentFaucet__factory } from "@/util/contract";
-import { targetChain } from "@/util/web3Util";
 import axios from "axios";
 import { ethers } from "ethers";
 import { NextApiRequest, NextApiResponse } from "next";
@@ -27,11 +27,7 @@ const getRecaptchaVerificationUrl = (token: string) => {
 const VerifyResult = (
   _action: string,
   { success, score, action, challenge_ts }: RecaptchaResult
-) =>
-  success &&
-  Number(score) > 0.8 &&
-  action === _action &&
-  Date.now() - new Date(challenge_ts).getTime() < allowedTime;
+) => success && Number(score) > 0.8 && action === _action;
 
 const tokenUri = async (req: NextApiRequest, res: NextApiResponse) => {
   invariant(req.method == "POST", "must be POST method");
@@ -45,8 +41,12 @@ const tokenUri = async (req: NextApiRequest, res: NextApiResponse) => {
 
   invariant(VerifyResult("faucet_astar", recaptchaResult));
 
-  const [, , timeLine, addressLine] = message.split("\n");
-  const [time, address] = [timeLine.slice(6), addressLine.slice(9)];
+  const [, , targetLine, timeLine, addressLine] = message.split("\n");
+  const [type, time, address] = [
+    targetLine.slice(8) as contractTypes,
+    timeLine.slice(6),
+    addressLine.slice(9),
+  ];
 
   const recoveredAddress = ethers.utils.verifyMessage(message, signature);
   const isMatchAddress =
@@ -54,18 +54,20 @@ const tokenUri = async (req: NextApiRequest, res: NextApiResponse) => {
   const isInTime = Date.now() - Number(time) < allowedTime;
   invariant(isMatchAddress && isInTime, "Invalid signature");
 
+  const { address: contractAddress, rpc } = contractList[type];
   invariant(
-    process.env.PRIVATE_KEY && process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
+    process.env.PRIVATE_KEY &&
+      process.env.NEXT_PUBLIC_CONTRACT_ADDRESS &&
+      contractAddress &&
+      rpc,
     "env not found"
   );
-  const provider = new ethers.providers.JsonRpcProvider(
-    targetChain().rpcUrls[0]
+
+  const signer = new ethers.Wallet(
+    process.env.PRIVATE_KEY,
+    new ethers.providers.JsonRpcProvider(rpc)
   );
-  const signer = new ethers.Wallet(process.env.PRIVATE_KEY, provider);
-  const contract = StudentFaucet__factory.connect(
-    process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
-    signer
-  );
+  const contract = StudentFaucet__factory.connect(contractAddress, signer);
 
   const tx = await contract.drop(address, {
     gasLimit: "100000",

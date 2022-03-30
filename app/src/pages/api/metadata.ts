@@ -1,3 +1,5 @@
+import { usefulZeroFill } from "@/util";
+import { contractList, contractTypes } from "@/util/config";
 import { StudentFaucet__factory } from "@/util/contract";
 import { targetChain } from "@/util/web3Util";
 import { ethers } from "ethers";
@@ -6,54 +8,78 @@ import invariant from "tiny-invariant";
 
 type queryMeta = {
   id?: number;
+  type?: contractTypes;
 };
 
+const getGrade = (value: number | string, min = 0, max = 3) =>
+  Math.max(
+    min,
+    Math.min(max, Math.floor(Math.log10(Number(value))))
+  ).toString();
+
+const getQueryUrl = (query: Record<string, string | number>) =>
+  new URLSearchParams(
+    Object.entries(query).map(([key, value]) => [key, String(value)])
+  ).toString();
+
 const tokenUri = async (req: NextApiRequest, res: NextApiResponse) => {
-  const { id } = req.query as queryMeta;
+  const { id, type = "astar" } = req.query as queryMeta;
   invariant(
     process.env.NEXT_PUBLIC_CONTRACT_ADDRESS && targetChain().rpcUrls[0] && id
   );
 
-  const provider = new ethers.providers.JsonRpcProvider(
-    "https://rpc.astar.network:8545"
-  );
+  const { rpc, address } = contractList[type];
   const contract = StudentFaucet__factory.connect(
-    process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
-    provider
+    address,
+    new ethers.providers.JsonRpcProvider(rpc)
   );
 
   const supportData = await contract.supportData(id);
   invariant(supportData);
   const { value, name, icon } = supportData;
-  const astr = ethers.utils.formatEther(value);
-  const grade = Math.max(
-    0,
-    Math.min(3, Math.floor(Math.log10(Number(astr))))
-  ).toString();
-  const idString = ("0".repeat(3) + String(id)).slice(
-    -Math.max(String(id).length, 3)
-  );
-  const imageQuery = new URLSearchParams([
-    ["title", name],
-    ["icon", icon],
-    ["value", ethers.utils.formatEther(value.toString())],
-    ["grade", grade],
-    ["id", idString],
-  ]);
 
-  const metadata = {
-    description: `Proof NFT of ${name}'s ${astr}ASTR donation to the AStar Student Faucet`,
-    image: `https://www.as-faucet.xyz/api/nftimage?${imageQuery.toString()}`,
-    external_url: ``,
-    name: `Proof of ${name}'s donation`,
-    attributes: [
-      { trait_type: "name", value: name },
-      { trait_type: "icon", value: icon },
-      { trait_type: "value", value: `${astr}ASTR` },
-      { trait_type: "grade", value: grade },
-    ],
-  };
-  res.status(200).json(metadata);
+  const astr = ethers.utils.formatEther(value);
+  const grade = getGrade(astr, 0, 3);
+  const idString = usefulZeroFill(id, 3);
+  const imageQuery = getQueryUrl({
+    title: name,
+    icon,
+    value: ethers.utils.formatEther(value),
+    grade,
+    id: idString,
+  });
+
+  if (type === "astar") {
+    const metadata = {
+      description: `Proof NFT of ${name}'s ${astr}ASTR donation to the AStar Student Faucet`,
+      image: `https://www.as-faucet.xyz/api/nftimage?${imageQuery.toString()}`,
+      external_url: `https://www.as-faucet.xyz/`,
+      name: `Proof of ${name}'s donation`,
+      attributes: [
+        { trait_type: "name", value: name },
+        { trait_type: "icon", value: icon },
+        { trait_type: "value", value: `${astr}ASTR` },
+        { trait_type: "grade", value: grade },
+      ],
+    };
+    res.status(200).json(metadata);
+  } else if (type === "shiden") {
+    const metadata = {
+      description: `Proof NFT of ${name}'s ${astr}SDN donation to the SDN Student Faucet`,
+      image: `https://www.as-faucet.xyz/api/sscard?type=${type}&${imageQuery.toString()}`,
+      external_url: `https://www.as-faucet.xyz/`,
+      name: `${name}'s Shiden Student Faucet Supporter NFT`,
+      attributes: [
+        { trait_type: "name", value: name },
+        { trait_type: "icon", value: icon },
+        { trait_type: "value", value: `${astr}SDN` },
+        { trait_type: "grade", value: grade },
+      ],
+    };
+    res.status(400).json(metadata);
+  } else {
+    res.status(400).json({});
+  }
 };
 
 export default tokenUri;

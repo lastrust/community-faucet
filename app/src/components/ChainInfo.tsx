@@ -17,7 +17,7 @@ const ChainInfo: React.FC<{
       data-theme={theme}
     >
       <NextLink href={href}>
-        <a className="link link-hover flex items-center text-2xl font-bold">
+        <a className="link link-hover flex items-center justify-center text-2xl font-bold">
           <BsLink45Deg />
           <h2>{children}</h2>
         </a>

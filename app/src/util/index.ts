@@ -11,3 +11,8 @@ export const usefulFixed = (v: string | number, fractionDigits?: number) => {
     ? Number(0).toFixed(fractionDigits)
     : num.toFixed(fractionDigits);
 };
+
+export const usefulZeroFill = (target: string | number, len: number) =>
+  ("0".repeat(len) + String(target)).slice(
+    -Math.max(String(target).length, len)
+  );

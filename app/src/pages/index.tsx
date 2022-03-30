@@ -10,7 +10,7 @@ const Home: NextPage = () => {
         <h1 className="text-5xl font-bold">Student Faucet</h1>
         <p className="text-lg">Powerful Faucet for Students</p>
       </div>
-      <div className="card mx-auto grid  max-w-2xl shadow-lg sm:grid-cols-2">
+      <div className="mx-auto grid max-w-2xl overflow-hidden shadow-lg sm:grid-cols-2 sm:rounded-lg">
         <ChainInfo type="astar" symbol="ASTR" href="astar" theme="light">
           AStar Student Faucet
         </ChainInfo>

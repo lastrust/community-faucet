@@ -1,4 +1,5 @@
 import { useContract, useWeb3 } from "@/hooks";
+import { contractTypes } from "@/util/config";
 import { ethers } from "ethers";
 import React, { useEffect, useState } from "react";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
@@ -8,14 +9,16 @@ import ModalBase from "./Modal";
 const FaucetModal: React.FC<{
   open: boolean;
   onChange: (open: boolean) => void;
-}> = (props) => {
+  symbol: string;
+  type: contractTypes;
+}> = ({ type, symbol, ...props }) => {
   const [isStudent, setIsStudent] = useState(false);
   const [nextTime, setNextTime] = useState<number>(Infinity);
   const [amount, setAmount] = useState<number | string>(0);
   const [isLoading, setIsLoading] = useState(false);
   const { account, provider } = useWeb3();
   const { executeRecaptcha } = useGoogleReCaptcha();
-  const contract = useContract("astar", { fetchOnly: true });
+  const contract = useContract(type, { fetchOnly: true });
   const handler = (e: React.ChangeEvent<HTMLInputElement>) =>
     setIsStudent(e.target.checked);
 
@@ -23,7 +26,7 @@ const FaucetModal: React.FC<{
     if (account && provider && executeRecaptcha) {
       setIsLoading(true);
       const token = await executeRecaptcha("faucet_astar");
-      const message = `AStar Faucet\n\nTime: ${new Date().getTime()}\nAddress: ${
+      const message = `Student Faucet\n\nTarget: ${type}\nTime: ${new Date().getTime()}\nAddress: ${
         account.id
       }`;
       const signature = await provider.getSigner().signMessage(message);
@@ -59,7 +62,7 @@ const FaucetModal: React.FC<{
       {nextTime < 0 && (
         <p className="mb-4 text-center">You have already received the ASTR.</p>
       )}
-      <div className="overflow-x-auto  ">
+      <div className="overflow-x-auto text-center">
         <div className="stats justify-center bg-primary text-primary-content">
           <div className="stat place-items-center">
             <div className="stat-title">Next Drop Time</div>
@@ -69,7 +72,7 @@ const FaucetModal: React.FC<{
             <div className="stat-title">Faucet Amount</div>
             <div className="stat-value">
               {amount}
-              <span className="text-2xl">ASTR</span>
+              <span className="text-2xl">{symbol}</span>
             </div>
           </div>
         </div>
@@ -80,7 +83,19 @@ const FaucetModal: React.FC<{
           <input type="checkbox" className="checkbox" onChange={handler} />
         </label>
       </div>
+
       <div className="modal-action">
+        <div className="text-sm">
+          This site is protected by reCAPTCHA and the Google
+          <a href="https://policies.google.com/privacy" className="link">
+            Privacy Policy
+          </a>
+          and
+          <a href="https://policies.google.com/terms" className="link">
+            Terms of Service
+          </a>
+          apply.
+        </div>
         <UsefulButton
           className="btn btn-primary"
           forSign={true}

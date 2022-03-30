@@ -29,12 +29,12 @@ const Content = (props) => (
         className={`h-full w-full rounded-lg p-1 ${frameColors[props.grade]}`}
       >
         <div className="flex h-full w-full items-center rounded-lg bg-black px-4 shadow-2xl">
-          <div className="flex grow flex-col gap-8">
-            <div className="flex items-center gap-2">
+          <div className="flex grow flex-col">
+            <div className="mb-8 flex items-center">
               {props.icon && (
                 <img
                   src={props.icon}
-                  className="h-28 w-28 rounded-full bg-white object-cover"
+                  className="mr-2 h-28 w-28 rounded-full bg-white object-cover"
                 />
               )}
               <p className="text-4xl font-bold text-white">{props.title}</p>
