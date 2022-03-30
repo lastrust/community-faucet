@@ -18,7 +18,7 @@ const ShidenCard: NextPage = () => {
       <div className="artboard card artboard-horizontal phone-2 card-side max-h-72 bg-base-100 shadow-xl">
         <div className="card-body w-2/3">
           <h1
-            className={`card-title -mb-4 w-fit bg-clip-text font-mono text-7xl font-extrabold text-transparent ${frameColors[2]}`}
+            className={`card-title -mb-2 w-fit bg-clip-text font-mono text-7xl font-extrabold text-transparent ${frameColors[2]}`}
           >
             {query.value || "0.0"}SDN
           </h1>
