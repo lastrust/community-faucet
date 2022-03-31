@@ -13,12 +13,7 @@ const ShidenHero = () => {
         open={openSupport}
         onChange={setOpenSupport}
       />
-      <FaucetModal
-        type="shiden"
-        symbol="SDN"
-        open={openFaucet}
-        onChange={setOpenFaucet}
-      />
+      <FaucetModal type="shiden" open={openFaucet} onChange={setOpenFaucet} />
       <div className="hero hero-content mx-auto flex-col text-center sm:mt-32">
         <div className="max-w-xl">
           <h1 className="text-5xl font-bold">

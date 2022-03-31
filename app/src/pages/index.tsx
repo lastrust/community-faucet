@@ -11,8 +11,16 @@ const Home: NextPage = () => {
         <p className="text-lg">Powerful Faucet for Students</p>
       </div>
       <div className="mx-auto grid max-w-2xl overflow-hidden shadow-lg sm:grid-cols-2 sm:rounded-lg">
-        <ChainInfo type="astar" symbol="ASTR" href="astar" theme="light">
+        <ChainInfo type="astar" symbol="ASTR" href="astar" theme="light" w={2}>
           AStar Student Faucet
+        </ChainInfo>
+        <ChainInfo
+          type="polygon"
+          symbol="MATIC"
+          href="polygon"
+          theme="cyberpunk"
+        >
+          MATIC Student Faucet
         </ChainInfo>
         <ChainInfo type="shiden" symbol="SDN" href="shiden" theme="dark">
           Shiden Student Faucet

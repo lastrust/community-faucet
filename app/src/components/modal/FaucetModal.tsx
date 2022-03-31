@@ -1,5 +1,5 @@
 import { useContract, useWeb3 } from "@/hooks";
-import { contractTypes } from "@/util/config";
+import { contractTypes, symbolList } from "@/util/config";
 import { ethers } from "ethers";
 import React, { useEffect, useState } from "react";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
@@ -9,9 +9,9 @@ import ModalBase from "./Modal";
 const FaucetModal: React.FC<{
   open: boolean;
   onChange: (open: boolean) => void;
-  symbol: string;
+
   type: contractTypes;
-}> = ({ type, symbol, ...props }) => {
+}> = ({ type, ...props }) => {
   const [isStudent, setIsStudent] = useState(false);
   const [nextTime, setNextTime] = useState<number>(Infinity);
   const [amount, setAmount] = useState<number | string>(0);
@@ -72,7 +72,7 @@ const FaucetModal: React.FC<{
             <div className="stat-title">Faucet Amount</div>
             <div className="stat-value">
               {amount}
-              <span className="text-2xl">{symbol}</span>
+              <span className="text-2xl">{symbolList[type]}</span>
             </div>
           </div>
         </div>

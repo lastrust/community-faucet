@@ -10,10 +10,13 @@ const ChainInfo: React.FC<{
   type: keyof typeof contractList;
   symbol: string;
   href: string;
-}> = ({ children, theme, type, symbol, href }) => {
+  w?: 1 | 2;
+}> = ({ children, theme, type, symbol, href, w = 1 }) => {
   return (
     <div
-      className="card-body col-span-1 row-span-1 bg-base-200 text-base-content"
+      className={`card-body bg-base-200 text-base-content ${
+        w === 1 ? "col-span-1" : "sm:col-span-2"
+      }`}
       data-theme={theme}
     >
       <NextLink href={href}>

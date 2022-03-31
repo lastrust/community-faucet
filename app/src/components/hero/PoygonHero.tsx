@@ -2,17 +2,21 @@ import { useState } from "react";
 import FaucetModal from "../modal/FaucetModal";
 import SupportModal from "../modal/SupportModal";
 
-const Hero = () => {
+const PolygonHero = () => {
   const [openSupport, setOpenSupport] = useState(false);
   const [openFaucet, setOpenFaucet] = useState(false);
 
   return (
     <>
-      <SupportModal type="astar" open={openSupport} onChange={setOpenSupport} />
-      <FaucetModal type="astar" open={openFaucet} onChange={setOpenFaucet} />
+      <SupportModal
+        type="polygon"
+        open={openSupport}
+        onChange={setOpenSupport}
+      />
+      <FaucetModal type="polygon" open={openFaucet} onChange={setOpenFaucet} />
       <div className="hero hero-content mx-auto flex-col text-center sm:mt-32">
         <div className="max-w-xl">
-          <h1 className="text-5xl font-bold">AStar Student Faucet</h1>
+          <h1 className="text-4xl font-bold">Polygon Student Faucet</h1>
           <p className="py-6">
             This is Student-only Faucet more powerful than official Faucet. It
             is informal but run by students. And this Faucet is made possible by
@@ -39,4 +43,4 @@ const Hero = () => {
     </>
   );
 };
-export default Hero;
+export default PolygonHero;
