@@ -1,4 +1,5 @@
 import { useWeb3 } from "@/hooks";
+import { contractTypes, scanList } from "@/util/config";
 import { switchChain } from "@/util/web3Util";
 import NextLink from "next/link";
 import React, { useState } from "react";
@@ -8,8 +9,10 @@ import { VscDebugDisconnect } from "react-icons/vsc";
 
 export default function DefaultLayout({
   children,
+  type,
   theme = ["winter", "forest"],
 }: {
+  type: contractTypes;
   theme?: [string, string];
   children: React.ReactNode;
 }) {
@@ -22,7 +25,7 @@ export default function DefaultLayout({
       >
         <Header {...{ isDark, setIsDark }} />
         <div className="mt-16 text-base-content">{children}</div>
-        <Footer />
+        <Footer type={type} />
       </div>
     </>
   );
@@ -100,7 +103,7 @@ export const ToggleTheme: React.FC<{
   );
 };
 
-export const Footer: React.FC = () => (
+export const Footer: React.FC<{ type: contractTypes }> = ({ type }) => (
   <footer className="footer mt-auto items-center bg-neutral p-4 text-neutral-content">
     <div className="grid-flow-col items-center">
       <BsGear size="36" />
@@ -113,7 +116,7 @@ export const Footer: React.FC = () => (
       <a href="https://github.com/inaridiy/AStar-Student-Faucet">
         <BsGithub size="1.5rem" />
       </a>
-      <a href="https://astar.subscan.io/account/0x26DA9C05A9f7bcEFb9e342Bb35FA8aE338F9cCed?tab=transfer">
+      <a href={scanList[type]}>
         <AiFillDatabase size="1.5rem" />
       </a>
     </div>
