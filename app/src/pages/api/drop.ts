@@ -72,7 +72,7 @@ const tokenUri = async (req: NextApiRequest, res: NextApiResponse) => {
   const contract = StudentFaucet__factory.connect(contractAddress, signer);
 
   const tx = await contract.drop(address, {
-    gasLimit: "100000",
+    gasLimit: "200000",
   });
 
   res.json({ status: "success" });
