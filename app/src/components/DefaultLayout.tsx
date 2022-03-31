@@ -20,7 +20,7 @@ export default function DefaultLayout({
   return (
     <>
       <div
-        className="relative flex min-h-full flex-col bg-base-200 transition-all"
+        className="relative flex min-h-full flex-col bg-base-200 text-base-content transition-all"
         data-theme={isDark ? theme[1] : theme[0]}
       >
         <Header {...{ isDark, setIsDark }} />
