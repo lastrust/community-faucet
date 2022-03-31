@@ -5,7 +5,7 @@ import type { NextPage } from "next";
 
 const Home: NextPage = () => {
   return (
-    <DefaultLayout>
+    <DefaultLayout type="astar">
       <div className="hero hero-content mx-auto max-w-lg flex-col text-center sm:mt-32">
         <h1 className="text-5xl font-bold">Student Faucet</h1>
         <p className="text-lg">Powerful Faucet for Students</p>
