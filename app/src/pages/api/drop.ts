@@ -71,7 +71,10 @@ const tokenUri = async (req: NextApiRequest, res: NextApiResponse) => {
   );
   const contract = StudentFaucet__factory.connect(contractAddress, signer);
 
-  const tx = await contract.drop(address);
+  const tx = await contract.drop(address, {
+    maxFeePerGas: ethers.utils.parseUnits("40", "gwei"),
+    maxPriorityFeePerGas: ethers.utils.parseUnits("40", "gwei"),
+  });
 
   res.json({ status: "success" });
 };

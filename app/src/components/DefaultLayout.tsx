@@ -39,12 +39,12 @@ export const Header: React.FC<{
     <nav className="navbar fixed">
       <div className="mx-auto flex w-full max-w-screen-xl justify-between">
         <NextLink href="/">
-          <a className="btn btn-ghost text-xl normal-case text-base-content sm:text-2xl">
+          <a className="btn btn-ghost text-xl normal-case sm:text-2xl">
             <span className="hidden sm:block">Student Faucet</span>
             <span className="sm:hidden">SSFaucet</span>
           </a>
         </NextLink>
-        <div className="flex items-center text-base-content sm:gap-2">
+        <div className="flex items-center sm:gap-2">
           <AccountWithAth />
           <div className="ml-2 h-8 w-0.5 bg-base-content"></div>
           <ToggleTheme {...props} />

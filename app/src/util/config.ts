@@ -9,7 +9,7 @@ export const chainParameters = {
       name: "MATIC",
       symbol: "MATIC",
     },
-    rpcUrls: ["https://polygon-rpc.com/"],
+    rpcUrls: ["https://matic-mainnet.chainstacklabs.com"],
   },
   "0x13881": {
     chainId: "0x13881",

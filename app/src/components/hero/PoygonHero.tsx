@@ -29,7 +29,7 @@ const PolygonHero = () => {
             className="btn btn-primary"
             onClick={() => setOpenFaucet(!openFaucet)}
           >
-            Get ASTR
+            Get MATIC
           </button>
           <div className="text-xl font-bold">OR</div>
           <button
