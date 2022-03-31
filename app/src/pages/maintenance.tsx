@@ -9,7 +9,7 @@ const Home: NextPage = () => {
     void contract?.changeDropSize(ethers.utils.parseEther("0.002"));
   return (
     <>
-      <DefaultLayout theme={["cupcake", "dracula"]}>
+      <DefaultLayout type="astar" theme={["cupcake", "dracula"]}>
         <button className="btn" onClick={click}>
           BTN
         </button>
