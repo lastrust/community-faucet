@@ -75,6 +75,7 @@ export const providerOptions = async () => ({
         81: `https://rpc.shibuya.astar.network:8545`,
         592: `https://rpc.astar.network:8545`,
         336: `https://evm.shiden.astar.network`,
+        137: `https://polygon-rpc.com/`,
       },
     },
   },
@@ -91,6 +92,11 @@ export const contractList = {
     rpc: chainParameters["0x150"].rpcUrls[0],
     chainId: "0x150" as ChainIds,
   },
+  polygon: {
+    address: process.env.NEXT_PUBLIC_POLYGON_CONTRACT_ADDRESS as string,
+    rpc: chainParameters["0x89"].rpcUrls[0],
+    chainId: "0x89" as ChainIds,
+  },
 };
 
 export type contractTypes = keyof typeof contractList;
@@ -98,6 +104,7 @@ export type contractTypes = keyof typeof contractList;
 export const symbolList: Record<contractTypes, string> = {
   astar: "ASTR",
   shiden: "SDN",
+  polygon: "MATIC",
 };
 
 export const scanList: Record<contractTypes, string> = {
@@ -105,4 +112,5 @@ export const scanList: Record<contractTypes, string> = {
     "https://astar.subscan.io/account/0x26DA9C05A9f7bcEFb9e342Bb35FA8aE338F9cCed?tab=transfer",
   shiden:
     "https://shiden.subscan.io/account/0x7F3D0a403dBAc1496DCa0D5cFb3196e9830e0fB8",
+  polygon: "",
 };
