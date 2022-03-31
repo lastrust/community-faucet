@@ -1,5 +1,5 @@
 import { useContract, useInputs, useJsonProvider, useWeb3 } from "@/hooks";
-import { contractList, contractTypes } from "@/util/config";
+import { contractList, contractTypes, symbolList } from "@/util/config";
 import { ethers } from "ethers";
 import { useEffect, useState } from "react";
 import { UsefulButton } from "../Button";
@@ -87,7 +87,7 @@ const SupportModal: React.FC<{
             onChange={handler("value")}
             disabled={isLoading || transaction}
           />
-          <span>{props.type === "astar" ? "ASTR" : "SDN"}</span>
+          <span>{symbolList[props.type]}</span>
         </label>
       </div>
 

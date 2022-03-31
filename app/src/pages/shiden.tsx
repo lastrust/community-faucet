@@ -15,7 +15,7 @@ const Home: NextPage = () => {
           cardType: "summary_large_image",
         }}
       />
-      <DefaultLayout theme={["lofi", "night"]}>
+      <DefaultLayout type="shiden" theme={["lofi", "night"]}>
         <ShidenHero />
         {/* <h1 className="text-center text-6xl font-bold text-red-500 sm:mt-32">
           Under Maintenance

@@ -15,7 +15,7 @@ const Home: NextPage = () => {
           cardType: "summary_large_image",
         }}
       />
-      <DefaultLayout theme={["cupcake", "dracula"]}>
+      <DefaultLayout type="astar" theme={["cupcake", "dracula"]}>
         <AstarHero />
         <div className="mx-2 flex justify-center">
           <StatsBase type="astar" symbol="ASTR" />
