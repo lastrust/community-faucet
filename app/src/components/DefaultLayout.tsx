@@ -3,6 +3,7 @@ import { contractTypes, scanList } from "@/util/config";
 import { switchChain } from "@/util/web3Util";
 import NextLink from "next/link";
 import React, { useState } from "react";
+import CookieConsent from "react-cookie-consent";
 import { AiFillDatabase } from "react-icons/ai";
 import { BsGear, BsGithub, BsMoon, BsSun, BsTwitter } from "react-icons/bs";
 import { VscDebugDisconnect } from "react-icons/vsc";
@@ -27,6 +28,9 @@ export default function DefaultLayout({
         <div className="mt-16 text-base-content">{children}</div>
         <Footer type={type} />
       </div>
+      <CookieConsent>
+        This website uses cookies to enhance the user experience.
+      </CookieConsent>
     </>
   );
 }
