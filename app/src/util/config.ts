@@ -112,5 +112,6 @@ export const scanList: Record<contractTypes, string> = {
     "https://astar.subscan.io/account/0x26DA9C05A9f7bcEFb9e342Bb35FA8aE338F9cCed?tab=transfer",
   shiden:
     "https://shiden.subscan.io/account/0x7F3D0a403dBAc1496DCa0D5cFb3196e9830e0fB8",
-  polygon: "",
+  polygon:
+    "https://polygonscan.com/address/0xe29BFb891Db927E88134846DC34B482dd7f875f0",
 };

@@ -6,7 +6,7 @@ async function main() {
     "ShidenStudentFaucet",
     "SSF",
     "https://www.as-faucet.xyz/api/metadata?type=polygon&id=",
-    ethers.utils.parseEther("0.002"),
+    ethers.utils.parseEther("0.01"),
     7 * 24 * 60 * 60,
   ]);
 
