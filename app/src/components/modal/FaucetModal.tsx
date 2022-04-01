@@ -105,7 +105,7 @@ const FaucetModal: React.FC<{
           isLoading={isLoading}
           onClick={() => void faucet()}
         >
-          Get AStar
+          Get {symbolList[type]}
         </UsefulButton>
       </div>
     </ModalBase>
