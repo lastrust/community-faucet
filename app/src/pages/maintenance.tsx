@@ -4,9 +4,9 @@ import { ethers } from "ethers";
 import type { NextPage } from "next";
 
 const Home: NextPage = () => {
-  const contract = useContract("shiden");
+  const contract = useContract("polygon");
   const click = () =>
-    void contract?.changeDropSize(ethers.utils.parseEther("0.002"));
+    void contract?.changeDropSize(ethers.utils.parseEther("0.008"));
   return (
     <>
       <DefaultLayout type="astar" theme={["cupcake", "dracula"]}>

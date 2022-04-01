@@ -6,7 +6,12 @@ const sscard = async (req: NextApiRequest, res: NextApiResponse) => {
   const { type } = req.query;
   invariant(type === "shiden" || type === "polygon");
   const browser = await playwright.launchChromium({ headless: true });
-  const page = await browser.newPage({ viewport: { width: 800, height: 400 } });
+  const page = await browser.newPage({
+    viewport:
+      type === "polygon"
+        ? { width: 400, height: 800 }
+        : { width: 800, height: 400 },
+  });
   const queryString = new URLSearchParams(
     Object.entries(req.query as Record<string, string>)
   ).toString();
