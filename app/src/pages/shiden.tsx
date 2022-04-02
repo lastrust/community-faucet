@@ -1,5 +1,4 @@
 import DefaultLayout from "@/components/DefaultLayout";
-import ShidenHero from "@/components/hero/ShidenHero";
 import StatsBase from "@/components/StatsBase";
 import type { NextPage } from "next";
 import { NextSeo } from "next-seo";
@@ -16,10 +15,11 @@ const Home: NextPage = () => {
         }}
       />
       <DefaultLayout type="shiden" theme={["lofi", "night"]}>
-        <ShidenHero />
-        {/* <h1 className="text-center text-6xl font-bold text-red-500 sm:mt-32">
+        {/* <ShidenHero /> */}
+        <h1 className="text-center text-6xl font-bold text-red-500 sm:mt-32">
           Under Maintenance
-        </h1> */}
+        </h1>{" "}
+        *
         <div className="mx-2 flex justify-center">
           <StatsBase type="shiden" symbol="SDN" />
         </div>
