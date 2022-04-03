@@ -46,6 +46,9 @@ export const Web3Provider: React.FC<
 
   const connectWallet = async () => {
     try {
+      if (location) {
+        location.href = "#";
+      }
       setIsLoading(true);
       const [instance, _provider] = await getWeb3Provider();
       setIsMetaMask(instance.isMetaMask);
