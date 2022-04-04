@@ -20,6 +20,9 @@ const ShidenHero = () => {
             Shiden <span className="text-6xl text-red-500">{`"Student"`}</span>
             Faucet
           </h1>
+          <h2 className="text-center text-2xl font-bold text-red-500">
+            Shiden RPC may have a traffic.😭
+          </h2>
           <p className="py-6">
             This is Student-only Faucet more powerful than official Faucet. It
             is informal but run by students. And this Faucet is made possible by
