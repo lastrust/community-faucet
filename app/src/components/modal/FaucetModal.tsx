@@ -101,7 +101,7 @@ const FaucetModal: React.FC<{
         <UsefulButton
           className="btn btn-primary"
           forSign={true}
-          disabled={!isStudent || nextTime < 0}
+          // disabled={!isStudent || nextTime < 0}
           isLoading={isLoading}
           onClick={() => void faucet()}
         >
