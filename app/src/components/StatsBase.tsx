@@ -1,35 +1,38 @@
-import { useContract, useInputs } from "@/hooks";
+import { useContract, useJsonProvider } from "@/hooks";
 import { usefulFixed } from "@/util";
 import { contractTypes } from "@/util/config";
+import { StudentFaucet } from "@/util/contract";
 import { ethers } from "ethers";
+import { useQuery } from "react-query";
 
 const StatsBase: React.FC<{
   type: contractTypes;
   symbol: string;
   vertical?: boolean;
 }> = ({ type, symbol, vertical }) => {
-  const { value, margeValue } = useInputs({
-    contractBalance: "0.0",
-    totalDrop: "0.0",
-    supporter: "0",
-  });
+  const contract = useContract(type, { fetchOnly: true }) as StudentFaucet;
+  const provider = useJsonProvider(type);
+  const { data: contractBalance } = useQuery(
+    ["contractBalance", type],
+    async () =>
+      usefulFixed(
+        ethers.utils.formatEther(await provider.getBalance(contract.address)),
+        2
+      ),
+    { enabled: Boolean(contract), initialData: "0.00" }
+  );
+  const { data: totalDrop } = useQuery(
+    ["totalDrop", type],
+    async () =>
+      usefulFixed(ethers.utils.formatEther(await contract.totalDrop()), 2),
+    { enabled: Boolean(contract), initialData: "0.00" }
+  );
+  const { data: supporter } = useQuery(
+    ["supporter", type],
+    async () => (await contract.numberOfSupporter()).toString(),
+    { enabled: Boolean(contract), initialData: "0" }
+  );
 
-  useContract(type, {
-    fetchOnly: true,
-    cb: async (contract, provider) => {
-      margeValue({
-        contractBalance: usefulFixed(
-          ethers.utils.formatEther(await provider.getBalance(contract.address)),
-          2
-        ),
-        totalDrop: usefulFixed(
-          ethers.utils.formatEther(await contract.totalDrop()),
-          2
-        ),
-        supporter: (await contract.numberOfSupporter()).toString(),
-      });
-    },
-  });
   return (
     <div
       className={`stats bg-base-100 shadow ${
@@ -39,7 +42,7 @@ const StatsBase: React.FC<{
       <div className="stat place-items-center">
         <div className="stat-title">Faucet Balance</div>
         <div className="stat-value">
-          {value.contractBalance}
+          {contractBalance}
           <span className="text-2xl">{symbol}</span>
         </div>
         <div className="stat-desc">Remaining funds</div>
@@ -47,7 +50,7 @@ const StatsBase: React.FC<{
       <div className="stat place-items-center">
         <div className="stat-title">Total Drop</div>
         <div className="stat-value text-secondary">
-          {value.totalDrop}
+          {totalDrop}
           <span className="text-2xl">{symbol}</span>
         </div>
         <div className="stat-desc text-base font-bold text-secondary">
@@ -56,7 +59,7 @@ const StatsBase: React.FC<{
       </div>
       <div className="stat place-items-center">
         <div className="stat-title">Supporter</div>
-        <div className="stat-value">{value.supporter}</div>
+        <div className="stat-value">{supporter}</div>
         <div className="stat-desc">Faucet Supporter</div>
       </div>
     </div>
