@@ -57,7 +57,10 @@ export const chainParameters = {
       name: "SDN",
       symbol: "SDN",
     },
-    rpcUrls: ["https://shiden.api.onfinality.io/public"],
+    rpcUrls: [
+      "https://evm.shiden.astar.network/",
+      "https://shiden.api.onfinality.io/public",
+    ],
   },
 };
 
@@ -74,7 +77,7 @@ export const providerOptions = async () => ({
         80001: `https://rpc-mumbai.matic.today`,
         81: `https://rpc.shibuya.astar.network:8545`,
         592: `https://rpc.astar.network:8545`,
-        336: `https://shiden.api.onfinality.io/public`,
+        336: `https://evm.shiden.astar.network/`,
         137: `https://polygon-rpc.com/`,
       },
     },
