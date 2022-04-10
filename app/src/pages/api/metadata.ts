@@ -91,6 +91,20 @@ const tokenUri = async (req: NextApiRequest, res: NextApiResponse) => {
       ],
     };
     res.status(200).json(metadata);
+  } else if (type === "shibuya") {
+    const metadata = {
+      description: `Proof NFT of ${name}'s ${astr}SBY donation to the Shibuya Student Faucet`,
+      image: `https://www.as-faucet.xyz/api/sscard?type=${type}&${imageQuery.toString()}`,
+      external_url: `https://www.as-faucet.xyz/`,
+      name: `${name}'s SBY Student Faucet Supporter NFT`,
+      attributes: [
+        { trait_type: "name", value: name },
+        { trait_type: "icon", value: icon },
+        { trait_type: "value", value: `${astr}SBY` },
+        { trait_type: "grade", value: grade },
+      ],
+    };
+    res.status(200).json(metadata);
   } else {
     res.status(400).json({});
   }

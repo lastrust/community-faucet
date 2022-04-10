@@ -12,9 +12,11 @@ export default function DefaultLayout({
   children,
   type,
   theme = ["winter", "forest"],
+  style,
 }: {
   type: contractTypes;
   theme?: [string, string];
+  style?: React.HTMLAttributes<HTMLDivElement>["style"];
   children: React.ReactNode;
 }) {
   const [isDark, setIsDark] = useState(false);
@@ -23,6 +25,7 @@ export default function DefaultLayout({
       <div
         className="relative flex min-h-full flex-col bg-base-200 text-base-content transition-all"
         data-theme={isDark ? theme[1] : theme[0]}
+        style={style}
       >
         <Header {...{ isDark, setIsDark }} />
         <div className="mt-16 text-base-content">{children}</div>

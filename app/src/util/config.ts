@@ -100,6 +100,11 @@ export const contractList = {
     rpc: chainParameters["0x89"].rpcUrls[0],
     chainId: "0x89" as ChainIds,
   },
+  shibuya: {
+    address: process.env.NEXT_PUBLIC_SHIBUYA_CONTRACT_ADDRESS as string,
+    rpc: chainParameters["0x51"].rpcUrls[0],
+    chainId: "0x51" as ChainIds,
+  },
 };
 
 export type contractTypes = keyof typeof contractList;
@@ -108,6 +113,7 @@ export const symbolList: Record<contractTypes, string> = {
   astar: "ASTR",
   shiden: "SDN",
   polygon: "MATIC",
+  shibuya: "SBY",
 };
 
 export const scanList: Record<contractTypes, string> = {
@@ -117,4 +123,6 @@ export const scanList: Record<contractTypes, string> = {
     "https://shiden.subscan.io/account/0x7F3D0a403dBAc1496DCa0D5cFb3196e9830e0fB8",
   polygon:
     "https://polygonscan.com/address/0xe29BFb891Db927E88134846DC34B482dd7f875f0",
+  shibuya:
+    "https://shibuya.subscan.io/account/0xd546Fa7F58d247C8c03d6b97525eE259ac50b63F",
 };
