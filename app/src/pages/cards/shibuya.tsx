@@ -12,7 +12,7 @@ const ShidenCard: NextPage = () => {
   const { query } = useRouter();
   return (
     <div
-      className={`flex aspect-square w-full items-center justify-center bg-base-300 p-8 text-base-content ${frameColors[2]}`}
+      className={`flex h-full w-full items-center justify-center bg-base-300 p-8 text-base-content ${frameColors[2]}`}
       data-theme="winter"
     >
       <div className="flex h-full w-full flex-col items-center gap-2 rounded-full bg-base-100 shadow-xl">
