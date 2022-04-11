@@ -18,7 +18,7 @@ const sscard = async (req: NextApiRequest, res: NextApiResponse) => {
     Object.entries(req.query as Record<string, string>)
   ).toString();
   //console.log(`http://localhost:3000/cards/${type}?${queryString}`);
-  await page.goto(`http://localhost:3000/cards/${type}?${queryString}`, {
+  await page.goto(`https://as-faucet.xyz/cards/${type}?${queryString}`, {
     waitUntil: "networkidle",
   });
 
