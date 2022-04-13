@@ -18,12 +18,9 @@ const sscard = async (req: NextApiRequest, res: NextApiResponse) => {
     Object.entries(req.query as Record<string, string>)
   ).toString();
   //console.log(`http://localhost:3000/cards/${type}?${queryString}`);
-  await page.goto(
-    `https://as-tar-student-faucet.vercel.app/cards/${type}?${queryString}`,
-    {
-      waitUntil: "networkidle",
-    }
-  );
+  await page.goto(`https://www.as-faucet.xyz/cards/${type}?${queryString}`, {
+    waitUntil: "networkidle",
+  });
 
   const image = await page.screenshot({ type: "png" });
   await browser.close();
