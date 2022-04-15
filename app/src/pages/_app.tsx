@@ -35,8 +35,8 @@ function MyApp({ Component, pageProps }: AppProps) {
       >
         <Web3Provider>
           <NextSeo
-            title="Student Faucet"
-            description="Unofficial student-only Student Faucet."
+            title="Community Faucet"
+            description="Unofficial Community Faucet."
             openGraph={{
               images: [{ url: "https://www.as-faucet.xyz/sf.png" }],
             }}
