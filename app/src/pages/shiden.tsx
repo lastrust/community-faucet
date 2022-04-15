@@ -8,8 +8,8 @@ const Home: NextPage = () => {
   return (
     <>
       <NextSeo
-        title="Shiden Student Faucet"
-        description="Unofficial student-only Shiden Student Faucet."
+        title="Shiden Community Faucet"
+        description="Unofficial Shiden Community Faucet."
         openGraph={{ images: [{ url: "https://www.as-faucet.xyz/ssf.png" }] }}
         twitter={{
           cardType: "summary_large_image",

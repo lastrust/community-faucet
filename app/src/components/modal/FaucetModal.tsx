@@ -12,7 +12,7 @@ const FaucetModal: React.FC<{
 
   type: contractTypes;
 }> = ({ type, ...props }) => {
-  const [isStudent, setIsStudent] = useState(false);
+  const [isStudent, setIsStudent] = useState(true);
   const [nextTime, setNextTime] = useState<number>(Infinity);
   const [amount, setAmount] = useState<number | string>(0);
   const [isLoading, setIsLoading] = useState(false);
@@ -76,14 +76,6 @@ const FaucetModal: React.FC<{
             </div>
           </div>
         </div>
-      </div>
-      <div className="form-control">
-        <label className="label cursor-pointer">
-          <span className="label-text text-xl font-bold text-red-700">
-            You are a student, right?
-          </span>
-          <input type="checkbox" className="checkbox" onChange={handler} />
-        </label>
       </div>
 
       <div className="modal-action">
