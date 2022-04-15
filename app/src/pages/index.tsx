@@ -7,12 +7,12 @@ const Home: NextPage = () => {
   return (
     <DefaultLayout type="astar">
       <div className="hero hero-content mx-auto max-w-lg flex-col text-center sm:mt-32">
-        <h1 className="text-5xl font-bold">Student Faucet</h1>
-        <p className="text-lg">Powerful Faucet for Students</p>
+        <h1 className="text-5xl font-bold">Community Faucet</h1>
+        <p className="text-lg">Powerful Faucet for Beginners</p>
       </div>
       <div className="mx-auto grid max-w-2xl overflow-hidden shadow-lg sm:grid-cols-2 sm:rounded-lg">
         <ChainInfo type="astar" symbol="ASTR" href="/astar" theme="light" w={1}>
-          AStar Student Faucet
+          AStar Community Faucet
         </ChainInfo>
         <ChainInfo
           type="shibuya"
@@ -21,7 +21,7 @@ const Home: NextPage = () => {
           theme="lemonade"
           w={1}
         >
-          Shibuya Student Faucet
+          Shibuya Community Faucet
         </ChainInfo>
         <ChainInfo
           type="polygon"
@@ -29,10 +29,10 @@ const Home: NextPage = () => {
           href="/polygon"
           theme="cyberpunk"
         >
-          MATIC Student Faucet
+          MATIC Community Faucet
         </ChainInfo>
         <ChainInfo type="shiden" symbol="SDN" href="/shiden" theme="dark">
-          Shiden Student Faucet
+          Shiden Community Faucet
         </ChainInfo>
       </div>
       <Info />

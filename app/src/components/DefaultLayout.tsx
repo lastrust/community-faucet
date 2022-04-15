@@ -47,8 +47,8 @@ export const Header: React.FC<{
       <div className="mx-auto flex w-full max-w-screen-xl justify-between">
         <NextLink href="/">
           <a className="btn btn-ghost text-xl normal-case sm:text-2xl">
-            <span className="hidden sm:block">Student Faucet</span>
-            <span className="sm:hidden">SSFaucet</span>
+            <span className="hidden sm:block">Community Faucet</span>
+            <span className="sm:hidden">CSFaucet</span>
           </a>
         </NextLink>
         <div className="flex items-center sm:gap-2">

@@ -15,14 +15,8 @@ const ShibuyaHero = () => {
       />
       <FaucetModal type="shibuya" open={openFaucet} onChange={setOpenFaucet} />
       <div className="hero hero-content mx-auto flex-col text-center sm:mt-32">
-        <div className="max-w-xl">
-          <h1 className="text-5xl font-bold">Shibuya Student Faucet</h1>
-          <p className="py-6">
-            This is Student-only Faucet more powerful than official Faucet. It
-            is informal but run by students. And this Faucet is made possible by
-            the support of volunteers. Therefore, it sometimes becomes
-            unavailable.
-          </p>
+        <div className="max-w-xl py-8">
+          <h1 className="text-5xl font-bold">Shibuya Community Faucet</h1>
         </div>
         <div className="flex w-full max-w-2xl items-center justify-center gap-4">
           <button

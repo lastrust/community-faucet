@@ -50,7 +50,7 @@ export const useContract: useContract = (
     } else {
       setContract(null);
     }
-  }, [provider, chainId, fetchOnly, fallback]);
+  }, [type, provider, chainId, fetchOnly, fallback]);
 
   useEffect(() => {
     if (contract) {
