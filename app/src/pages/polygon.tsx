@@ -10,7 +10,7 @@ const Home: NextPage = () => {
       <NextSeo
         title="Polygon Community Faucet"
         description="Unofficial Polygon Community Faucet."
-        openGraph={{ images: [{ url: "https://www.as-faucet.xyz/ssf.png" }] }}
+        openGraph={{ images: [{ url: "https://www.as-faucet.xyz/ogp.png" }] }}
         twitter={{
           cardType: "summary_large_image",
         }}
