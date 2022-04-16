@@ -33,7 +33,7 @@ export const chainParameters = {
       name: "SBY",
       symbol: "SBY",
     },
-    rpcUrls: ["https://rpc.shibuya.astar.network:8545"],
+    rpcUrls: ["https://evm.shibuya.astar.network"],
   },
   "0x250": {
     chainId: "0x250",
@@ -45,7 +45,7 @@ export const chainParameters = {
       name: "ASTR",
       symbol: "ASTR",
     },
-    rpcUrls: ["https://rpc.astar.network:8545"],
+    rpcUrls: ["https://evm.astar.network/"],
   },
   "0x150": {
     chainId: "0x150",
@@ -75,8 +75,8 @@ export const providerOptions = async () => ({
           process.env.NEXT_PUBLIC_INFURA_PROJECT_ID || ""
         }`,
         80001: `https://rpc-mumbai.matic.today`,
-        81: `https://rpc.shibuya.astar.network:8545`,
-        592: `https://rpc.astar.network:8545`,
+        81: `https://evm.shibuya.astar.network`,
+        592: `https://evm.astar.network/`,
         336: `https://evm.shiden.astar.network/`,
         137: `https://polygon-rpc.com/`,
       },
