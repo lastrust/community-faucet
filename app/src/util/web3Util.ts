@@ -26,14 +26,10 @@ export const getAccountIds = (
   provider: ethers.providers.Web3Provider
 ): Promise<string[]> => provider.send("eth_accounts", []) as Promise<string[]>;
 
-export const fetchAccount = async (id: string): Promise<Account> => {
-  const provider = getInfuraProvider();
+export const fetchAccount = (id: string): Account => {
   const abbreviatedId = `${id.slice(0, 4)}...${id.slice(-3)}`;
-  const [ethName, avatar] = await Promise.all([
-    provider.lookupAddress(id),
-    provider.getAvatar(id),
-  ]);
-  return { id, abbreviatedId, ethName, avatar };
+
+  return { id, abbreviatedId, ethName: null, avatar: null };
 };
 
 export const fetchAccounts = (accountIds: string[]): Promise<Account[]> =>
