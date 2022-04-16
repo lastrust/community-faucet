@@ -22,7 +22,7 @@ const ShidenCard: NextPage = () => {
           >
             {query.value || "0.0"}SDN
           </h1>
-          <p className="text-xl italic">Shiden Student Faucet</p>
+          <p className="text-xl italic">Shiden Community Faucet</p>
           <div className="flex items-center">
             {query.icon && (
               <div className="mask mask-hexagon mr-2 w-24 bg-primary">

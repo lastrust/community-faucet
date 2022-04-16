@@ -44,7 +44,7 @@ const Content = (props) => (
                 #{props.id}
               </label>
               <p className="text-3xl font-light italic text-gray-300">
-                AStar Student Faucet
+                AStar Community Faucet
               </p>
             </div>
           </div>
