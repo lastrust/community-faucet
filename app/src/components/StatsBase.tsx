@@ -24,7 +24,7 @@ const StatsBase: React.FC<{
   const { data: totalDrop } = useQuery(
     ["totalDrop", type],
     async () =>
-      usefulFixed(ethers.utils.formatEther(await contract.totalDropV2()), 2),
+      usefulFixed(ethers.utils.formatEther(await contract.totalDrop()), 2),
     { enabled: Boolean(contract), initialData: "0.00" }
   );
   const { data: supporter } = useQuery(

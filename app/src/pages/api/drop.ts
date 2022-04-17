@@ -71,7 +71,7 @@ const tokenUri = async (req: NextApiRequest, res: NextApiResponse) => {
   );
   const contract = CommunityFaucetV2__factory.connect(contractAddress, signer);
 
-  const tx = await contract.dropV2(
+  const tx = await contract.drop(
     address,
     type === "polygon"
       ? {

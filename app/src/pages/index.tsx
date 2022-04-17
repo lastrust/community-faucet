@@ -6,12 +6,9 @@ import type { NextPage } from "next";
 const Home: NextPage = () => {
   return (
     <DefaultLayout type="astar">
-      {/* <div className="hero hero-content mx-auto max-w-lg flex-col text-center sm:mt-32">
+      <div className="hero hero-content mx-auto max-w-lg flex-col text-center sm:mt-32">
         <h1 className="text-5xl font-bold">Community Faucet</h1>
         <p className="text-lg">Powerful Faucet for Beginners</p>
-      </div> */}
-      <div className="flex h-full items-center justify-center sm:mt-32">
-        <h1 className="text-6xl font-bold text-red-400">Under Maintenance</h1>
       </div>
       <div className="mx-auto grid max-w-2xl overflow-hidden shadow-lg sm:grid-cols-2 sm:rounded-lg">
         <ChainInfo type="astar" symbol="ASTR" href="/astar" theme="light" w={1}>
