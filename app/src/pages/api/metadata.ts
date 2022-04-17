@@ -1,6 +1,6 @@
 import { usefulZeroFill } from "@/util";
 import { contractList, contractTypes } from "@/util/config";
-import { StudentFaucet__factory } from "@/util/contract";
+import { CommunityFaucetV2__factory } from "@/util/contract";
 import { targetChain } from "@/util/web3Util";
 import { ethers } from "ethers";
 import { NextApiRequest, NextApiResponse } from "next";
@@ -29,7 +29,7 @@ const tokenUri = async (req: NextApiRequest, res: NextApiResponse) => {
   );
 
   const { rpc, address } = contractList[type];
-  const contract = StudentFaucet__factory.connect(
+  const contract = CommunityFaucetV2__factory.connect(
     address,
     new ethers.providers.JsonRpcProvider(rpc)
   );
