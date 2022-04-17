@@ -1,7 +1,7 @@
 import { useContract, useJsonProvider } from "@/hooks";
 import { usefulFixed } from "@/util";
 import { contractTypes } from "@/util/config";
-import { StudentFaucet } from "@/util/contract";
+import { CommunityFaucetV2 } from "@/util/contract";
 import { ethers } from "ethers";
 import { useQuery } from "react-query";
 
@@ -10,7 +10,7 @@ const StatsBase: React.FC<{
   symbol: string;
   vertical?: boolean;
 }> = ({ type, symbol, vertical }) => {
-  const contract = useContract(type, { fetchOnly: true }) as StudentFaucet;
+  const contract = useContract(type, { fetchOnly: true }) as CommunityFaucetV2;
   const provider = useJsonProvider(type);
   const { data: contractBalance } = useQuery(
     ["contractBalance", type],
@@ -24,7 +24,7 @@ const StatsBase: React.FC<{
   const { data: totalDrop } = useQuery(
     ["totalDrop", type],
     async () =>
-      usefulFixed(ethers.utils.formatEther(await contract.totalDrop()), 2),
+      usefulFixed(ethers.utils.formatEther(await contract.totalDropV2()), 2),
     { enabled: Boolean(contract), initialData: "0.00" }
   );
   const { data: supporter } = useQuery(

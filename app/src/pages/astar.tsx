@@ -1,5 +1,4 @@
 import DefaultLayout from "@/components/DefaultLayout";
-import AstarHero from "@/components/hero/AstarHero";
 import StatsBase from "@/components/StatsBase";
 import type { NextPage } from "next";
 import { NextSeo } from "next-seo";
@@ -16,7 +15,10 @@ const Home: NextPage = () => {
         }}
       />
       <DefaultLayout type="astar" theme={["cupcake", "dracula"]}>
-        <AstarHero />
+        {/* <AstarHero /> */}
+        <h1 className="text-center text-6xl font-bold text-red-500 sm:mt-32">
+          Under Maintenance
+        </h1>{" "}
         <div className="mx-2 flex justify-center">
           <StatsBase type="astar" symbol="ASTR" />
         </div>

@@ -1,5 +1,5 @@
 import { contractList, contractTypes } from "@/util/config";
-import { StudentFaucet, StudentFaucet__factory } from "@/util/contract";
+import { CommunityFaucetV2, CommunityFaucetV2__factory } from "@/util/contract";
 import { ethers } from "ethers";
 import { useEffect, useState } from "react";
 import { useWeb3 } from "./useWeb3";
@@ -10,7 +10,7 @@ type option = Partial<{
   fetchOnly: boolean;
   fallback: boolean;
   cb?: (
-    contract: StudentFaucet,
+    contract: CommunityFaucetV2,
     provider: ethers.providers.Provider
   ) => void | Promise<void>;
 }>;
@@ -18,13 +18,13 @@ type option = Partial<{
 type useContract = <T extends keyof typeof contractList>(
   type: T,
   opt?: option
-) => StudentFaucet | null;
+) => CommunityFaucetV2 | null;
 
 const getContract = (
   type: valueOf<typeof contractList>,
   provider?: ethers.providers.Provider | ethers.Signer
 ) =>
-  StudentFaucet__factory.connect(
+  CommunityFaucetV2__factory.connect(
     type.address,
     provider || new ethers.providers.JsonRpcProvider(type.rpc)
   );
@@ -35,7 +35,7 @@ export const useContract: useContract = (
 ) => {
   const contractType = contractList[type];
   const { provider, chainId } = useWeb3();
-  const [contract, setContract] = useState<null | StudentFaucet>(
+  const [contract, setContract] = useState<null | CommunityFaucetV2>(
     fetchOnly ? getContract(contractType) : null
   );
   const isTargetChain = Number(contractType.chainId) === Number(chainId);

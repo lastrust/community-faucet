@@ -1,5 +1,5 @@
 import { contractList, contractTypes } from "@/util/config";
-import { StudentFaucet__factory } from "@/util/contract";
+import { CommunityFaucetV2__factory } from "@/util/contract";
 import axios from "axios";
 import { ethers } from "ethers";
 import { NextApiRequest, NextApiResponse } from "next";
@@ -69,9 +69,9 @@ const tokenUri = async (req: NextApiRequest, res: NextApiResponse) => {
     process.env.PRIVATE_KEY,
     new ethers.providers.JsonRpcProvider(rpc)
   );
-  const contract = StudentFaucet__factory.connect(contractAddress, signer);
+  const contract = CommunityFaucetV2__factory.connect(contractAddress, signer);
 
-  const tx = await contract.drop(
+  const tx = await contract.dropV2(
     address,
     type === "polygon"
       ? {

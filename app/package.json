@@ -6,7 +6,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "sync": "yarn typechain --target ethers-v5 --out-dir src/util/contract '../contract/artifacts/contracts/StudentFaucet.sol/StudentFaucet.json'"
+    "sync": "yarn typechain --target ethers-v5 --out-dir src/util/contract '../contract/artifacts/contracts/FaucetV2.sol/CommunityFaucetV2.json'"
   },
   "dependencies": {
     "axios": "^0.26.1",
