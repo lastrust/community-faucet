@@ -57,10 +57,7 @@ export const chainParameters = {
       name: "SDN",
       symbol: "SDN",
     },
-    rpcUrls: [
-      "https://evm.shiden.astar.network/",
-      "https://shiden.api.onfinality.io/public",
-    ],
+    rpcUrls: ["https://shiden.api.onfinality.io/public"],
   },
 };
 
