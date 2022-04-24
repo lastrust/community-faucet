@@ -13,11 +13,11 @@ const Info = () => {
       </div>
       <div className="card-body bg-accent text-accent-content">
         <h3 className="text-center text-4xl font-bold">
-          What is AStar Student Faucet?
+          What is AStar Community Faucet?
         </h3>
         <p className="text-center text-lg">
           Faucet provided by the official is often broken, but it is important
-          for students.
+          for beginners.
           <br />
           Therefore, it was created as a replacement for the official Faucet.
           <br />

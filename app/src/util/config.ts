@@ -84,22 +84,22 @@ export const providerOptions = async () => ({
 export const contractList = {
   astar: {
     address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as string,
-    rpc: chainParameters["0x250"].rpcUrls[0],
+    rpc: "https://astar.blastapi.io/6a492343-ce82-409d-89fe-38838ab38fdd",
     chainId: "0x250" as ChainIds,
   },
   shiden: {
     address: process.env["NEXT_PUBLIC_SHIDEN_CONTRACT_ADDRESS"] as string,
-    rpc: chainParameters["0x150"].rpcUrls[0],
+    rpc: "https://shiden.blastapi.io/6a492343-ce82-409d-89fe-38838ab38fdd",
     chainId: "0x150" as ChainIds,
   },
   polygon: {
     address: process.env.NEXT_PUBLIC_POLYGON_CONTRACT_ADDRESS as string,
-    rpc: chainParameters["0x89"].rpcUrls[0],
+    rpc: "https://polygon-mainnet.blastapi.io/6a492343-ce82-409d-89fe-38838ab38fdd",
     chainId: "0x89" as ChainIds,
   },
   shibuya: {
     address: process.env.NEXT_PUBLIC_SHIBUYA_CONTRACT_ADDRESS as string,
-    rpc: chainParameters["0x51"].rpcUrls[0],
+    rpc: "https://shibuya.blastapi.io/6a492343-ce82-409d-89fe-38838ab38fdd",
     chainId: "0x51" as ChainIds,
   },
 };
