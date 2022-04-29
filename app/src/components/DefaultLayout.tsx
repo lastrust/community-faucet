@@ -30,7 +30,7 @@ export default function DefaultLayout({
         <Header {...{ isDark, setIsDark }} />
         <div className="mt-16 text-base-content">
           <h1 className="text-center text-4xl font-bold">
-            Under Worst Maintenance{" "}
+            Shitty maintenance.
           </h1>
         </div>
         <Footer type={type} />
