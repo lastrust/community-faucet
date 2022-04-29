@@ -30,6 +30,7 @@ const VerifyResult = (
 ) => success && Number(score) >= 0.9 && action === _action;
 
 const tokenUri = async (req: NextApiRequest, res: NextApiResponse) => {
+  invariant(false);
   invariant(req.method == "POST", "must be POST method");
 
   const { message, signature, token } = req.body as BodyType;
