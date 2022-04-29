@@ -30,7 +30,6 @@ const VerifyResult = (
 ) => success && Number(score) >= 0.9 && action === _action;
 
 const tokenUri = async (req: NextApiRequest, res: NextApiResponse) => {
-  invariant(false);
   invariant(req.method == "POST", "must be POST method");
 
   const { message, signature, token } = req.body as BodyType;
@@ -72,15 +71,15 @@ const tokenUri = async (req: NextApiRequest, res: NextApiResponse) => {
   );
   const contract = CommunityFaucetV2__factory.connect(contractAddress, signer);
 
-  const tx = await contract.drop(
-    address,
-    type === "polygon"
-      ? {
-          maxFeePerGas: ethers.utils.parseUnits("40", "gwei"),
-          maxPriorityFeePerGas: ethers.utils.parseUnits("40", "gwei"),
-        }
-      : {}
-  );
+  // const tx = await contract.drop(
+  //   address,
+  //   type === "polygon"
+  //     ? {
+  //         maxFeePerGas: ethers.utils.parseUnits("40", "gwei"),
+  //         maxPriorityFeePerGas: ethers.utils.parseUnits("40", "gwei"),
+  //       }
+  //     : {}
+  // );
 
   res.json({ status: "success" });
 };
