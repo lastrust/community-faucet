@@ -25,9 +25,9 @@ const VerifyResult = (
   { success, score, action, challenge_ts }: RecaptchaResult
 ) => success && Number(score) >= 0.9 && action === _action;
 
-const tokenUri = async (req: NextApiRequest, res: NextApiResponse) => {
+const tokenUri = (req: NextApiRequest, res: NextApiResponse) => {
   invariant(req.method == "POST", "must be POST method");
-  throw JSON.stringify(req);
+  console.log(JSON.stringify(req));
 
   // const { message, signature, token } = req.body as BodyType;
 
