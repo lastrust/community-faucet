@@ -78,7 +78,7 @@ const tokenUri = (req: NextApiRequest, res: NextApiResponse) => {
   // //     : {}
   // // );
 
-  // res.json({ status: "success" });
+  res.json({ status: "success" });
 };
 
 export default tokenUri;
