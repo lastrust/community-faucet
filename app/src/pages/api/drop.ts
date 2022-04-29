@@ -28,7 +28,7 @@ const VerifyResult = (
 const tokenUri = (req: NextApiRequest, res: NextApiResponse) => {
   invariant(req.method == "POST", "must be POST method");
   const ip = req.headers["x-real-ip"] || req.connection.remoteAddress;
-  console.log(ip);
+  console.log(req.body, ip);
   // const { message, signature, token } = req.body as BodyType;
 
   // invariant(message && signature && token, "Body is not correct.");
