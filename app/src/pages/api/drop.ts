@@ -37,7 +37,7 @@ const tokenUri = async (req: NextApiRequest, res: NextApiResponse) => {
     getRecaptchaVerificationUrl(token)
   )) as { data: RecaptchaResult };
 
-  console.log(recaptchaResult);
+  console.log(Number(recaptchaResult.score) >= 0.9);
 
   // invariant(VerifyResult("faucet_astar", recaptchaResult));
 
