@@ -1,8 +1,10 @@
 import { contractList, contractTypes } from "@/util/config";
 import { CommunityFaucetV2__factory } from "@/util/contract";
+import { LimitChecker } from "@/util/limitChecker";
 import axios from "axios";
 import { ethers } from "ethers";
 import { NextApiRequest, NextApiResponse } from "next";
+import requestIp from "request-ip";
 import invariant from "tiny-invariant";
 
 type BodyType = {
@@ -18,6 +20,7 @@ type RecaptchaResult = {
   score: string;
   action: string;
 };
+const limitChecker = LimitChecker();
 
 const allowedTime = 1000 * 60 * 1; //署名の有効期限
 const getRecaptchaVerificationUrl = (token: string) => {
@@ -27,9 +30,12 @@ const getRecaptchaVerificationUrl = (token: string) => {
 const VerifyResult = (
   _action: string,
   { success, score, action, challenge_ts }: RecaptchaResult
-) => success && Number(score) >= 0.9 && action === _action;
+) => success && Number(score) >= 0.7 && action === _action;
 
 const tokenUri = async (req: NextApiRequest, res: NextApiResponse) => {
+  const clientIp = requestIp.getClientIp(req) || "IP_NOT_FOUND";
+  await limitChecker.check(res, 3, clientIp);
+
   invariant(req.method == "POST", "must be POST method");
 
   const { message, signature, token } = req.body as BodyType;
