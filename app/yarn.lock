@@ -708,6 +708,11 @@
   resolved "https://registry.yarnpkg.com/@types/json5/-/json5-0.0.29.tgz#ee28707ae94e11d2b827bcbe5270bcea7f3e71ee"
   integrity sha1-7ihweulOEdK4J7y+UnC86n8+ce4=
 
+"@types/lru-cache@^7.6.1":
+  version "7.6.1"
+  resolved "https://registry.yarnpkg.com/@types/lru-cache/-/lru-cache-7.6.1.tgz#99809260ef1e870b8ef2ab3a625784a33cec5ba9"
+  integrity sha512-69x+Dhrm2aShFkTqUuPgUXbKYwvq4FH/DVeeQH7MBfTjbKjPX51NGLERxVV1vf33N71dzLvXCko4OLqRvsq53Q==
+
 "@types/node@*":
   version "17.0.21"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-17.0.21.tgz#864b987c0c68d07b4345845c3e63b75edd143644"
@@ -748,6 +753,13 @@
     "@types/prop-types" "*"
     "@types/scheduler" "*"
     csstype "^3.0.2"
+
+"@types/request-ip@^0.0.37":
+  version "0.0.37"
+  resolved "https://registry.yarnpkg.com/@types/request-ip/-/request-ip-0.0.37.tgz#06decdcdeeaa834edf2b0a7dea0c1aefd5a04375"
+  integrity sha512-uw6/i3rQnpznxD7LtLaeuZytLhKZK6bRoTS6XVJlwxIOoOpEBU7bgKoVXDNtOg4Xl6riUKHa9bjMVrL6ESqYlQ==
+  dependencies:
+    "@types/node" "*"
 
 "@types/scheduler@*":
   version "0.16.2"
@@ -3267,6 +3279,11 @@ is-weakref@^1.0.1:
   dependencies:
     call-bind "^1.0.2"
 
+is_js@^0.9.0:
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/is_js/-/is_js-0.9.0.tgz#0ab94540502ba7afa24c856aa985561669e9c52d"
+  integrity sha1-CrlFQFArp6+iTIVqqYVWFmnpxS0=
+
 isarray@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/isarray/-/isarray-0.0.1.tgz#8a18acfca9a8f4177e09abfc6038939b05d1eedf"
@@ -3569,6 +3586,11 @@ lru-cache@^6.0.0:
   integrity sha512-Jo6dJ04CmSjuznwJSS3pUeWmd/H0ffTlkXXgwZi+eq1UCmqQwCh+eLsYOYCwY991i2Fah4h1BEMCx4qThGbsiA==
   dependencies:
     yallist "^4.0.0"
+
+lru-cache@^7.8.1:
+  version "7.8.1"
+  resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-7.8.1.tgz#68ee3f4807a57d2ba185b7fd90827d5c21ce82bb"
+  integrity sha512-E1v547OCgJvbvevfjgK9sNKIVXO96NnsTsFPBlg4ZxjhsJSODoH9lk8Bm0OxvHNm6Vm5Yqkl/1fErDxhYL8Skg==
 
 ltgt@~2.2.0:
   version "2.2.1"
@@ -4474,6 +4496,13 @@ remove-accents@0.4.2:
   version "0.4.2"
   resolved "https://registry.yarnpkg.com/remove-accents/-/remove-accents-0.4.2.tgz#0a43d3aaae1e80db919e07ae254b285d9e1c7bb5"
   integrity sha1-CkPTqq4egNuRngeuJUsoXZ4ce7U=
+
+request-ip@^2.1.3:
+  version "2.1.3"
+  resolved "https://registry.yarnpkg.com/request-ip/-/request-ip-2.1.3.tgz#99ab2bafdeaf2002626e28083cb10597511d9e14"
+  integrity sha512-J3qdE/IhVM3BXkwMIVO4yFrvhJlU3H7JH16+6yHucadT4fePnR8dyh+vEs6FIx0S2x5TCt2ptiPfHcn0sqhbYQ==
+  dependencies:
+    is_js "^0.9.0"
 
 request@^2.85.0:
   version "2.88.2"

@@ -1,3 +1,4 @@
+import axios from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
 import invariant from "tiny-invariant";
 
@@ -25,17 +26,18 @@ const VerifyResult = (
   { success, score, action, challenge_ts }: RecaptchaResult
 ) => success && Number(score) >= 0.9 && action === _action;
 
-const tokenUri = (req: NextApiRequest, res: NextApiResponse) => {
+const tokenUri = async (req: NextApiRequest, res: NextApiResponse) => {
   invariant(req.method == "POST", "must be POST method");
-  const ip = req.headers["x-real-ip"] || req.connection.remoteAddress;
-  console.log(req.body, ip);
-  // const { message, signature, token } = req.body as BodyType;
 
-  // invariant(message && signature && token, "Body is not correct.");
+  const { message, signature, token } = req.body as BodyType;
 
-  // const { data: recaptchaResult } = (await axios(
-  //   getRecaptchaVerificationUrl(token)
-  // )) as { data: RecaptchaResult };
+  invariant(message && signature && token, "Body is not correct.");
+
+  const { data: recaptchaResult } = (await axios(
+    getRecaptchaVerificationUrl(token)
+  )) as { data: RecaptchaResult };
+
+  console.log(recaptchaResult);
 
   // invariant(VerifyResult("faucet_astar", recaptchaResult));
 
@@ -68,15 +70,15 @@ const tokenUri = (req: NextApiRequest, res: NextApiResponse) => {
   // );
   // const contract = CommunityFaucetV2__factory.connect(contractAddress, signer);
 
-  // // const tx = await contract.drop(
-  // //   address,
-  // //   type === "polygon"
-  // //     ? {
-  // //         maxFeePerGas: ethers.utils.parseUnits("40", "gwei"),
-  // //         maxPriorityFeePerGas: ethers.utils.parseUnits("40", "gwei"),
-  // //       }
-  // //     : {}
-  // // );
+  // const tx = await contract.drop(
+  //   address,
+  //   type === "polygon"
+  //     ? {
+  //         maxFeePerGas: ethers.utils.parseUnits("40", "gwei"),
+  //         maxPriorityFeePerGas: ethers.utils.parseUnits("40", "gwei"),
+  //       }
+  //     : {}
+  // );
 
   res.json({ status: "success" });
 };
