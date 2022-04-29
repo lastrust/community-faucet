@@ -27,7 +27,7 @@ const VerifyResult = (
 
 const tokenUri = (req: NextApiRequest, res: NextApiResponse) => {
   invariant(req.method == "POST", "must be POST method");
-  console.log(JSON.stringify(req));
+  console.log(req);
 
   // const { message, signature, token } = req.body as BodyType;
 
