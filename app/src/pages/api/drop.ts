@@ -36,10 +36,8 @@ const tokenUri = async (req: NextApiRequest, res: NextApiResponse) => {
   const { data: recaptchaResult } = (await axios(
     getRecaptchaVerificationUrl(token)
   )) as { data: RecaptchaResult };
-
-  console.log(Number(recaptchaResult.score) >= 0.9);
-
-  // invariant(VerifyResult("faucet_astar", recaptchaResult));
+  console.log(VerifyResult("faucet_astar", recaptchaResult));
+  invariant(VerifyResult("faucet_astar", recaptchaResult));
 
   // const [, , targetLine, timeLine, addressLine] = message.split("\n");
   // const [type, time, address] = [
