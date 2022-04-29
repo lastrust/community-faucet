@@ -28,11 +28,7 @@ export default function DefaultLayout({
         style={style}
       >
         <Header {...{ isDark, setIsDark }} />
-        <div className="mt-16 text-base-content">
-          <h1 className="text-center text-4xl font-bold">
-            Shitty maintenance.
-          </h1>
-        </div>
+        <div className="mt-16 text-base-content">{children}</div>
         <Footer type={type} />
       </div>
       <CookieConsent>

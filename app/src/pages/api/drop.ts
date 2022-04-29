@@ -1,4 +1,7 @@
+import { contractList, contractTypes } from "@/util/config";
+import { CommunityFaucetV2__factory } from "@/util/contract";
 import axios from "axios";
+import { ethers } from "ethers";
 import { NextApiRequest, NextApiResponse } from "next";
 import invariant from "tiny-invariant";
 
@@ -33,50 +36,49 @@ const tokenUri = async (req: NextApiRequest, res: NextApiResponse) => {
 
   invariant(message && signature && token, "Body is not correct.");
 
+  const [, , targetLine, timeLine, addressLine] = message.split("\n");
+  const [type, time, address] = [
+    targetLine.slice(8) as contractTypes,
+    timeLine.slice(6),
+    addressLine.slice(9),
+  ];
+
   const { data: recaptchaResult } = (await axios(
     getRecaptchaVerificationUrl(token)
   )) as { data: RecaptchaResult };
-  console.log(VerifyResult("faucet_astar", recaptchaResult));
-  invariant(VerifyResult("faucet_astar", recaptchaResult));
 
-  // const [, , targetLine, timeLine, addressLine] = message.split("\n");
-  // const [type, time, address] = [
-  //   targetLine.slice(8) as contractTypes,
-  //   timeLine.slice(6),
-  //   addressLine.slice(9),
-  // ];
-  // // invariant(type !== "shiden");
+  invariant(VerifyResult(`drop_to_${address}`, recaptchaResult));
 
-  // const recoveredAddress = ethers.utils.verifyMessage(message, signature);
-  // const isMatchAddress =
-  //   recoveredAddress.toLowerCase() === address.toLowerCase();
-  // const isInTime = Date.now() - Number(time) < allowedTime;
-  // invariant(isMatchAddress && isInTime, "Invalid signature");
+  const recoveredAddress = ethers.utils.verifyMessage(message, signature);
+  const isMatchAddress =
+    recoveredAddress.toLowerCase() === address.toLowerCase();
+  const isInTime = Date.now() - Number(time) < allowedTime;
+  invariant(isMatchAddress && isInTime, "Invalid signature");
 
-  // const { address: contractAddress, rpc } = contractList[type];
-  // invariant(
-  //   process.env.PRIVATE_KEY &&
-  //     process.env.NEXT_PUBLIC_CONTRACT_ADDRESS &&
-  //     contractAddress &&
-  //     rpc,
-  //   "env not found"
-  // );
+  const { address: contractAddress, rpc } = contractList[type];
+  invariant(
+    process.env.PRIVATE_KEY &&
+      process.env.NEXT_PUBLIC_CONTRACT_ADDRESS &&
+      contractAddress &&
+      rpc,
+    "env not found"
+  );
 
-  // const signer = new ethers.Wallet(
-  //   process.env.PRIVATE_KEY,
-  //   new ethers.providers.JsonRpcProvider(rpc)
-  // );
-  // const contract = CommunityFaucetV2__factory.connect(contractAddress, signer);
+  const signer = new ethers.Wallet(
+    process.env.PRIVATE_KEY,
+    new ethers.providers.JsonRpcProvider(rpc)
+  );
+  const contract = CommunityFaucetV2__factory.connect(contractAddress, signer);
 
-  // const tx = await contract.drop(
-  //   address,
-  //   type === "polygon"
-  //     ? {
-  //         maxFeePerGas: ethers.utils.parseUnits("40", "gwei"),
-  //         maxPriorityFeePerGas: ethers.utils.parseUnits("40", "gwei"),
-  //       }
-  //     : {}
-  // );
+  const tx = await contract.drop(
+    address,
+    type === "polygon"
+      ? {
+          maxFeePerGas: ethers.utils.parseUnits("40", "gwei"),
+          maxPriorityFeePerGas: ethers.utils.parseUnits("40", "gwei"),
+        }
+      : {}
+  );
 
   res.json({ status: "success" });
 };

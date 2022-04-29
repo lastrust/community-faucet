@@ -19,13 +19,11 @@ const FaucetModal: React.FC<{
   const { account, provider } = useWeb3();
   const { executeRecaptcha } = useGoogleReCaptcha();
   const contract = useContract(type, { fetchOnly: true });
-  const handler = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setIsStudent(e.target.checked);
 
   const faucet = async () => {
     if (account && provider && executeRecaptcha) {
       setIsLoading(true);
-      const token = await executeRecaptcha("faucet_astar");
+      const token = await executeRecaptcha(`drop_to_${account.id}`);
       const message = `Student Faucet\n\nTarget: ${type}\nTime: ${new Date().getTime()}\nAddress: ${
         account.id
       }`;
