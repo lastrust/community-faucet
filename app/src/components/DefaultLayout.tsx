@@ -114,7 +114,7 @@ export const Footer: React.FC<{ type: contractTypes }> = ({ type }) => (
   <footer className="footer mt-auto items-center bg-neutral p-4 text-neutral-content">
     <div className="grid-flow-col items-center">
       <BsGear size="36" />
-      <p> Student Faucet © 2022 - All right reserved</p>
+      <p> Community Faucet © 2022 - All right reserved</p>
     </div>
     <div className="grid-flow-col gap-4 md:place-self-center md:justify-self-end">
       <a href="https://twitter.com/unknown_gakusei">
