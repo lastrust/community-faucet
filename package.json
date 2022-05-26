@@ -1,0 +1,21 @@
+{
+  "name": "community_faucet",
+  "version": "1.0.0",
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "eslint": "8.8.0",
+    "eslint-config-next": "^12.0.10",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.25.4"
+  },
+  "scripts": {
+    "dev": "yarn workspace @community_faucet/interface dev",
+    "test": "yarn workspace contract hardhat test"
+  },
+  "workspaces": {
+    "packages": [
+      "projects/*"
+    ]
+  }
+}

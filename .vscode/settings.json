@@ -5,11 +5,11 @@
     "source.organizeImports": true,
     "source.fixAll.eslint": true
   },
-  "eslint.workingDirectories": ["./app"],
+  "eslint.workingDirectories": ["./projects/app", "./projects/contract"],
   "[javascriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "files.exclude": {
-    // /"**/.env*": true
+  "[xml]": {
+    "editor.defaultFormatter": "DotJoshJohnson.xml"
   }
 }

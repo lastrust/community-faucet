@@ -4,7 +4,6 @@
     "dbaeumer.vscode-eslint",
     "streetsidesoftware.code-spell-checker",
     "bradlc.vscode-tailwindcss",
-    "csstools.postcss",
-    "NomicFoundation.hardhat-solidity"
+    "csstools.postcss"
   ]
 }
