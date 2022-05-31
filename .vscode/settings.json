@@ -5,7 +5,7 @@
     "source.organizeImports": true,
     "source.fixAll.eslint": true
   },
-  "eslint.workingDirectories": ["./projects/app", "./projects/contract"],
+  "eslint.workingDirectories": ["./projects/interface", "./projects/contract"],
   "[javascriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },

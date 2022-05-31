@@ -1,3 +1,5 @@
+import "@/styles/global.css";
+
 function MyApp({
   Component,
   pageProps,
@@ -5,11 +7,7 @@ function MyApp({
   Component: React.FC;
   pageProps: any;
 }) {
-  return (
-
-      <Component {...pageProps} />
-
-  );
+  return <Component {...pageProps} />;
 }
 
 export default MyApp;
