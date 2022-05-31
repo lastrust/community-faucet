@@ -2,7 +2,7 @@ import { contractList, contractTypes } from "@/util/config";
 import { CommunityFaucetV2__factory } from "@/util/contract";
 import { LimitChecker } from "@/util/limitChecker";
 import axios from "axios";
-import { ethers } from "ethers";
+import { ethers, utils } from "ethers";
 import { NextApiRequest, NextApiResponse } from "next";
 import requestIp from "request-ip";
 import invariant from "tiny-invariant";
@@ -70,21 +70,17 @@ const tokenUri = async (req: NextApiRequest, res: NextApiResponse) => {
     "env not found"
   );
 
-  const signer = new ethers.Wallet(
-    process.env.PRIVATE_KEY,
-    new ethers.providers.JsonRpcProvider(rpc)
-  );
+  const provider = new ethers.providers.JsonRpcProvider(rpc);
+
+  const signer = new ethers.Wallet(process.env.PRIVATE_KEY, provider);
   const contract = CommunityFaucetV2__factory.connect(contractAddress, signer);
 
-  const tx = await contract.drop(
-    address,
-    type === "polygon"
-      ? {
-          maxFeePerGas: ethers.utils.parseUnits("40", "gwei"),
-          maxPriorityFeePerGas: ethers.utils.parseUnits("40", "gwei"),
-        }
-      : {}
-  );
+  const tx = await contract.drop(address, {
+    maxFeePerGas: utils.parseUnits("20", "gwei"),
+    maxPriorityFeePerGas: utils.parseUnits("20", "gwei"),
+  });
+  console.log(tx);
+  await tx.wait();
 
   res.json({ status: "success" });
 };
