@@ -79,8 +79,6 @@ const tokenUri = async (req: NextApiRequest, res: NextApiResponse) => {
     maxFeePerGas: utils.parseUnits("20", "gwei"),
     maxPriorityFeePerGas: utils.parseUnits("20", "gwei"),
   });
-  console.log(tx);
-  await tx.wait();
 
   res.json({ status: "success" });
 };
