@@ -76,8 +76,8 @@ const tokenUri = async (req: NextApiRequest, res: NextApiResponse) => {
   const contract = CommunityFaucetV2__factory.connect(contractAddress, signer);
 
   const tx = await contract.drop(address, {
-    maxFeePerGas: utils.parseUnits("20", "gwei"),
-    maxPriorityFeePerGas: utils.parseUnits("20", "gwei"),
+    maxFeePerGas: utils.parseUnits("6", "gwei"),
+    maxPriorityFeePerGas: utils.parseUnits("6", "gwei"),
   });
 
   res.json({ status: "success" });
