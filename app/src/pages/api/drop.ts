@@ -22,7 +22,12 @@ type RecaptchaResult = {
 };
 const limitChecker = LimitChecker();
 
-const blackList = ["162.158.179.44", "162.158.179.43"];
+const blackList = [
+  "162.158.179.44",
+  "162.158.179.43",
+  "172.68.253.124",
+  "162.158.179.198",
+];
 
 const allowedTime = 1000 * 60 * 1; //署名の有効期限
 const getRecaptchaVerificationUrl = (token: string) => {
@@ -37,7 +42,8 @@ const VerifyResult = (
 const tokenUri = async (req: NextApiRequest, res: NextApiResponse) => {
   const clientIp = requestIp.getClientIp(req) || "IP_NOT_FOUND";
   await limitChecker.check(res, 3, clientIp);
-  console.log(clientIp);
+  if (clientIp.includes("162.158") || clientIp.includes("172.68"))
+    return res.status(418).send("I'am a teapot.");
   invariant(req.method == "POST", "must be POST method");
 
   const { message, signature, token } = req.body as BodyType;
