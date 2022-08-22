@@ -22,7 +22,7 @@ type RecaptchaResult = {
 };
 const limitChecker = LimitChecker();
 
-const blackList = ["104.0.5112.82"];
+const blackList = ["162.158.179.44", "162.158.179.43"];
 
 const allowedTime = 1000 * 60 * 1; //署名の有効期限
 const getRecaptchaVerificationUrl = (token: string) => {
