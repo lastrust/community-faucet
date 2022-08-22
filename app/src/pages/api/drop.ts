@@ -37,7 +37,7 @@ const VerifyResult = (
 const tokenUri = async (req: NextApiRequest, res: NextApiResponse) => {
   const clientIp = requestIp.getClientIp(req) || "IP_NOT_FOUND";
   await limitChecker.check(res, 3, clientIp);
-  if (blackList.includes(clientIp)) return res.status(400).send("LOL");
+  console.log(clientIp);
   invariant(req.method == "POST", "must be POST method");
 
   const { message, signature, token } = req.body as BodyType;
