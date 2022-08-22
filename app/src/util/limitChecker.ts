@@ -10,7 +10,7 @@ type CheckLimitFunc = () => {
 };
 export const LimitChecker: CheckLimitFunc = () => {
   const tokenCache = new LRU<string, number>({
-    max: 500,
+    max: 10,
     ttl: 1000 * 60 * 5,
   });
 

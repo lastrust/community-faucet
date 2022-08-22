@@ -9,6 +9,7 @@
     "sync": "yarn typechain --target ethers-v5 --out-dir src/util/contract '../contract/artifacts/contracts/FaucetV2.sol/CommunityFaucetV2.json'"
   },
   "dependencies": {
+    "@rainbow-me/fee-suggestions": "^2.0.0",
     "axios": "^0.26.1",
     "daisyui": "^2.11.1",
     "ethers": "^5.5.4",
