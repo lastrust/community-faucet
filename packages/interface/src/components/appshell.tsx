@@ -38,8 +38,12 @@ export default function App_nav({ children }: { children: ReactNode }) {
                 })}
             >
                 <Group>
-                    {icon}
-                    <Text size="sm">{label}</Text>
+                    <MediaQuery smallerThan="md" styles={{ display: 'none' }}>
+                        <>
+                            {icon}
+                            <Text size="sm">{label}</Text>
+                        </>
+                    </MediaQuery>
                 </Group>
             </UnstyledButton>
         );
@@ -55,9 +59,11 @@ export default function App_nav({ children }: { children: ReactNode }) {
                 navbarOffsetBreakpoint="sm"
                 asideOffsetBreakpoint="sm"
                 navbar={
-                    <Navbar p="md" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 200, lg: 300 }}>
-                        {data.map((link) => <MainLink {...link} key={link.label} />)}
-                    </Navbar>
+                    <MediaQuery smallerThan="md" styles={{ display: 'none' }}>
+                        <Navbar p="md" hiddenBreakpoint="md" hidden={!opened} width={{ md: 200, lg: 250 }}>
+                            {data.map((link) => <MainLink {...link} key={link.label} />)}
+                        </Navbar>
+                    </MediaQuery>
                 }
                 footer={
                     <Footer height={60} p="md">
