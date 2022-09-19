@@ -10,6 +10,13 @@
     "sync": "yarn typechain --target ethers-v5 --out-dir src/util/contract '../contract/artifacts/contracts/FaucetV2.sol/CommunityFaucetV2.json'"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.4",
+    "@mantine/core": "^5.3.3",
+    "@mantine/form": "^5.3.3",
+    "@mantine/hooks": "^5.3.3",
+    "@mantine/modals": "^5.3.3",
+    "@mantine/notifications": "^5.3.3",
+    "@mantine/nprogress": "^5.3.3",
     "@polkadot/extension-dapp": "^0.43.2",
     "ethers": "^5.5.4",
     "lru-cache": "^7.8.1",
