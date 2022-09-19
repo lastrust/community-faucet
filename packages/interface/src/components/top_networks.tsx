@@ -12,7 +12,7 @@ export default function Top_networks({ name, balance, total_drop, supporter, sym
                 >{name} Community Faucet</Text>
             </Group>
             <Grid grow={grow}>
-                <Grid.Col span={6}>
+                <Grid.Col xs={6} sm={4} md={4} lg={6} xl={6}>
                     <Text size="sm" color="dimmed" align="center">
                         <Blockquote
                             cite="– Remaining funds"
@@ -28,7 +28,7 @@ export default function Top_networks({ name, balance, total_drop, supporter, sym
                         </Blockquote>
                     </Text>
                 </Grid.Col>
-                <Grid.Col span={6}>
+                <Grid.Col xs={6} sm={4} md={4} lg={6} xl={6}>
                     <Text size="sm" color="dimmed" align="center">
                         <Blockquote
                             cite={"–" + symbol + " from here"}
@@ -44,7 +44,7 @@ export default function Top_networks({ name, balance, total_drop, supporter, sym
                         </Blockquote>
                     </Text>
                 </Grid.Col>
-                <Grid.Col span={6}>
+                <Grid.Col xs={6} sm={4} md={4} lg={6} xl={6}>
                     <Text size="sm" color="dimmed" align="center">
                         <Blockquote
                             cite="– Faucet Supporter"

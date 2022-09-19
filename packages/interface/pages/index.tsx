@@ -6,7 +6,7 @@ const Home: NextPage = () => {
     <>
       <Container >
         <Grid grow gutter="lg">
-          <Grid.Col span={6}>
+          <Grid.Col xs={12} sm={12} md={12} lg={6} xl={6}>
             <Top_networks
               name="aster"
               balance={630.06}
@@ -16,7 +16,7 @@ const Home: NextPage = () => {
               color="indigo"
               grow={false}
             /></Grid.Col>
-          <Grid.Col span={6}><Top_networks
+          <Grid.Col xs={12} sm={12} md={12} lg={6} xl={6}><Top_networks
             name="shibuya"
             balance={1557.24}
             total_drop={606.80}
@@ -25,7 +25,7 @@ const Home: NextPage = () => {
             color="gray"
             grow={false}
           /></Grid.Col>
-          <Grid.Col span={6}><Top_networks
+          <Grid.Col xs={12} sm={12} md={12} lg={6} xl={6}><Top_networks
             name="matic"
             balance={1.94}
             total_drop={29.38}
@@ -34,7 +34,7 @@ const Home: NextPage = () => {
             color="grape"
             grow={false}
           /></Grid.Col>
-          <Grid.Col span={6}><Top_networks
+          <Grid.Col xs={12} sm={12} md={12} lg={6} xl={6}><Top_networks
             name="shiden"
             balance={347.07}
             total_drop={1145.38}
