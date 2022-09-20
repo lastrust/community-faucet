@@ -52,8 +52,6 @@ export default function Layout({ children }: { children: ReactNode }) {
                 </Navbar.Item>
             </Navbar.Content>
         </Navbar>
-        <Container md>
-            {children}
-        </Container>
+        {children}
     </>)
 }
