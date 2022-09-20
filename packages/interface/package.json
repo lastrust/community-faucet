@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@emotion/react": "^11.10.4",
+    "@nextui-org/react": "^1.0.0-beta.10",
     "@polkadot/extension-dapp": "^0.43.2",
     "ethers": "^5.5.4",
     "lru-cache": "^7.8.1",
