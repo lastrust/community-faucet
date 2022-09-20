@@ -12,11 +12,12 @@ const Home: NextPage = () => {
             }}
           >
             <Networks
-              name="Astar"
+              name="astar"
               balance={629.87}
               total_drop={1164.92}
               supporter={197}
               symbol="ASTR"
+              url="aster"
             />
           </Grid>
           <Grid 
@@ -24,11 +25,12 @@ const Home: NextPage = () => {
               margin: "10px auto"
             }}>
             <Networks
-              name="Shibuya"
+              name="shibuya"
               balance={1557.24}
               total_drop={606.80}
               supporter={69}
               symbol="SBY"
+              url="shibuya"
             />
           </Grid>
           <Grid 
@@ -36,11 +38,12 @@ const Home: NextPage = () => {
               margin: "10px auto"
             }}>
             <Networks
-              name="Matic"
+              name="matic"
               balance={1.94}
               total_drop={29.38}
               supporter={30}
               symbol="MATIC"
+              url="polygon"
             />
           </Grid>
           <Grid 
@@ -48,11 +51,12 @@ const Home: NextPage = () => {
               margin: "10px auto"
             }}>
             <Networks
-              name="Shiden"
+              name="shiden"
               balance={347.05}
               total_drop={1145.40}
               supporter={62}
               symbol="SDN"
+              url="shiden"
             />
           </Grid>
         </Grid.Container>

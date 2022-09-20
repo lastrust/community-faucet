@@ -1,5 +1,6 @@
-import { Container, Card, Grid, Text, Link } from "@nextui-org/react";
-export default function Networks({ name, balance, total_drop, supporter, symbol }: { name: string, balance: number, total_drop: number, supporter: number, symbol: string }) {
+import { Container, Card, Grid, Text, Button } from "@nextui-org/react";
+import Link from "next/link";
+export default function Networks({ name, balance, total_drop, supporter, symbol, url }: { name: string, balance: number, total_drop: number, supporter: number, symbol: string, url: string }) {
     var capitalize = function (str: string) {
         if (typeof str !== 'string' || !str) return str;
         return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
@@ -71,11 +72,15 @@ export default function Networks({ name, balance, total_drop, supporter, symbol 
                     >
 
                         <Link
-                            color="primary"
-                            target="_blank"
-                            href="https://github.com/nextui-org/nextui"
+                            href={"/" + url}
                         >
-                            Open {symbol} Acquisition Page
+                            <Button
+                                style={{
+                                    width: "100%"
+                                }}
+                                bordered
+                                color="gradient"
+                            >Open {symbol} Acquisition Page</Button>
                         </Link>
 
                     </Grid>
