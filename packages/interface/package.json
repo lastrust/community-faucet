@@ -11,6 +11,7 @@
   "dependencies": {
     "@emotion/react": "^11.10.4",
     "@heroicons/react": "^2.0.11",
+    "@metamask/eth-sig-util": "^5.0.0",
     "@nextui-org/react": "^1.0.0-beta.10",
     "@polkadot/extension-dapp": "^0.43.2",
     "@trpc/client": "^9.27.2",
