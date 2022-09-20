@@ -28,7 +28,7 @@ export default function Networks({ name, balance, total_drop, supporter, symbol 
                         <Text h3 style={{
                             marginTop: "-6px",
                             marginBottom: "1px"
-                        }}>{balance} {symbol}</Text>
+                        }}>{balance} {symbol.length == 3 ? symbol + "　" : symbol}</Text>
                         <Text h5 color="#7d8185">Remaining funds</Text>
                     </Grid>
                     <Grid xs={12} sm={6} md={6} lg={6} xl={6}
@@ -42,7 +42,7 @@ export default function Networks({ name, balance, total_drop, supporter, symbol 
                         <Text h3 style={{
                             marginTop: "-6px",
                             marginBottom: "1px"
-                        }}>{total_drop} {symbol}</Text>
+                        }}>{total_drop} {symbol.length == 3 ? symbol + "　" : symbol}</Text>
                         <Text h5 color="#7d8185">{symbol} from here</Text>
                     </Grid>
                     <Grid xs={12} sm={6} md={6} lg={6} xl={6}
@@ -75,7 +75,7 @@ export default function Networks({ name, balance, total_drop, supporter, symbol 
                             target="_blank"
                             href="https://github.com/nextui-org/nextui"
                         >
-                            Open Aster Acquisition Page
+                            Open {symbol} Acquisition Page
                         </Link>
 
                     </Grid>

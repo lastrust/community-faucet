@@ -19,7 +19,7 @@ const Home: NextPage = () => {
               symbol="ASTR"
             />
           </Grid>
-          <Grid
+          <Grid 
             style={{
               margin: "10px auto"
             }}>
@@ -31,7 +31,7 @@ const Home: NextPage = () => {
               symbol="SBY"
             />
           </Grid>
-          <Grid
+          <Grid 
             style={{
               margin: "10px auto"
             }}>
@@ -43,7 +43,7 @@ const Home: NextPage = () => {
               symbol="MATIC"
             />
           </Grid>
-          <Grid
+          <Grid 
             style={{
               margin: "10px auto"
             }}>
