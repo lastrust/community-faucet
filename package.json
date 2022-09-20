@@ -19,6 +19,8 @@
     "eslint-plugin-import": "^2.25.4"
   },
   "scripts": {
-    "dev": "yarn workspace @community_faucet/interface dev"
+    "dev": "yarn workspace @community_faucet/interface dev",
+    "build": "yarn workspace @community_faucet/interface build",
+    "start": "yarn workspace @community_faucet/interface start"
   }
 }
