@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@nomicfoundation/hardhat-toolbox": "^2.0.0",
+    "@openzeppelin/contracts-upgradeable": "^4.7.3",
     "hardhat": "^2.11.2"
   },
   "devDependencies": {
