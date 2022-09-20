@@ -50,7 +50,7 @@ export default function Layout({ children }: { children: ReactNode }) {
                 </Navbar.Item>
             </Navbar.Content>
         </Navbar>
-        <Container>
+        <Container md>
             {children}
         </Container>
     </>)

@@ -5,7 +5,7 @@ const Home: NextPage = () => {
   return (
     <>
       <Grid.Container gap={2} justify="center">
-        <Grid xs={6}>
+        <Grid >
           <Networks
             name="Astar"
             balance={629.87}
@@ -14,7 +14,7 @@ const Home: NextPage = () => {
             symbol="ASTR"
           />
         </Grid>
-        <Grid xs={6}>
+        <Grid >
           <Networks
             name="Shibuya"
             balance={1557.24}
@@ -23,7 +23,7 @@ const Home: NextPage = () => {
             symbol="SBY"
           />
         </Grid>
-        <Grid xs={6}>
+        <Grid >
           <Networks
             name="Matic"
             balance={1.94}
@@ -32,7 +32,7 @@ const Home: NextPage = () => {
             symbol="MATIC"
           />
         </Grid>
-        <Grid xs={6}>
+        <Grid >
           <Networks
             name="Shiden"
             balance={347.05}

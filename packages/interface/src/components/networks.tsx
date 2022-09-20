@@ -5,7 +5,7 @@ export default function Networks({ name, balance, total_drop, supporter, symbol 
         return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
     };
     return (
-        <Container>
+        <Container css={{ p : 0 }}>
             <Card css={{ p: "$6", mw: "400px" }}>
                 <Card.Header>
                     <Grid.Container css={{ pl: "$6" }}>
