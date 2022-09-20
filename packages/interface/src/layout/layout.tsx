@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
-import { Navbar, Link, Text, Button, Container } from "@nextui-org/react";
+import { Navbar, Text, Button, Container } from "@nextui-org/react";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useTheme as useNextTheme } from 'next-themes'
 import { Switch, useTheme } from '@nextui-org/react'
@@ -10,7 +11,6 @@ export default function Layout({ children }: { children: ReactNode }) {
     const { isDark, type } = useTheme();
     return (<>
         <Navbar shouldHideOnScroll variant="floating" isBordered>
-            <Navbar.Toggle showIn="xs" />
             <Navbar.Brand
                 css={{
                     "@xs": {
@@ -20,21 +20,23 @@ export default function Layout({ children }: { children: ReactNode }) {
             >
                 <Link
                     href="/"
-                    color="text"
                 >
-                    <Text b color="inherit" hideIn="xs">
+                    <Text b color="inherit" hideIn="sm">
                         Community Faucet
                     </Text>
                 </Link>
+                <Link
+                    href="/"
+                >
+                    <Text b color="inherit" showIn="sm" style={{
+                        marginBottom: "2px"
+                    }}>
+                        CFaucet
+                    </Text>
+                </Link>
             </Navbar.Brand>
-            <Navbar.Content
-                variant="highlight"
-            >
-                <Navbar.Link isActive={router.pathname == "/"} href="/">Home</Navbar.Link>
-                <Navbar.Link isActive={router.pathname == "/supporters"} href="/supporters">Supporters</Navbar.Link>
-            </Navbar.Content>
             <Navbar.Content>
-                <Navbar.Link color="inherit" href="#">
+                <Navbar.Link color="inherit" hideIn="sm">
                     <Button
                         auto
                         light
@@ -44,7 +46,7 @@ export default function Layout({ children }: { children: ReactNode }) {
                     />
                 </Navbar.Link>
                 <Navbar.Item>
-                    <Button auto flat as={Link} href="#">
+                    <Button auto flat>
                         Connect Wallet
                     </Button>
                 </Navbar.Item>
