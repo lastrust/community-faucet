@@ -40,7 +40,7 @@ export default function Layout({ children }: { children: ReactNode }) {
                         light
                         color="gradient"
                         onClick={() => { setTheme(isDark ? "light" : "dark") }}
-                        icon={isDark ? <MoonIcon width={20} /> : <SunIcon width={20} />}
+                        icon={isDark ? <MoonIcon width={20} color="#FFFFFF" /> : <SunIcon width={20} color="#000000" />}
                     />
                 </Navbar.Link>
                 <Navbar.Item>
