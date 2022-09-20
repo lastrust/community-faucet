@@ -18,9 +18,10 @@ const Home: NextPage = () => {
               supporter={197}
               symbol="ASTR"
               url="aster"
+              color="#67b7f0"
             />
           </Grid>
-          <Grid 
+          <Grid
             style={{
               margin: "10px auto"
             }}>
@@ -31,9 +32,10 @@ const Home: NextPage = () => {
               supporter={69}
               symbol="SBY"
               url="shibuya"
+              color="#7cd7de"
             />
           </Grid>
-          <Grid 
+          <Grid
             style={{
               margin: "10px auto"
             }}>
@@ -44,9 +46,10 @@ const Home: NextPage = () => {
               supporter={30}
               symbol="MATIC"
               url="polygon"
+              color="#a5bbe6"
             />
           </Grid>
-          <Grid 
+          <Grid
             style={{
               margin: "10px auto"
             }}>
@@ -57,6 +60,7 @@ const Home: NextPage = () => {
               supporter={62}
               symbol="SDN"
               url="shiden"
+              color="#f7bef2"
             />
           </Grid>
         </Grid.Container>

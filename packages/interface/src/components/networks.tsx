@@ -1,17 +1,33 @@
 import { Container, Card, Grid, Text, Button } from "@nextui-org/react";
 import Link from "next/link";
-export default function Networks({ name, balance, total_drop, supporter, symbol, url }: { name: string, balance: number, total_drop: number, supporter: number, symbol: string, url: string }) {
+export default function Networks({ name, balance, total_drop, supporter, symbol, url, color }: { name: string, balance: number, total_drop: number, supporter: number, symbol: string, url: string, color: string }) {
     var capitalize = function (str: string) {
         if (typeof str !== 'string' || !str) return str;
         return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
     };
+    function hex2rgba(hex: string, alpha = 1) {
+        let r = hex.match(/^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i)
+        let c = null
+        if (r) {
+            c = r.slice(1, 4).map(function (x) { return parseInt(x, 16) })
+        }
+        r = hex.match(/^#([0-9a-f])([0-9a-f])([0-9a-f])$/i)
+        if (r) {
+            c = r.slice(1, 4).map(function (x) { return 0x11 * parseInt(x, 16) })
+        }
+        if (!c) {
+            return null
+        }
+        return `rgba(${c[0]}, ${c[1]}, ${c[2]}, ${alpha})`
+    }
     return (
-        <Card css={{ p: "$6", mw: "400px" }}>
+        <Card css={{ p: "$6", mw: "400px" }}
+        >
             <Card.Header>
                 <Grid.Container css={{ pl: "$6" }}>
                     <Grid xs={12}>
-                        <Text h4 css={{ lineHeight: "$xs" }}>
-                            {capitalize(name)} Community Faucet
+                        <Text h2 css={{ lineHeight: "$xs", marginBottom: "-3px" }}>
+                            {capitalize(name)}
                         </Text>
                     </Grid>
                 </Grid.Container>
@@ -76,7 +92,7 @@ export default function Networks({ name, balance, total_drop, supporter, symbol,
                         >
                             <Button
                                 style={{
-                                    width: "100%"
+                                    width: "100%",
                                 }}
                                 bordered
                                 color="gradient"
