@@ -1,7 +1,11 @@
 import { Grid } from "@nextui-org/react";
 import type { NextPage } from 'next';
 import Networks from 'src/components/networks';
+import { trpc } from "src/utils/trpc";
+
 const Home: NextPage = () => {
+  const hello = trpc.useQuery(['hello', { text: 'client' }]);
+  console.log(hello.data?.greeting)
   return (
     <>
       <Grid.Container gap={2} justify="center">
