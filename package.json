@@ -21,6 +21,8 @@
   "scripts": {
     "dev": "yarn workspace @community_faucet/interface dev",
     "build": "yarn workspace @community_faucet/interface build",
-    "start": "yarn workspace @community_faucet/interface start"
+    "start": "yarn workspace @community_faucet/interface start",
+    "compile":"yarn workspace @community_faucet/contract compile",
+    "test":"yarn workspace @community_faucet/contract test"
   }
 }
