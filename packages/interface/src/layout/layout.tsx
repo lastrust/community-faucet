@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { Navbar, Link, Text, Button } from "@nextui-org/react";
+import { Navbar, Link, Text, Button, Container } from "@nextui-org/react";
 import { useRouter } from "next/router";
 import { useTheme as useNextTheme } from 'next-themes'
 import { Switch, useTheme } from '@nextui-org/react'
@@ -50,6 +50,8 @@ export default function Layout({ children }: { children: ReactNode }) {
                 </Navbar.Item>
             </Navbar.Content>
         </Navbar>
-        {children}
+        <Container>
+            {children}
+        </Container>
     </>)
 }
