@@ -5,7 +5,7 @@ const Home: NextPage = () => {
   return (
     <>
       <Container>
-        <Grid.Container justify="center">
+        <Grid.Container justify="center" >
           <Grid
             style={{
               margin: "10px auto"
