@@ -1,5 +1,6 @@
 import { Button, Card, Collapse, Grid, Text } from "@nextui-org/react";
 import Link from "next/link";
+import Router from 'next/router'
 export default function Networks({ name, balance, total_drop, supporter, symbol, url, color }: { name: string, balance: number, total_drop: number, supporter: number, symbol: string, url: string, color: string }) {
     var capitalize = function (str: string) {
         if (typeof str !== 'string' || !str) return str;
@@ -165,17 +166,16 @@ export default function Networks({ name, balance, total_drop, supporter, symbol,
                         }}
                     >
 
-                        <Link
-                            href={"/" + url}
-                        >
-                            <Button
-                                style={{
-                                    width: "100%",
-                                }}
-                                bordered
-                                color="gradient"
-                            >Open {symbol} Acquisition Page</Button>
-                        </Link>
+                        <Button
+                            style={{
+                                width: "100%",
+                            }}
+                            bordered
+                            color="gradient"
+                            onClick={() => {
+                                Router.push('/' + url)
+                            }}
+                        >Open {symbol} Acquisition Page</Button>
 
                     </Grid>
                 </Grid.Container>
