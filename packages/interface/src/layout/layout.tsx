@@ -21,7 +21,10 @@ export default function Layout({ children }: { children: ReactNode }) {
                 <Link
                     href="/"
                 >
-                    <Text b color="inherit" hideIn="sm">
+                    <Text b color="inherit" hideIn="sm"
+                        style={{
+                            cursor: "pointer"
+                        }}>
                         Community Faucet
                     </Text>
                 </Link>
@@ -29,7 +32,8 @@ export default function Layout({ children }: { children: ReactNode }) {
                     href="/"
                 >
                     <Text b color="inherit" showIn="sm" style={{
-                        marginBottom: "2px"
+                        marginBottom: "2px",
+                        cursor: "pointer"
                     }}>
                         CFaucet
                     </Text>
