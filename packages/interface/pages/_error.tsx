@@ -59,17 +59,7 @@ export default function Error_Page({ statusCode }: { statusCode: number }) {
                         }}
                         weight="bold"
                     >
-                        I&apos;m
-                    </Text>
-                    <Text
-                        h1
-                        size={60}
-                        css={{
-                            textGradient: "45deg, $yellow600 -20%, $red600 100%",
-                        }}
-                        weight="bold"
-                    >
-                        a teapot
+                        I&apos;m a teapot
                     </Text>
                 </main>
             </div>
