@@ -2,7 +2,7 @@ import { contractList, contractTypes } from "@/util/config";
 import { CommunityFaucetV2__factory } from "@/util/contract";
 import { LimitChecker } from "@/util/limitChecker";
 import axios from "axios";
-import { ethers, utils } from "ethers";
+import { ethers } from "ethers";
 import { NextApiRequest, NextApiResponse } from "next";
 import requestIp from "request-ip";
 import invariant from "tiny-invariant";
@@ -22,12 +22,28 @@ type RecaptchaResult = {
 };
 const limitChecker = LimitChecker();
 
-const blackList = [
-  "162.158.179.44",
-  "162.158.179.43",
-  "172.68.253.124",
-  "162.158.179.198",
-];
+export class FixedProvider extends ethers.providers.JsonRpcBatchProvider {
+  async getFeeData(): Promise<ethers.providers.FeeData> {
+    const history = (await this.send("eth_feeHistory", [
+      "0x1",
+      "latest",
+      [25],
+    ])) as {
+      baseFeePerGas: string[];
+      reward: string[][];
+    };
+
+    const feeData = {
+      gasPrice: null,
+      lastBaseFeePerGas: null,
+      maxFeePerGas: ethers.BigNumber.from(history.baseFeePerGas[1])
+        .mul(2)
+        .add(history.reward[0][0]),
+      maxPriorityFeePerGas: ethers.BigNumber.from(history.reward[0][0]),
+    };
+    return feeData;
+  }
+}
 
 const allowedTime = 1000 * 60 * 1; //署名の有効期限
 const getRecaptchaVerificationUrl = (token: string) => {
@@ -87,10 +103,7 @@ const tokenUri = async (req: NextApiRequest, res: NextApiResponse) => {
   const signer = new ethers.Wallet(process.env.PRIVATE_KEY, provider);
   const contract = CommunityFaucetV2__factory.connect(contractAddress, signer);
 
-  const tx = await contract.drop(address, {
-    maxFeePerGas: utils.parseUnits("3.25", "gwei"),
-    maxPriorityFeePerGas: utils.parseUnits("2", "gwei"),
-  });
+  const tx = await contract.drop(address);
 
   res.json({ status: "success" });
 };
