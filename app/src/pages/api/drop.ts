@@ -47,7 +47,10 @@ export class FixedProvider extends ethers.providers.JsonRpcBatchProvider {
 
 const allowedTime = 1000 * 60 * 1; //署名の有効期限
 const getRecaptchaVerificationUrl = (token: string) => {
-  invariant(process.env.RECAPTCHA_SECRET_KEY);
+  invariant(
+    process.env.RECAPTCHA_SECRET_KEY,
+    "RECAPTCHA_SECRET_KEY is not found"
+  );
   return `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${token}`;
 };
 const VerifyResult = (
@@ -98,7 +101,7 @@ const tokenUri = async (req: NextApiRequest, res: NextApiResponse) => {
     "env not found"
   );
 
-  const provider = new ethers.providers.JsonRpcProvider(rpc);
+  const provider = new FixedProvider(rpc);
 
   const signer = new ethers.Wallet(process.env.PRIVATE_KEY, provider);
   const contract = CommunityFaucetV2__factory.connect(contractAddress, signer);
