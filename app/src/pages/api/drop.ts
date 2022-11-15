@@ -1,9 +1,11 @@
+import { db } from "@/firebase/server";
 import { contractList, contractTypes } from "@/util/config";
 import { CommunityFaucetV2__factory } from "@/util/contract";
 import { LimitChecker } from "@/util/limitChecker";
 import axios from "axios";
 import { ethers } from "ethers";
 import { NextApiRequest, NextApiResponse } from "next";
+import Error from "next/error";
 import requestIp from "request-ip";
 import invariant from "tiny-invariant";
 
@@ -53,6 +55,7 @@ const getRecaptchaVerificationUrl = (token: string) => {
   );
   return `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${token}`;
 };
+
 const VerifyResult = (
   _action: string,
   { success, score, action, challenge_ts }: RecaptchaResult
@@ -106,7 +109,23 @@ const tokenUri = async (req: NextApiRequest, res: NextApiResponse) => {
   const signer = new ethers.Wallet(process.env.PRIVATE_KEY, provider);
   const contract = CommunityFaucetV2__factory.connect(contractAddress, signer);
 
-  const tx = await contract.drop(address);
+  const txOrError = await contract.drop(address).catch((e: Error) => e);
+
+  await db.collection("drops").add({
+    target: address,
+    chain: type,
+
+    timestamp: Date.now(),
+    ip: clientIp,
+    tx: txOrError instanceof Error ? null : txOrError.hash,
+    error: txOrError instanceof Error ? JSON.stringify(txOrError) : null,
+    request: {
+      time,
+      address,
+      signature,
+    },
+    recaptchaResult,
+  });
 
   res.json({ status: "success" });
 };
