@@ -118,6 +118,9 @@ const tokenUri = async (req: NextApiRequest, res: NextApiResponse) => {
 
     timestamp: firestore.Timestamp.fromDate(new Date()),
     ip: clientIp,
+    ip8: clientIp.split(".").slice(0, 1).join("."),
+    ip16: clientIp.split(".").slice(0, 2).join("."),
+    ip24: clientIp.split(".").slice(0, 3).join("."),
     txHash:
       txOrError instanceof Error || !txOrError.hash ? null : txOrError.hash,
     fullLog: JSON.stringify(txOrError),
