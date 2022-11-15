@@ -4,6 +4,7 @@ import { CommunityFaucetV2__factory } from "@/util/contract";
 import { LimitChecker } from "@/util/limitChecker";
 import axios from "axios";
 import { ethers } from "ethers";
+import { firestore } from "firebase-admin";
 import { NextApiRequest, NextApiResponse } from "next";
 import Error from "next/error";
 import requestIp from "request-ip";
@@ -115,7 +116,7 @@ const tokenUri = async (req: NextApiRequest, res: NextApiResponse) => {
     target: address,
     chain: type,
 
-    timestamp: Date.now(),
+    timestamp: firestore.Timestamp.fromDate(new Date()),
     ip: clientIp,
     txHash:
       txOrError instanceof Error || !txOrError.hash ? null : txOrError.hash,
