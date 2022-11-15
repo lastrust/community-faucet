@@ -1,4 +1,3 @@
-import { db } from "@/firebase/server";
 import { contractList, contractTypes } from "@/util/config";
 import { CommunityFaucetV2__factory } from "@/util/contract";
 import { LimitChecker } from "@/util/limitChecker";
@@ -111,21 +110,21 @@ const tokenUri = async (req: NextApiRequest, res: NextApiResponse) => {
 
   const txOrError = await contract.drop(address).catch((e: Error) => e);
 
-  await db.collection("drops").add({
-    target: address,
-    chain: type,
+  // await db.collection("drops").add({
+  //   target: address,
+  //   chain: type,
 
-    timestamp: Date.now(),
-    ip: clientIp,
-    tx: txOrError instanceof Error ? null : txOrError.hash,
-    error: txOrError instanceof Error ? JSON.stringify(txOrError) : null,
-    request: {
-      time,
-      address,
-      signature,
-    },
-    recaptchaResult,
-  });
+  //   timestamp: Date.now(),
+  //   ip: clientIp,
+  //   tx: txOrError instanceof Error ? null : txOrError.hash,
+  //   error: txOrError instanceof Error ? JSON.stringify(txOrError) : null,
+  //   request: {
+  //     time,
+  //     address,
+  //     signature,
+  //   },
+  //   recaptchaResult,
+  // });
 
   res.json({ status: "success" });
 };
