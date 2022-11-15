@@ -25,6 +25,51 @@ type RecaptchaResult = {
 };
 const limitChecker = LimitChecker();
 
+const ipValidate = async (ip: string) => {
+  const ip16 = ip.split(".").slice(0, 2).join(".");
+  const ip24 = ip.split(".").slice(0, 3).join(".");
+  const ip16Count = await db
+    .collection("drops")
+    .where("ip16", "==", ip16)
+    .where(
+      "timestamp",
+      ">=",
+      firestore.Timestamp.fromMillis(Date.now() - 1000 * 3600 * 24)
+    )
+    .count()
+    .get();
+  const ip24Count = await db
+    .collection("drops")
+    .where("ip24", "==", ip24)
+    .where(
+      "timestamp",
+      ">=",
+      firestore.Timestamp.fromMillis(Date.now() - 1000 * 3600 * 24)
+    )
+    .count()
+    .get();
+  const ipCount = await db
+    .collection("drops")
+    .where("ip", "==", ip)
+    .where(
+      "timestamp",
+      ">=",
+      firestore.Timestamp.fromMillis(Date.now() - 1000 * 3600 * 24)
+    )
+    .count()
+    .get();
+  console.log(
+    ip16Count.data().count,
+    ip24Count.data().count,
+    ipCount.data().count
+  );
+  return (
+    ip16Count.data().count < 50 &&
+    ip24Count.data().count < 20 &&
+    ipCount.data().count < 8
+  );
+};
+
 export class FixedProvider extends ethers.providers.JsonRpcBatchProvider {
   async getFeeData(): Promise<ethers.providers.FeeData> {
     const history = (await this.send("eth_feeHistory", [
@@ -95,6 +140,8 @@ const tokenUri = async (req: NextApiRequest, res: NextApiResponse) => {
     recoveredAddress.toLowerCase() === address.toLowerCase();
   const isInTime = Date.now() - Number(time) < allowedTime;
   invariant(isMatchAddress && isInTime, "Invalid signature");
+
+  invariant(await ipValidate(clientIp));
 
   const { address: contractAddress, rpc } = contractList[type];
   invariant(
