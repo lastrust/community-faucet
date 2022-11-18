@@ -23,7 +23,7 @@ const FaucetModal: React.FC<{
   const faucet = async () => {
     if (account && provider && executeRecaptcha) {
       setIsLoading(true);
-      const token = await executeRecaptcha(`drop_to_${account.id}`);
+      const token = await executeRecaptcha(`drop_to__${account.id}`);
       const message = `Student Faucet\n\nTarget: ${type}\nTime: ${new Date().getTime()}\nAddress: ${
         account.id
       }`;

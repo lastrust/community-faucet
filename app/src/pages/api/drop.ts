@@ -133,7 +133,7 @@ const tokenUri = async (req: NextApiRequest, res: NextApiResponse) => {
     getRecaptchaVerificationUrl(token)
   )) as { data: RecaptchaResult };
 
-  invariant(VerifyResult(`drop_to_${address}`, recaptchaResult));
+  invariant(VerifyResult(`drop_to__${address}`, recaptchaResult));
 
   const recoveredAddress = ethers.utils.verifyMessage(message, signature);
   const isMatchAddress =

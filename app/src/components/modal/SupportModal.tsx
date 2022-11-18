@@ -67,7 +67,7 @@ const SupportModal: React.FC<{
         </label>
         <input
           type="text"
-          placeholder="Type Your Name"
+          placeholder="Icon URL"
           className="input input-bordered"
           value={value.icon}
           onChange={handler("icon")}
