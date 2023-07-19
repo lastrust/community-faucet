@@ -33,90 +33,90 @@ export const Web3Context = createContext<Web3ContextInterface>(
   getDefaultContextValue()
 );
 
-export const Web3Provider: React.FC<
-  React.PropsWithChildren<{ key?: string }>
-> = ({ children }) => {
-  const [provider, setProvider] = useState<Interface["provider"]>(null);
-  const [account, setAccount] = useState<Interface["account"]>(null);
-  const [chainId, setChainId] = useState<Interface["chainId"]>(null);
-  const [isLoading, setIsLoading] = useState<Interface["isLoading"]>(false);
-  const [isMetaMask, setIsMetaMask] = useState<Interface["isMetaMask"]>(false);
-  const [isTargetChain, setIsTargetChain] =
-    useState<Interface["isTargetChain"]>(false);
+export const Web3Provider: React.FC<React.PropsWithChildren<{ key?: string }>> =
+  ({ children }) => {
+    const [provider, setProvider] = useState<Interface["provider"]>(null);
+    const [account, setAccount] = useState<Interface["account"]>(null);
+    const [chainId, setChainId] = useState<Interface["chainId"]>(null);
+    const [isLoading, setIsLoading] = useState<Interface["isLoading"]>(false);
+    const [isMetaMask, setIsMetaMask] =
+      useState<Interface["isMetaMask"]>(false);
+    const [isTargetChain, setIsTargetChain] =
+      useState<Interface["isTargetChain"]>(false);
 
-  const connectWallet = async () => {
-    try {
-      if (location) {
-        location.href = "#";
+    const connectWallet = async () => {
+      try {
+        if (location) {
+          location.href = "#";
+        }
+        setIsLoading(true);
+        const [instance, _provider] = await getWeb3Provider();
+        setIsMetaMask(instance.isMetaMask);
+        instance.on(
+          "accountsChanged",
+          (e: string[]) => void handleAccountsChanged(e)
+        );
+        instance.on("chainChanged", handleChainChanged);
+        instance.on("disconnect", resetWeb3);
+        localStorage.setItem("auto_connect", "yes");
+        const accountPromise = async () =>
+          setAccount(await getConnectedAccount(_provider));
+        const providerPromise = async () => {
+          const chainId = await getChainId(_provider);
+          setChainId(chainId);
+          setIsTargetChain(checkIsTargetChain(chainId));
+          setProvider(_provider);
+        };
+        await Promise.all([accountPromise(), providerPromise()]);
+      } catch (e) {
+        console.error(e);
+      } finally {
+        setIsLoading(false);
       }
-      setIsLoading(true);
-      const [instance, _provider] = await getWeb3Provider();
-      setIsMetaMask(instance.isMetaMask);
-      instance.on(
-        "accountsChanged",
-        (e: string[]) => void handleAccountsChanged(e)
-      );
-      instance.on("chainChanged", handleChainChanged);
-      instance.on("disconnect", resetWeb3);
-      localStorage.setItem("auto_connect", "yes");
-      const accountPromise = async () =>
-        setAccount(await getConnectedAccount(_provider));
-      const providerPromise = async () => {
-        const chainId = await getChainId(_provider);
-        setChainId(chainId);
-        setIsTargetChain(checkIsTargetChain(chainId));
-        setProvider(_provider);
-      };
-      await Promise.all([accountPromise(), providerPromise()]);
-    } catch (e) {
-      console.error(e);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+    };
 
-  const resetWeb3 = () => {
-    setProvider(null);
-    setAccount(null);
-    setChainId(null);
-    setIsTargetChain(false);
-  };
+    const resetWeb3 = () => {
+      setProvider(null);
+      setAccount(null);
+      setChainId(null);
+      setIsTargetChain(false);
+    };
 
-  const handleAccountsChanged = async (_accountIds: string[]) => {
-    try {
-      setIsLoading(true);
-      setAccount(await getAccountByIds(_accountIds));
-      !_accountIds.length && resetWeb3();
-    } catch (e) {
-      console.error(e);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+    const handleAccountsChanged = async (_accountIds: string[]) => {
+      try {
+        setIsLoading(true);
+        setAccount(await getAccountByIds(_accountIds));
+        !_accountIds.length && resetWeb3();
+      } catch (e) {
+        console.error(e);
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-  const handleChainChanged = (_chainId: string) => {
-    setChainId(_chainId);
-    setIsTargetChain(checkIsTargetChain(_chainId));
-  };
+    const handleChainChanged = (_chainId: string) => {
+      setChainId(_chainId);
+      setIsTargetChain(checkIsTargetChain(_chainId));
+    };
 
-  useEffect(() => {
-    localStorage.getItem("auto_connect") === "yes" && connectWallet();
-    return resetWeb3;
-  }, []);
-  return (
-    <Web3Context.Provider
-      value={{
-        ...getDefaultContextValue(),
-        provider,
-        account,
-        chainId,
-        isLoading,
-        isMetaMask,
-        isTargetChain,
-        connectWallet,
-      }}
-    >
-      {children}
-    </Web3Context.Provider>
-  );
-};
+    useEffect(() => {
+      localStorage.getItem("auto_connect") === "yes" && void connectWallet();
+      return resetWeb3;
+    }, []);
+    return (
+      <Web3Context.Provider
+        value={{
+          ...getDefaultContextValue(),
+          provider,
+          account,
+          chainId,
+          isLoading,
+          isMetaMask,
+          isTargetChain,
+          connectWallet,
+        }}
+      >
+        {children}
+      </Web3Context.Provider>
+    );
+  };

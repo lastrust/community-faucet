@@ -30,7 +30,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <QueryClientProvider client={queryClient}>
       <GoogleReCaptchaProvider
-        reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA}
+        reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA || ""}
         language="ja"
       >
         <Web3Provider>

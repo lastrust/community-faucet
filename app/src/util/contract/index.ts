@@ -2,5 +2,5 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { CommunityFaucetV2 } from "./CommunityFaucetV2";
-
+export * as factories from "./factories";
 export { CommunityFaucetV2__factory } from "./factories/CommunityFaucetV2__factory";

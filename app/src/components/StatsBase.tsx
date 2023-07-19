@@ -1,12 +1,12 @@
 import { useContract, useJsonProvider } from "@/hooks";
 import { usefulFixed } from "@/util";
-import { contractTypes } from "@/util/config";
+import { ContractTypes } from "@/util/config";
 import { CommunityFaucetV2 } from "@/util/contract";
 import { ethers } from "ethers";
 import { useQuery } from "react-query";
 
 const StatsBase: React.FC<{
-  type: contractTypes;
+  type: ContractTypes;
   symbol: string;
   vertical?: boolean;
 }> = ({ type, symbol, vertical }) => {

@@ -1,12 +1,21 @@
-import { contractList, contractTypes } from "@/util/config";
+import { contractList } from "@/util/config";
 import { CommunityFaucetV2, CommunityFaucetV2__factory } from "@/util/contract";
 import { ethers } from "ethers";
 import { useEffect, useState } from "react";
 import { useWeb3 } from "./useWeb3";
 
-type valueOf<T> = T[keyof T];
+import type { ValueOf } from "@/types/util";
 
-type option = Partial<{
+const getContract = (
+  type: ValueOf<typeof contractList>,
+  provider?: ethers.providers.Provider | ethers.Signer
+) =>
+  CommunityFaucetV2__factory.connect(
+    type.address,
+    provider || new ethers.providers.JsonRpcProvider(type.rpc)
+  );
+
+type Option = Partial<{
   fetchOnly: boolean;
   fallback: boolean;
   cb?: (
@@ -15,23 +24,9 @@ type option = Partial<{
   ) => void | Promise<void>;
 }>;
 
-type useContract = <T extends keyof typeof contractList>(
+export const useContract = <T extends keyof typeof contractList>(
   type: T,
-  opt?: option
-) => CommunityFaucetV2 | null;
-
-const getContract = (
-  type: valueOf<typeof contractList>,
-  provider?: ethers.providers.Provider | ethers.Signer
-) =>
-  CommunityFaucetV2__factory.connect(
-    type.address,
-    provider || new ethers.providers.JsonRpcProvider(type.rpc)
-  );
-
-export const useContract: useContract = (
-  type,
-  { fetchOnly, fallback, cb } = {}
+  { fetchOnly, fallback, cb }: Option = {}
 ) => {
   const contractType = contractList[type];
   const { provider, chainId } = useWeb3();
@@ -64,6 +59,3 @@ export const useContract: useContract = (
 
   return contract;
 };
-
-export const useJsonProvider = (type: contractTypes) =>
-  new ethers.providers.JsonRpcBatchProvider(contractList[type].rpc);

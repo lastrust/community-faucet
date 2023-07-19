@@ -1,5 +1,5 @@
 import { useWeb3 } from "@/hooks";
-import { contractTypes, scanList } from "@/util/config";
+import { ContractTypes, scanList } from "@/util/config";
 import { switchChain } from "@/util/web3Util";
 import NextLink from "next/link";
 import React, { useState } from "react";
@@ -14,7 +14,7 @@ export default function DefaultLayout({
   theme = ["winter", "forest"],
   style,
 }: {
-  type: contractTypes;
+  type: ContractTypes;
   theme?: [string, string];
   style?: React.HTMLAttributes<HTMLDivElement>["style"];
   children: React.ReactNode;
@@ -45,11 +45,12 @@ export const Header: React.FC<{
   return (
     <nav className="navbar fixed">
       <div className="mx-auto flex w-full max-w-screen-xl justify-between">
-        <NextLink href="/">
-          <a className="btn btn-ghost text-xl normal-case sm:text-2xl">
-            <span className="hidden sm:block">Community Faucet</span>
-            <span className="sm:hidden">CSFaucet</span>
-          </a>
+        <NextLink
+          href="/"
+          className="btn btn-ghost text-xl normal-case sm:text-2xl"
+        >
+          <span className="hidden sm:block">Community Faucet</span>
+          <span className="sm:hidden">CSFaucet</span>
         </NextLink>
         <div className="flex items-center sm:gap-2">
           <AccountWithAth />
@@ -110,7 +111,7 @@ export const ToggleTheme: React.FC<{
   );
 };
 
-export const Footer: React.FC<{ type: contractTypes }> = ({ type }) => (
+export const Footer: React.FC<{ type: ContractTypes }> = ({ type }) => (
   <footer className="footer mt-auto items-center bg-neutral p-4 text-neutral-content">
     <div className="grid-flow-col items-center">
       <BsGear size="36" />

@@ -19,11 +19,12 @@ const ChainInfo: React.FC<{
       }`}
       data-theme={theme}
     >
-      <NextLink href={href}>
-        <a className="link link-hover flex items-center justify-center text-2xl font-bold">
-          <BsLink45Deg />
-          <h2>{children}</h2>
-        </a>
+      <NextLink
+        href={href}
+        className="link link-hover flex items-center justify-center text-2xl font-bold"
+      >
+        <BsLink45Deg />
+        <h2>{children}</h2>
       </NextLink>
       <div className="hidden w-full sm:block">
         <StatsBase vertical type={type} symbol={symbol} />

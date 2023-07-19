@@ -1,5 +1,5 @@
 import { useContract, useInputs, useJsonProvider, useWeb3 } from "@/hooks";
-import { contractList, contractTypes, symbolList } from "@/util/config";
+import { ContractTypes, contractList, symbolList } from "@/util/config";
 import { ethers } from "ethers";
 import { useEffect, useState } from "react";
 import { UsefulButton } from "../Button";
@@ -8,7 +8,7 @@ import ModalBase from "./Modal";
 const SupportModal: React.FC<{
   open: boolean;
   onChange: (open: boolean) => void;
-  type: contractTypes;
+  type: ContractTypes;
 }> = (props) => {
   const { value, handler, setter } = useInputs({
     name: "",
@@ -38,7 +38,7 @@ const SupportModal: React.FC<{
   }, [account]);
   useEffect(() => {
     account &&
-      jsonProvider
+      void jsonProvider
         .getBalance(account.id)
         .then((balance) =>
           setMaxValue(

@@ -104,16 +104,16 @@ export const contractList = {
   },
 };
 
-export type contractTypes = keyof typeof contractList;
+export type ContractTypes = keyof typeof contractList;
 
-export const symbolList: Record<contractTypes, string> = {
+export const symbolList: Record<ContractTypes, string> = {
   astar: "ASTR",
   shiden: "SDN",
   polygon: "MATIC",
   shibuya: "SBY",
 };
 
-export const scanList: Record<contractTypes, string> = {
+export const scanList: Record<ContractTypes, string> = {
   astar:
     "https://astar.subscan.io/account/0x26DA9C05A9f7bcEFb9e342Bb35FA8aE338F9cCed?tab=transfer",
   shiden:
