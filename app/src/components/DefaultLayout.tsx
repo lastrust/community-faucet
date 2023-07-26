@@ -1,6 +1,5 @@
-import { useWeb3 } from "@/hooks";
 import { ContractTypes, scanList } from "@/util/config";
-import { switchChain } from "@/util/web3Util";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 import NextLink from "next/link";
 import React, { useState } from "react";
 import CookieConsent from "react-cookie-consent";
@@ -23,7 +22,7 @@ export default function DefaultLayout({
   return (
     <>
       <div
-        className="relative flex min-h-full flex-col bg-base-200 text-base-content transition-all"
+        className="relative flex min-h-[100svh] flex-col bg-base-200 text-base-content transition-all"
         data-theme={isDark ? theme[1] : theme[0]}
         style={style}
       >
@@ -53,7 +52,7 @@ export const Header: React.FC<{
           <span className="sm:hidden">CSFaucet</span>
         </NextLink>
         <div className="flex items-center sm:gap-2">
-          <AccountWithAth />
+          <CustomConnectButton />
           <div className="ml-2 h-8 w-0.5 bg-base-content"></div>
           <ToggleTheme {...props} />
         </div>
@@ -61,41 +60,53 @@ export const Header: React.FC<{
     </nav>
   );
 };
-export const AccountWithAth = () => {
-  const { connectWallet, account, isLoading } = useWeb3();
-  if (isLoading) {
-    return <button className="btn loading btn-ghost">Loading</button>;
-  } else if (account) {
-    return (
-      <div className=" text-lg font-bold">
-        {account.ethName || account.abbreviatedId}
-      </div>
-    );
-  } else {
-    return (
-      <button className="btn btn-ghost" onClick={() => void connectWallet()}>
-        Connect Wallet
-      </button>
-    );
-  }
-};
 
-export const ChainState: React.FC = () => {
-  const { isTargetChain, isMetaMask, provider, connectWallet, account } =
-    useWeb3();
-  const handleClick = () => {
-    if (provider && isMetaMask) {
-      void switchChain(provider);
-    } else {
-      void connectWallet();
-    }
-  };
-  return !isTargetChain && account ? (
-    <button className="btn btn-ghost btn-square" onClick={handleClick}>
-      <VscDebugDisconnect size="2rem" color="#f21361" />
-    </button>
-  ) : (
-    <></>
+export const CustomConnectButton = () => {
+  return (
+    <ConnectButton.Custom>
+      {({
+        account,
+        chain,
+        openAccountModal,
+        openConnectModal,
+        openChainModal,
+        authenticationStatus,
+        mounted,
+      }) => {
+        const ready = mounted && authenticationStatus !== "loading";
+        const connected =
+          ready &&
+          account &&
+          chain &&
+          (!authenticationStatus || authenticationStatus === "authenticated");
+
+        if (chain?.unsupported) {
+          return (
+            <button
+              className="btn btn-ghost btn-square"
+              onClick={openChainModal}
+            >
+              <VscDebugDisconnect size="2rem" color="#f21361" />
+            </button>
+          );
+        }
+        if (connected) {
+          return (
+            <button className="btn btn-ghost" onClick={openAccountModal}>
+              {account.displayName}
+            </button>
+          );
+        }
+        if (ready) {
+          return (
+            <button className="btn btn-ghost" onClick={openConnectModal}>
+              Connect
+            </button>
+          );
+        }
+        return <div className="btn btn-ghost">Loading</div>;
+      }}
+    </ConnectButton.Custom>
   );
 };
 

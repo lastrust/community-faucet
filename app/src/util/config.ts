@@ -1,3 +1,6 @@
+import { Address } from "wagmi";
+import { Chain, polygon } from "wagmi/chains";
+
 export const chainParameters = {
   "0x89": {
     chainId: "0x89",
@@ -62,6 +65,89 @@ export const chainParameters = {
 };
 
 export type ChainIds = keyof typeof chainParameters;
+
+export const supportedChains = [
+  polygon,
+  {
+    id: 81,
+    name: "Shibuya",
+    network: "shibuya",
+    nativeCurrency: {
+      name: "SBY",
+      symbol: "SBY",
+      decimals: 18,
+    },
+    rpcUrls: {
+      default: { http: ["https://evm.shibuya.astar.network"] },
+      public: { http: ["https://evm.shibuya.astar.network"] },
+    },
+    blockExplorers: {
+      default: { name: "Subscan", url: "https://shibuya.subscan.io" },
+    },
+    testnet: true,
+  },
+  {
+    id: 592,
+    name: "Astar",
+    network: "astar",
+    nativeCurrency: {
+      name: "ASTR",
+      symbol: "ASTR",
+      decimals: 18,
+    },
+    rpcUrls: {
+      default: { http: ["https://evm.astar.network/"] },
+      public: { http: ["https://evm.astar.network/"] },
+    },
+    blockExplorers: {
+      default: { name: "Subscan", url: "https://astar.subscan.io" },
+    },
+    testnet: false,
+  },
+  {
+    id: 336,
+    name: "Shiden",
+    network: "shiden",
+    nativeCurrency: {
+      name: "SDN",
+      symbol: "SDN",
+      decimals: 18,
+    },
+    rpcUrls: {
+      default: { http: ["https://shiden.api.onfinality.io/public"] },
+      public: { http: ["https://shiden.api.onfinality.io/public"] },
+    },
+    blockExplorers: {
+      default: { name: "Subscan", url: "https://shiden.subscan.io" },
+    },
+    testnet: true,
+  },
+] satisfies Chain[];
+
+export const supportedContracts = {
+  astar: {
+    address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as Address,
+    rpc: "https://astar.blastapi.io/6a492343-ce82-409d-89fe-38838ab38fdd",
+    chain: 592,
+  },
+  shiden: {
+    address: process.env.NEXT_PUBLIC_SHIDEN_CONTRACT_ADDRESS as Address,
+    rpc: "https://shiden.blastapi.io/6a492343-ce82-409d-89fe-38838ab38fdd",
+    chain: 336,
+  },
+  polygon: {
+    address: process.env.NEXT_PUBLIC_POLYGON_CONTRACT_ADDRESS as Address,
+    rpc: "https://polygon-mainnet.blastapi.io/6a492343-ce82-409d-89fe-38838ab38fdd",
+    chain: 89,
+  },
+  shibuya: {
+    address: process.env.NEXT_PUBLIC_SHIBUYA_CONTRACT_ADDRESS as Address,
+    rpc: "https://shibuya.blastapi.io/6a492343-ce82-409d-89fe-38838ab38fdd",
+    chain: 81,
+  },
+};
+
+export type SupportedContracts = keyof typeof supportedContracts;
 
 export const providerOptions = async () => ({
   walletconnect: {
