@@ -1,7 +1,6 @@
 import { usefulZeroFill } from "@/util";
 import { contractList, ContractTypes } from "@/util/config";
 import { CommunityFaucetV2__factory } from "@/util/contract";
-import { targetChain } from "@/util/web3Util";
 import { ethers } from "ethers";
 import { NextApiRequest, NextApiResponse } from "next";
 import invariant from "tiny-invariant";
@@ -24,9 +23,7 @@ const getQueryUrl = (query: Record<string, string | number>) =>
 
 const tokenUri = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id, type = "astar" } = req.query as QueryMeta;
-  invariant(
-    process.env.NEXT_PUBLIC_CONTRACT_ADDRESS && targetChain().rpcUrls[0] && id
-  );
+  invariant(id);
 
   const { rpc, address } = contractList[type];
   const contract = CommunityFaucetV2__factory.connect(

@@ -60,7 +60,10 @@ const getRecaptchaVerificationUrl = (token: string) => {
 const VerifyResult = (
   _action: string,
   { success, score, action }: RecaptchaResult
-) => success && Number(score) >= 0.7 && action === _action;
+) => {
+  if (process.env.NODE_ENV === "development") return true;
+  success && Number(score) >= 0.7 && action === _action;
+};
 
 const tokenUri = async (req: NextApiRequest, res: NextApiResponse) => {
   const clientIp = requestIp.getClientIp(req) || "IP_NOT_FOUND";

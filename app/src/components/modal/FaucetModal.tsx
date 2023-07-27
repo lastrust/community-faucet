@@ -1,31 +1,63 @@
-import { useContract, useWeb3 } from "@/hooks";
-import { ContractTypes, symbolList } from "@/util/config";
-import { ethers } from "ethers";
-import React, { useEffect, useState } from "react";
+import { FAUCET_CONTRACT_ABI } from "@/util/abis";
+import {
+  SupportedContracts,
+  supportedContracts,
+  symbolList,
+} from "@/util/config";
+import { roundUp } from "@/util/format";
+import React, { useState } from "react";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
+import { formatEther } from "viem";
+import { useAccount, useContractReads, useWalletClient } from "wagmi";
+
 import { UsefulButton } from "../Button";
 import ModalBase from "./Modal";
 
 const FaucetModal: React.FC<{
   open: boolean;
   onChange: (open: boolean) => void;
-  type: ContractTypes;
+  type: SupportedContracts;
 }> = ({ type, ...props }) => {
-  const [nextTime, setNextTime] = useState<number>(Infinity);
-  const [amount, setAmount] = useState<number | string>(0);
   const [isLoading, setIsLoading] = useState(false);
-  const { account, provider } = useWeb3();
+  const { data: walletClient } = useWalletClient();
   const { executeRecaptcha } = useGoogleReCaptcha();
-  const contract = useContract(type, { fetchOnly: true });
+  const { address } = useAccount();
+  const { data: results } = useContractReads({
+    contracts: [
+      {
+        address: supportedContracts[type].address,
+        abi: FAUCET_CONTRACT_ABI,
+        chainId: supportedContracts[type].chain,
+        functionName: "dropSize",
+      },
+      {
+        address: supportedContracts[type].address,
+        abi: FAUCET_CONTRACT_ABI,
+        chainId: supportedContracts[type].chain,
+        functionName: "lastReceiptDate",
+        args: [address as string],
+      },
+      {
+        address: supportedContracts[type].address,
+        abi: FAUCET_CONTRACT_ABI,
+        chainId: supportedContracts[type].chain,
+        functionName: "interval",
+      },
+    ],
+    enabled: !!address,
+  });
+
+  const dropSize = formatEther((results?.[0].result as bigint) || BigInt(0));
+  const lastReceiptDate = Number(results?.[1].result as bigint) || 0;
+  const interval = Number(results?.[2].result as bigint) || 0;
+  const nextDropTime = Date.now() / 1000 - lastReceiptDate - interval;
 
   const faucet = async () => {
-    if (account && provider && executeRecaptcha) {
+    if (address && executeRecaptcha && walletClient) {
       setIsLoading(true);
-      const token = await executeRecaptcha(`drop_to__${account.id}`);
-      const message = `Student Faucet\n\nTarget: ${type}\nTime: ${new Date().getTime()}\nAddress: ${
-        account.id
-      }`;
-      const signature = await provider.getSigner().signMessage(message);
+      const token = await executeRecaptcha(`drop_to__${address}`);
+      const message = `Student Faucet\n\nTarget: ${type}\nTime: ${new Date().getTime()}\nAddress: ${address.toLowerCase()}`;
+      const signature = await walletClient.signMessage({ message });
       await fetch("/api/drop", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -36,38 +68,24 @@ const FaucetModal: React.FC<{
     }
   };
 
-  useEffect(() => {
-    if (account && contract) {
-      void (async () => {
-        const nextTime =
-          Date.now() / 1000 -
-          (await contract.lastReceiptDate(account.id)).toNumber() -
-          (await contract.interval()).toNumber();
-        setNextTime(nextTime);
-      })();
-    }
-    if (contract) {
-      void (async () => {
-        setAmount(ethers.utils.formatEther(await contract.dropSize()));
-      })();
-    }
-  }, [contract, account]);
   return (
     <ModalBase id="faucet" {...props}>
       <h3 className="text-center text-3xl font-bold">Faucet</h3>
-      {nextTime < 0 && (
-        <p className="mb-4 text-center">You have already received the ASTR.</p>
+      {nextDropTime < 0 && (
+        <div className="mb-4">
+          <p className="text-center">You have already received the ASTR.</p>
+        </div>
       )}
       <div className="overflow-x-auto text-center">
         <div className="stats justify-center bg-primary text-primary-content">
           <div className="stat place-items-center">
             <div className="stat-title">Next Drop Time</div>
-            <CountDown time={Math.max(0, -nextTime)} />
+            <CountDown time={Math.max(0, -nextDropTime)} />
           </div>
           <div className="stat place-items-center">
             <div className="stat-title">Faucet Amount</div>
             <div className="stat-value">
-              {amount}
+              {roundUp(dropSize)}
               <span className="text-2xl">{symbolList[type]}</span>
             </div>
           </div>
@@ -88,8 +106,7 @@ const FaucetModal: React.FC<{
         </div>
         <UsefulButton
           className="btn btn-primary"
-          forSign={true}
-          disabled={nextTime < 0}
+          disabled={nextDropTime < 0}
           isLoading={isLoading}
           onClick={() => void faucet()}
         >

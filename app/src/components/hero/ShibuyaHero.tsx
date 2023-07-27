@@ -1,6 +1,12 @@
+import dynamic from "next/dynamic";
 import { useState } from "react";
-import FaucetModal from "../modal/FaucetModal";
-import SupportModal from "../modal/SupportModal";
+
+const FaucetModal = dynamic(() => import("../modal/FaucetModal"), {
+  ssr: false,
+});
+const SupportModal = dynamic(() => import("../modal/SupportModal"), {
+  ssr: false,
+});
 
 const ShibuyaHero = () => {
   const [openSupport, setOpenSupport] = useState(false);
