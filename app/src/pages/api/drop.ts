@@ -1,5 +1,5 @@
 import { db } from "@/firebase/server";
-import { contractList, ContractTypes } from "@/util/config";
+import { supportedContracts, SupportedContracts } from "@/util/config";
 import { CommunityFaucetV2__factory } from "@/util/contract";
 import { LimitChecker } from "@/util/limitChecker";
 import axios from "axios";
@@ -82,7 +82,7 @@ const tokenUri = async (req: NextApiRequest, res: NextApiResponse) => {
 
   const [, , targetLine, timeLine, addressLine] = message.split("\n");
   const [type, time, address] = [
-    targetLine.slice(8) as ContractTypes,
+    targetLine.slice(8) as SupportedContracts,
     timeLine.slice(6),
     addressLine.slice(9),
   ];
@@ -99,7 +99,7 @@ const tokenUri = async (req: NextApiRequest, res: NextApiResponse) => {
   const isInTime = Date.now() - Number(time) < allowedTime;
   invariant(isMatchAddress && isInTime, "Invalid signature");
 
-  const { address: contractAddress, rpc } = contractList[type];
+  const { address: contractAddress, rpc } = supportedContracts[type];
   invariant(
     process.env.PRIVATE_KEY &&
       process.env.NEXT_PUBLIC_CONTRACT_ADDRESS &&

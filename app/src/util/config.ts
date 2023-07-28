@@ -149,57 +149,14 @@ export const supportedContracts = {
 
 export type SupportedContracts = keyof typeof supportedContracts;
 
-export const providerOptions = async () => ({
-  walletconnect: {
-    package: (await import("@walletconnect/web3-provider")).default,
-    options: {
-      rpc: {
-        1: `https://mainnet.infura.io/v3/${
-          process.env.NEXT_PUBLIC_INFURA_PROJECT_ID || ""
-        }`,
-        80001: `https://rpc-mumbai.matic.today`,
-        81: `https://evm.shibuya.astar.network`,
-        592: `https://evm.astar.network/`,
-        336: `https://evm.shiden.astar.network/`,
-        137: `https://polygon-rpc.com/`,
-      },
-    },
-  },
-});
-
-export const contractList = {
-  astar: {
-    address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as string,
-    rpc: "https://astar.blastapi.io/6a492343-ce82-409d-89fe-38838ab38fdd",
-    chainId: "0x250" as ChainIds,
-  },
-  shiden: {
-    address: process.env["NEXT_PUBLIC_SHIDEN_CONTRACT_ADDRESS"] as string,
-    rpc: "https://shiden.blastapi.io/6a492343-ce82-409d-89fe-38838ab38fdd",
-    chainId: "0x150" as ChainIds,
-  },
-  polygon: {
-    address: process.env.NEXT_PUBLIC_POLYGON_CONTRACT_ADDRESS as string,
-    rpc: "https://polygon-mainnet.blastapi.io/6a492343-ce82-409d-89fe-38838ab38fdd",
-    chainId: "0x89" as ChainIds,
-  },
-  shibuya: {
-    address: process.env.NEXT_PUBLIC_SHIBUYA_CONTRACT_ADDRESS as string,
-    rpc: "https://shibuya.blastapi.io/6a492343-ce82-409d-89fe-38838ab38fdd",
-    chainId: "0x51" as ChainIds,
-  },
-};
-
-export type ContractTypes = keyof typeof contractList;
-
-export const symbolList: Record<ContractTypes, string> = {
+export const symbolList: Record<SupportedContracts, string> = {
   astar: "ASTR",
   shiden: "SDN",
   polygon: "MATIC",
   shibuya: "SBY",
 };
 
-export const scanList: Record<ContractTypes, string> = {
+export const scanList: Record<SupportedContracts, string> = {
   astar:
     "https://astar.subscan.io/account/0x26DA9C05A9f7bcEFb9e342Bb35FA8aE338F9cCed?tab=transfer",
   shiden:

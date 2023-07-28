@@ -1,4 +1,4 @@
-import { ContractTypes, scanList } from "@/util/config";
+import { SupportedContracts, scanList } from "@/util/config";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import NextLink from "next/link";
 import React, { useState } from "react";
@@ -13,7 +13,7 @@ export default function DefaultLayout({
   theme = ["winter", "forest"],
   style,
 }: {
-  type: ContractTypes;
+  type: SupportedContracts;
   theme?: [string, string];
   style?: React.HTMLAttributes<HTMLDivElement>["style"];
   children: React.ReactNode;
@@ -122,7 +122,7 @@ export const ToggleTheme: React.FC<{
   );
 };
 
-export const Footer: React.FC<{ type: ContractTypes }> = ({ type }) => (
+export const Footer: React.FC<{ type: SupportedContracts }> = ({ type }) => (
   <footer className="footer mt-auto items-center bg-neutral p-4 text-neutral-content">
     <div className="grid-flow-col items-center">
       <BsGear size="36" />

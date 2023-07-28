@@ -1,5 +1,5 @@
 import { usefulZeroFill } from "@/util";
-import { contractList, ContractTypes } from "@/util/config";
+import { supportedContracts, SupportedContracts } from "@/util/config";
 import { CommunityFaucetV2__factory } from "@/util/contract";
 import { ethers } from "ethers";
 import { NextApiRequest, NextApiResponse } from "next";
@@ -7,7 +7,7 @@ import invariant from "tiny-invariant";
 
 type QueryMeta = {
   id?: number;
-  type?: ContractTypes;
+  type?: SupportedContracts;
 };
 
 const getGrade = (value: number | string, min = 0, max = 3) =>
@@ -25,7 +25,7 @@ const tokenUri = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id, type = "astar" } = req.query as QueryMeta;
   invariant(id);
 
-  const { rpc, address } = contractList[type];
+  const { rpc, address } = supportedContracts[type];
   const contract = CommunityFaucetV2__factory.connect(
     address,
     new ethers.providers.JsonRpcProvider(rpc)

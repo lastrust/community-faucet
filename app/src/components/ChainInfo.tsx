@@ -1,4 +1,4 @@
-import { contractList } from "@/util/config";
+import { SupportedContracts } from "@/util/config";
 import dynamic from "next/dynamic";
 import NextLink from "next/link";
 import React from "react";
@@ -11,7 +11,7 @@ const StatsBase = dynamic(() => import("@/components/StatsBase"), {
 const ChainInfo: React.FC<{
   children: string;
   theme: string;
-  type: keyof typeof contractList;
+  type: SupportedContracts;
   symbol: string;
   href: string;
   w?: 1 | 2;
