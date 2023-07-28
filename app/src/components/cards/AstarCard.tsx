@@ -1,5 +1,12 @@
 import { FC } from "react";
 
+const gradients = [
+  "linear-gradient(90deg, #16a34a 0%, #3b82f6 100%)",
+  "linear-gradient(90deg, #06b6d4 0%, #ec4899 100%)",
+  "linear-gradient(90deg, #6366f1 0%, #a855f7 50%, #ec4899 100%)",
+  "linear-gradient(90deg, #eab308 0%, #f97316 50%, #ec4899 100%)",
+];
+
 export const AstarCard: FC<{
   title: string;
   grade: number;
@@ -7,13 +14,6 @@ export const AstarCard: FC<{
   id: string;
   icon: string;
 }> = (props) => {
-  const gradients = [
-    "linear-gradient(90deg, #16a34a 0%, #3b82f6 100%)",
-    "linear-gradient(90deg, #06b6d4 0%, #ec4899 100%)",
-    "linear-gradient(90deg, #6366f1 0%, #a855f7 50%, #ec4899 100%)",
-    "linear-gradient(90deg, #eab308 0%, #f97316 50%, #ec4899 100%)",
-  ];
-
   return (
     <div tw="flex w-full h-full bg-black p-10">
       <div

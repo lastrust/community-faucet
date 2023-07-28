@@ -1,4 +1,4 @@
-import { AstarCard } from "@/components/cards/AstarCard";
+import { PolygonCard } from "@/components/cards/PolygonCard";
 import { unstable_createNodejsStream } from "@vercel/og";
 import { promises as fs } from "fs";
 import { NextApiRequest, NextApiResponse } from "next";
@@ -40,9 +40,9 @@ export default async function handler(
     ...req.query,
   };
 
-  const stream = await unstable_createNodejsStream(<AstarCard {...props} />, {
-    width: 800,
-    height: 400,
+  const stream = await unstable_createNodejsStream(<PolygonCard {...props} />, {
+    width: 400,
+    height: 800,
     fonts: [
       {
         name: "NotoSans",
