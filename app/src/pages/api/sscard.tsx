@@ -5,12 +5,6 @@ import { unstable_createNodejsStream } from "@vercel/og";
 import { promises as fs } from "fs";
 import { NextApiRequest, NextApiResponse } from "next";
 
-const loadFontFromName = async (name: string) => {
-  const font = await fs.readFile(new URL(`../../assets/${name}`, import.meta.url));
-
-  return font;
-};
-
 const loadFonts = async () => {
   const notoSansRegular = await fs.readFile(
     new URL(`../../assets/NotoSansJP-Regular.ttf`, import.meta.url),
