@@ -12,10 +12,16 @@ const loadFontFromName = async (name: string) => {
 };
 
 const loadFonts = async () => {
-  const notoSansRegular = await loadFontFromName("NotoSansJP-Regular.ttf");
-  const notoSansBold = await loadFontFromName("NotoSansJP-Bold.ttf");
-  const robotoRegular = await loadFontFromName("Roboto-Regular.ttf");
-  const robotoBold = await loadFontFromName("Roboto-Bold.ttf");
+  const notoSansRegular = await fs.readFile(
+    new URL(`../../assets/NotoSansJP-Regular.ttf`, import.meta.url),
+  );
+  const notoSansBold = await fs.readFile(
+    new URL(`../../assets/NotoSansJP-Bold.ttf`, import.meta.url),
+  );
+  const robotoRegular = await fs.readFile(
+    new URL(`../../assets/Roboto-Regular.ttf`, import.meta.url),
+  );
+  const robotoBold = await fs.readFile(new URL(`../../assets/Roboto-Bold.ttf`, import.meta.url));
   return {
     notoSansRegular,
     notoSansBold,
