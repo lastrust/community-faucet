@@ -12,36 +12,37 @@ const getContract = async () => {
   ]);
   return instance as StudentFaucet;
 };
+
 const upgradeContract = async (instance: StudentFaucet) => {
   const V2 = await ethers.getContractFactory("CommunityFaucetV2");
   const upgraded = (await upgrades.upgradeProxy(
     instance,
-    V2
+    V2,
   )) as CommunityFaucetV2;
   await upgraded.initializeV2();
   return upgraded;
 };
+
 const getAddress = () => ethers.getSigners();
 
 describe("test of StudentFaucet", () => {
-  // it("support test", async () => {
-  //   const instance = await getContract();
-  //   const provider = waffle.provider;
-  //   const [, addr, addr2] = await getAddress();
-  //   await instance.support("Kimura", "Tanaka.png", {
-  //     value: ethers.utils.parseEther("2.3"),
-  //   });
-  //   await instance.support("Kimura2", "Tanaka2.png", { value: 3000 });
-  //   await instance
-  //     .connect(addr)
-  //     .support("Syoko", "Imamura.png", { value: 5000 });
-  //   await instance.drop(await addr2.getAddress());
+  it("support test", async () => {
+    const instance = await getContract();
+    const [, addr, addr2] = await getAddress();
+    await instance.support("Kimura", "Tanaka.png", {
+      value: ethers.utils.parseEther("2.3"),
+    });
+    await instance.support("Kimura2", "Tanaka2.png", { value: 3000 });
+    await instance
+      .connect(addr)
+      .support("Syoko", "Imamura.png", { value: 5000 });
+    await instance.drop(await addr2.getAddress());
 
-  //   console.log(await instance.numberOfSupporter());
-  //   console.log(await provider.getBalance(await addr2.getAddress()));
-  //   console.log(await instance.totalDrop());
-  //   // await instance.drop(await addr2.getAddress());
-  // });
+    console.log(await instance.numberOfSupporter());
+    console.log(await ethers.provider.getBalance(await addr2.getAddress()));
+    console.log(await instance.totalDrop());
+    // await instance.drop(await addr2.getAddress());
+  });
 
   it("V2 Test", async () => {
     const instance = await getContract();

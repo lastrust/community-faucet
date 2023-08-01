@@ -1,17 +1,19 @@
-import LRU from "lru-cache";
+import { LRUCache } from "lru-cache";
 import type { NextApiResponse } from "next";
 
-type CheckLimitFunc = () => {
-  check: (
-    res: NextApiResponse,
-    limit: number,
-    ipAddress: string
-  ) => Promise<void>;
+type CheckLimitFunc = (options?: Options) => {
+  check: (res: NextApiResponse, limit: number, ipAddress: string) => Promise<void>;
 };
-export const LimitChecker: CheckLimitFunc = () => {
-  const tokenCache = new LRU<string, number>({
-    max: 10,
-    ttl: 1000 * 60 * 5,
+
+type Options = {
+  uniqueTokenPerInterval?: number;
+  interval?: number;
+};
+
+export const rateLimit: CheckLimitFunc = (options?: Options) => {
+  const tokenCache = new LRUCache<string, number>({
+    max: options?.uniqueTokenPerInterval || 500,
+    ttl: options?.interval || 60000,
   });
 
   return {
@@ -24,10 +26,7 @@ export const LimitChecker: CheckLimitFunc = () => {
 
         const isRateLimited = currentUsage > limit;
         res.setHeader("X-RateLimit-Limit", limit);
-        res.setHeader(
-          "X-RateLimit-Remaining",
-          isRateLimited ? 0 : limit - currentUsage
-        );
+        res.setHeader("X-RateLimit-Remaining", isRateLimited ? 0 : limit - currentUsage);
 
         return isRateLimited ? reject("Too Many Requests") : resolve();
       }),

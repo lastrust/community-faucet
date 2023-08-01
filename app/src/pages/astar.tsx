@@ -1,8 +1,12 @@
 import DefaultLayout from "@/components/DefaultLayout";
 import AstarHero from "@/components/hero/AstarHero";
-import StatsBase from "@/components/StatsBase";
 import type { NextPage } from "next";
 import { NextSeo } from "next-seo";
+import dynamic from "next/dynamic";
+
+const StatsBase = dynamic(() => import("@/components/StatsBase"), {
+  ssr: false,
+});
 
 const Home: NextPage = () => {
   return (

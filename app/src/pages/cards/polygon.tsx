@@ -33,9 +33,7 @@ const ShidenCard: NextPage = () => {
         </p>
 
         <div className="flex-grow"></div>
-        <p className="text-center text-5xl font-bold">
-          {query.value || "0.0"}MATIC
-        </p>
+        <p className="text-center text-5xl font-bold">{query.value || "0.0"}MATIC</p>
         <p className="mb-4 text-center text-lg">Matic Community Faucet</p>
       </div>
     </div>

@@ -108,11 +108,9 @@ contract StudentFaucet is
         emit Support(newTokenId, msg.sender, msg.value);
     }
 
-    function supportData(uint256 tokenId_)
-        public
-        view
-        returns (SupportData memory)
-    {
+    function supportData(
+        uint256 tokenId_
+    ) public view returns (SupportData memory) {
         return _supports[tokenId_];
     }
 
@@ -136,7 +134,9 @@ contract StudentFaucet is
         super._beforeTokenTransfer(from, to, tokenId);
     }
 
-    function supportsInterface(bytes4 interfaceId)
+    function supportsInterface(
+        bytes4 interfaceId
+    )
         public
         view
         virtual

@@ -1,6 +1,13 @@
 import { useState } from "react";
-import FaucetModal from "../modal/FaucetModal";
-import SupportModal from "../modal/SupportModal";
+
+import dynamic from "next/dynamic";
+
+const FaucetModal = dynamic(() => import("../modal/FaucetModal"), {
+  ssr: false,
+});
+const SupportModal = dynamic(() => import("../modal/SupportModal"), {
+  ssr: false,
+});
 
 const Hero = () => {
   const [openSupport, setOpenSupport] = useState(false);
@@ -15,17 +22,11 @@ const Hero = () => {
           <h1 className="text-5xl font-bold">AStar Community Faucet</h1>
         </div>
         <div className="flex w-full max-w-2xl items-center justify-center gap-4">
-          <button
-            className="btn btn-primary"
-            onClick={() => setOpenFaucet(!openFaucet)}
-          >
+          <button className="btn btn-primary" onClick={() => setOpenFaucet(!openFaucet)}>
             Get ASTR
           </button>
           <div className="text-xl font-bold">OR</div>
-          <button
-            className="btn btn-secondary"
-            onClick={() => setOpenSupport(!openSupport)}
-          >
+          <button className="btn btn-secondary" onClick={() => setOpenSupport(!openSupport)}>
             Support Faucet
           </button>
         </div>

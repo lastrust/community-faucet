@@ -1,185 +1,110 @@
-import { db } from "@/firebase/server";
-import { contractList, contractTypes } from "@/util/config";
-import { CommunityFaucetV2__factory } from "@/util/contract";
-import { LimitChecker } from "@/util/limitChecker";
+import { SupportedContracts, supportedContracts } from "@/config";
+import { FAUCET_CONTRACT_ABI } from "@/constants/abis";
+import { feeSuggester } from "@/util/feeSuggester";
+import { rateLimit } from "@/util/limitChecker";
 import axios from "axios";
-import { ethers } from "ethers";
-import { firestore } from "firebase-admin";
 import { NextApiRequest, NextApiResponse } from "next";
-import Error from "next/error";
-import requestIp from "request-ip";
-import invariant from "tiny-invariant";
+import {
+  Address,
+  Hex,
+  createPublicClient,
+  createWalletClient,
+  getContract,
+  http,
+  verifyMessage,
+} from "viem";
+import { privateKeyToAccount } from "viem/accounts";
 
-type BodyType = {
+interface RequestBody {
   message?: string;
   signature?: string;
   token?: string;
-};
+}
 
-type RecaptchaResult = {
+interface RecaptchaResult {
   success: boolean;
   challenge_ts: string;
   hostname: string;
   score: string;
   action: string;
-};
-const limitChecker = LimitChecker();
-
-const ipValidate = async (ip: string) => {
-  const ip16 = ip.split(".").slice(0, 2).join(".");
-  const ip24 = ip.split(".").slice(0, 3).join(".");
-  const ip16Count = await db
-    .collection("drops")
-    .where("ip16", "==", ip16)
-    .where(
-      "timestamp",
-      ">=",
-      firestore.Timestamp.fromMillis(Date.now() - 1000 * 3600 * 24)
-    )
-    .count()
-    .get();
-  const ip24Count = await db
-    .collection("drops")
-    .where("ip24", "==", ip24)
-    .where(
-      "timestamp",
-      ">=",
-      firestore.Timestamp.fromMillis(Date.now() - 1000 * 3600 * 24)
-    )
-    .count()
-    .get();
-  const ipCount = await db
-    .collection("drops")
-    .where("ip", "==", ip)
-    .where(
-      "timestamp",
-      ">=",
-      firestore.Timestamp.fromMillis(Date.now() - 1000 * 3600 * 24)
-    )
-    .count()
-    .get();
-  console.log(
-    ip16Count.data().count,
-    ip24Count.data().count,
-    ipCount.data().count
-  );
-  return (
-    ip16Count.data().count < 50 &&
-    ip24Count.data().count < 20 &&
-    ipCount.data().count < 8
-  );
-};
-
-export class FixedProvider extends ethers.providers.JsonRpcBatchProvider {
-  async getFeeData(): Promise<ethers.providers.FeeData> {
-    const history = (await this.send("eth_feeHistory", [
-      "0x1",
-      "latest",
-      [25],
-    ])) as {
-      baseFeePerGas: string[];
-      reward: string[][];
-    };
-
-    const feeData = {
-      gasPrice: null,
-      lastBaseFeePerGas: null,
-      maxFeePerGas: ethers.BigNumber.from(history.baseFeePerGas[1])
-        .mul(2)
-        .add(history.reward[0][0]),
-      maxPriorityFeePerGas: ethers.BigNumber.from(history.reward[0][0]),
-    };
-    return feeData;
-  }
 }
 
-const allowedTime = 1000 * 60 * 1; //署名の有効期限
-const getRecaptchaVerificationUrl = (token: string) => {
-  invariant(
-    process.env.RECAPTCHA_SECRET_KEY,
-    "RECAPTCHA_SECRET_KEY is not found"
-  );
-  return `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${token}`;
-};
+const ALLOWED_TIME = 1000 * 60 * 5; // 5 minutes
 
-const VerifyResult = (
-  _action: string,
-  { success, score, action, challenge_ts }: RecaptchaResult
-) => success && Number(score) >= 0.7 && action === _action;
+const limiter = rateLimit({
+  interval: 60 * 1000 * 5, // 5 minutes
+  uniqueTokenPerInterval: 10, // Max 10 requests per 5 minutes
+});
 
-const tokenUri = async (req: NextApiRequest, res: NextApiResponse) => {
-  const clientIp = requestIp.getClientIp(req) || "IP_NOT_FOUND";
-  await limitChecker.check(res, 3, clientIp);
-  console.log(clientIp);
-  if (clientIp.includes("162.158") || clientIp.includes("172.68")) {
-    console.log("Teapot");
-    return res.status(418).send("I'am a teapot.");
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  if (req.method !== "POST")
+    return res.status(405).json({ error: "Only POST requests are allowed" });
+
+  // Check the limiter per IP address at a minimum
+  try {
+    await limiter.check(res, 200, req.socket.remoteAddress as string);
+  } catch (error) {
+    return res.status(429).json({ error: "Too Many Requests" });
   }
 
-  invariant(req.method == "POST", "must be POST method");
+  const { message, signature, token } = req.body as RequestBody;
 
-  const { message, signature, token } = req.body as BodyType;
+  if (!message || !signature || !token)
+    return res.status(400).json({ error: "Body is not correct." });
 
-  invariant(message && signature && token, "Body is not correct.");
-
+  // Parse the message
   const [, , targetLine, timeLine, addressLine] = message.split("\n");
   const [type, time, address] = [
-    targetLine.slice(8) as contractTypes,
+    targetLine.slice(8) as SupportedContracts,
     timeLine.slice(6),
     addressLine.slice(9),
   ];
 
-  const { data: recaptchaResult } = (await axios(
-    getRecaptchaVerificationUrl(token)
-  )) as { data: RecaptchaResult };
-
-  invariant(VerifyResult(`drop_to__${address}`, recaptchaResult));
-
-  const recoveredAddress = ethers.utils.verifyMessage(message, signature);
-  const isMatchAddress =
-    recoveredAddress.toLowerCase() === address.toLowerCase();
-  const isInTime = Date.now() - Number(time) < allowedTime;
-  invariant(isMatchAddress && isInTime, "Invalid signature");
-
-  invariant(await ipValidate(clientIp));
-
-  const { address: contractAddress, rpc } = contractList[type];
-  invariant(
-    process.env.PRIVATE_KEY &&
-      process.env.NEXT_PUBLIC_CONTRACT_ADDRESS &&
-      contractAddress &&
-      rpc,
-    "env not found"
+  // Check the recaptcha
+  const { data: recaptchaResult } = await axios<RecaptchaResult>(
+    `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${token}`,
   );
+  const { success, score } = recaptchaResult;
+  if (!success || Number(score) < 0.5) return res.status(400).json({ error: "Recaptcha failed." });
 
-  const provider = new FixedProvider(rpc);
+  // Verify that the signature is within the valid time limit
+  const isInTime = Date.now() - Number(time) < ALLOWED_TIME;
+  if (!isInTime) return res.status(400).json({ error: "Time is not correct." });
 
-  const signer = new ethers.Wallet(process.env.PRIVATE_KEY, provider);
-  const contract = CommunityFaucetV2__factory.connect(contractAddress, signer);
+  // Verify the signature
+  const valid = await verifyMessage({
+    address: address as Address,
+    message,
+    signature: signature as Hex,
+  });
+  if (!valid) return res.status(400).json({ error: "Signature verification failed." });
 
-  const txOrError = await contract.drop(address).catch((e: Error) => e);
-
-  await db.collection("drops").add({
-    target: address,
-    chain: type,
-
-    timestamp: firestore.Timestamp.fromDate(new Date()),
-    ip: clientIp,
-    ip8: clientIp.split(".").slice(0, 1).join("."),
-    ip16: clientIp.split(".").slice(0, 2).join("."),
-    ip24: clientIp.split(".").slice(0, 3).join("."),
-    txHash:
-      txOrError instanceof Error || !txOrError.hash ? null : txOrError.hash,
-    fullLog: JSON.stringify(txOrError),
-    request: {
-      time,
-      address,
-      signature,
-    },
-    recaptchaResult,
+  // Setup the contract
+  const wallet = privateKeyToAccount(process.env.PRIVATE_KEY as Hex);
+  const { chain, address: contractAddress } = supportedContracts[type];
+  const publicClient = createPublicClient({ chain, transport: http() });
+  const walletClient = createWalletClient({
+    chain,
+    transport: http(),
+    account: wallet,
+  });
+  const contract = getContract({
+    address: contractAddress,
+    abi: FAUCET_CONTRACT_ABI,
+    publicClient,
+    walletClient,
   });
 
-  res.json({ status: "success" });
-};
+  try {
+    // Drop the tokens
+    const tx = await contract.write.drop([address as Address], await feeSuggester(publicClient));
 
-export default tokenUri;
+    return res.status(200).json({ status: "success", tx });
+  } catch (e) {
+    const e_ = e as Error;
+    return res.status(400).json({
+      status: "error",
+      error: e_.message,
+    });
+  }
+}

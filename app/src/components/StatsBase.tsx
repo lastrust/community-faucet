@@ -1,48 +1,44 @@
-import { useContract, useJsonProvider } from "@/hooks";
-import { usefulFixed } from "@/util";
-import { contractTypes } from "@/util/config";
-import { CommunityFaucetV2 } from "@/util/contract";
-import { ethers } from "ethers";
-import { useQuery } from "react-query";
+import { SupportedContracts, supportedContracts } from "@/config";
+import { FAUCET_CONTRACT_ABI } from "@/constants/abis";
+import { roundUp } from "@/util/format";
+import { formatEther } from "viem";
+import { useBalance, useContractReads } from "wagmi";
 
 const StatsBase: React.FC<{
-  type: contractTypes;
+  type: SupportedContracts;
   symbol: string;
   vertical?: boolean;
 }> = ({ type, symbol, vertical }) => {
-  const contract = useContract(type, { fetchOnly: true }) as CommunityFaucetV2;
-  const provider = useJsonProvider(type);
-  const { data: contractBalance } = useQuery(
-    ["contractBalance", type],
-    async () =>
-      usefulFixed(
-        ethers.utils.formatEther(await provider.getBalance(contract.address)),
-        2
-      ),
-    { enabled: Boolean(contract), initialData: "0.00" }
-  );
-  const { data: totalDrop } = useQuery(
-    ["totalDrop", type],
-    async () =>
-      usefulFixed(ethers.utils.formatEther(await contract.totalDrop()), 2),
-    { enabled: Boolean(contract), initialData: "0.00" }
-  );
-  const { data: supporter } = useQuery(
-    ["supporter", type],
-    async () => (await contract.numberOfSupporter()).toString(),
-    { enabled: Boolean(contract), initialData: "0" }
-  );
+  const { data: contractBalance } = useBalance({
+    address: supportedContracts[type].address,
+    chainId: supportedContracts[type].chain.id,
+  });
+  const { data: results } = useContractReads({
+    contracts: [
+      {
+        chainId: supportedContracts[type].chain.id,
+        address: supportedContracts[type].address,
+        abi: FAUCET_CONTRACT_ABI,
+        functionName: "totalDrop",
+      },
+      {
+        chainId: supportedContracts[type].chain.id,
+        address: supportedContracts[type].address,
+        abi: FAUCET_CONTRACT_ABI,
+        functionName: "numberOfSupporter",
+      },
+    ],
+  });
+
+  const totalDrop = formatEther((results?.[0]?.result as bigint) || BigInt(0));
+  const supporter = Number(results?.[1]?.result) || 0;
 
   return (
-    <div
-      className={`stats bg-base-100 shadow ${
-        vertical ? "stats-vertical w-full" : ""
-      }`}
-    >
+    <div className={`stats bg-base-100 shadow ${vertical ? "stats-vertical w-full" : ""}`}>
       <div className="stat place-items-center">
         <div className="stat-title">Faucet Balance</div>
         <div className="stat-value">
-          {contractBalance}
+          {roundUp(contractBalance?.formatted)}
           <span className="text-2xl">{symbol}</span>
         </div>
         <div className="stat-desc">Remaining funds</div>
@@ -50,12 +46,10 @@ const StatsBase: React.FC<{
       <div className="stat place-items-center">
         <div className="stat-title">Total Drop</div>
         <div className="stat-value text-secondary">
-          {totalDrop}
+          {roundUp(totalDrop)}
           <span className="text-2xl">{symbol}</span>
         </div>
-        <div className="stat-desc text-base font-bold text-secondary">
-          {symbol} from here
-        </div>
+        <div className="stat-desc text-base font-bold text-secondary">{symbol} from here</div>
       </div>
       <div className="stat place-items-center">
         <div className="stat-title">Supporter</div>

@@ -1,39 +1,40 @@
-import { Web3Provider } from "@/components/Web3Provider";
+import { supportedChains } from "@/config";
 import "@/styles/global.css";
+import { RainbowKitProvider, getDefaultWallets } from "@rainbow-me/rainbowkit";
+import "@rainbow-me/rainbowkit/styles.css";
 import { NextSeo } from "next-seo";
 import type { AppProps } from "next/app";
-import { useEffect } from "react";
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
-import { QueryClient, QueryClientProvider } from "react-query";
-import { createWebStoragePersistor } from "react-query/createWebStoragePersistor-experimental";
-import { persistQueryClient } from "react-query/persistQueryClient-experimental";
+import { WagmiConfig, configureChains, createConfig } from "wagmi";
+import { infuraProvider } from "wagmi/providers/infura";
+import { publicProvider } from "wagmi/providers/public";
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      cacheTime: 1000 * 60 * 60 * 24, // 24 hours
-    },
-  },
+if (!process.env.NEXT_PUBLIC_INFURA_PROJECT_ID) throw new Error("ALCHEMY_ID is not set in .env");
+if (!process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID)
+  throw new Error("WALLETCONNECT_PROJECT_ID is not set in .env");
+
+const { chains, publicClient } = configureChains(supportedChains, [
+  infuraProvider({ apiKey: process.env.NEXT_PUBLIC_INFURA_PROJECT_ID }),
+  publicProvider(),
+]);
+
+const { connectors } = getDefaultWallets({
+  appName: "Community Faucet",
+  projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID,
+  chains,
+});
+
+const wagmiConfig = createConfig({
+  autoConnect: true,
+  connectors,
+  publicClient,
 });
 
 function MyApp({ Component, pageProps }: AppProps) {
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      void persistQueryClient({
-        queryClient,
-        persistor: createWebStoragePersistor({
-          storage: window.localStorage,
-        }),
-      });
-    }
-  }, []);
   return (
-    <QueryClientProvider client={queryClient}>
-      <GoogleReCaptchaProvider
-        reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA}
-        language="ja"
-      >
-        <Web3Provider>
+    <GoogleReCaptchaProvider reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA || ""} language="ja">
+      <WagmiConfig config={wagmiConfig}>
+        <RainbowKitProvider chains={chains}>
           <NextSeo
             title="Community Faucet"
             description="Unofficial Community Faucet."
@@ -45,9 +46,9 @@ function MyApp({ Component, pageProps }: AppProps) {
             }}
           />
           <Component {...pageProps} />
-        </Web3Provider>
-      </GoogleReCaptchaProvider>
-    </QueryClientProvider>
+        </RainbowKitProvider>
+      </WagmiConfig>
+    </GoogleReCaptchaProvider>
   );
 }
 
