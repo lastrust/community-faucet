@@ -1,4 +1,4 @@
-import { SupportedContracts, scanList } from "@/util/config";
+import { SupportedContracts, scanList } from "@/config";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import NextLink from "next/link";
 import React, { useState } from "react";

@@ -1,10 +1,6 @@
+import { SupportedContracts, supportedContracts, symbolList } from "@/config";
+import { FAUCET_CONTRACT_ABI } from "@/constants/abis";
 import { useInputs } from "@/hooks";
-import { FAUCET_CONTRACT_ABI } from "@/util/abis";
-import {
-  SupportedContracts,
-  supportedContracts,
-  symbolList,
-} from "@/util/config";
 import { useState } from "react";
 import {
   prepareWriteContract,
@@ -37,7 +33,7 @@ const SupportModal: React.FC<{
     const config = await prepareWriteContract({
       address: supportedContracts[props.type].address,
       abi: FAUCET_CONTRACT_ABI,
-      chainId: supportedContracts[props.type].chain,
+      chainId: supportedContracts[props.type].chain.id,
       functionName: "support",
       value: parseEther(value.value),
       args: [value.name, value.icon],

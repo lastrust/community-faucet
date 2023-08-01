@@ -1,5 +1,5 @@
-import { FAUCET_CONTRACT_ABI } from "@/util/abis/FacuetAbi";
-import { SupportedContracts, supportedContracts } from "@/util/config";
+import { SupportedContracts, supportedContracts } from "@/config";
+import { FAUCET_CONTRACT_ABI } from "@/constants/abis";
 import { roundUp } from "@/util/format";
 import { formatEther } from "viem";
 import { useBalance, useContractReads } from "wagmi";
@@ -11,18 +11,18 @@ const StatsBase: React.FC<{
 }> = ({ type, symbol, vertical }) => {
   const { data: contractBalance } = useBalance({
     address: supportedContracts[type].address,
-    chainId: supportedContracts[type].chain,
+    chainId: supportedContracts[type].chain.id,
   });
   const { data: results } = useContractReads({
     contracts: [
       {
-        chainId: supportedContracts[type].chain,
+        chainId: supportedContracts[type].chain.id,
         address: supportedContracts[type].address,
         abi: FAUCET_CONTRACT_ABI,
         functionName: "totalDrop",
       },
       {
-        chainId: supportedContracts[type].chain,
+        chainId: supportedContracts[type].chain.id,
         address: supportedContracts[type].address,
         abi: FAUCET_CONTRACT_ABI,
         functionName: "numberOfSupporter",

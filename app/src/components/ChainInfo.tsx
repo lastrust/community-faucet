@@ -1,4 +1,4 @@
-import { SupportedContracts } from "@/util/config";
+import { SupportedContracts } from "@/config";
 import dynamic from "next/dynamic";
 import NextLink from "next/link";
 import React from "react";

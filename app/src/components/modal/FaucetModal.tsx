@@ -1,9 +1,5 @@
-import { FAUCET_CONTRACT_ABI } from "@/util/abis";
-import {
-  SupportedContracts,
-  supportedContracts,
-  symbolList,
-} from "@/util/config";
+import { SupportedContracts, supportedContracts, symbolList } from "@/config";
+import { FAUCET_CONTRACT_ABI } from "@/constants/abis";
 import { roundUp } from "@/util/format";
 import React, { useState } from "react";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
@@ -27,20 +23,20 @@ const FaucetModal: React.FC<{
       {
         address: supportedContracts[type].address,
         abi: FAUCET_CONTRACT_ABI,
-        chainId: supportedContracts[type].chain,
+        chainId: supportedContracts[type].chain.id,
         functionName: "dropSize",
       },
       {
         address: supportedContracts[type].address,
         abi: FAUCET_CONTRACT_ABI,
-        chainId: supportedContracts[type].chain,
+        chainId: supportedContracts[type].chain.id,
         functionName: "lastReceiptDate",
         args: [address as string],
       },
       {
         address: supportedContracts[type].address,
         abi: FAUCET_CONTRACT_ABI,
-        chainId: supportedContracts[type].chain,
+        chainId: supportedContracts[type].chain.id,
         functionName: "interval",
       },
     ],

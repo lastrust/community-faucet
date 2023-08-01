@@ -1,5 +1,5 @@
+import { supportedChains } from "@/config";
 import "@/styles/global.css";
-import { supportedChains } from "@/util/config";
 import { RainbowKitProvider, getDefaultWallets } from "@rainbow-me/rainbowkit";
 import "@rainbow-me/rainbowkit/styles.css";
 import { NextSeo } from "next-seo";
