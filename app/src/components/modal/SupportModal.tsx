@@ -2,11 +2,7 @@ import { SupportedContracts, supportedContracts, symbolList } from "@/config";
 import { FAUCET_CONTRACT_ABI } from "@/constants/abis";
 import { useInputs } from "@/hooks";
 import { useState } from "react";
-import {
-  prepareWriteContract,
-  waitForTransaction,
-  writeContract,
-} from "wagmi/actions";
+import { prepareWriteContract, waitForTransaction, writeContract } from "wagmi/actions";
 
 import { roundUp } from "@/util/format";
 import { parseEther } from "viem";
@@ -73,16 +69,12 @@ const SupportModal: React.FC<{
           disabled={transaction}
         />
         <label className="label">
-          <span className="label-text text-lg font-bold">
-            Amount Of Support
-          </span>
+          <span className="label-text text-lg font-bold">Amount Of Support</span>
         </label>
         <label className="input-group w-full">
           <input
             type="text"
-            placeholder={`Type Amount Of Support (max ${roundUp(
-              balance?.formatted
-            )})`}
+            placeholder={`Type Amount Of Support (max ${roundUp(balance?.formatted)})`}
             className="input input-bordered w-full"
             value={value.value}
             onChange={handler("value")}

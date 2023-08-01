@@ -30,9 +30,7 @@ export default function DefaultLayout({
         <div className="mt-16 text-base-content">{children}</div>
         <Footer type={type} />
       </div>
-      <CookieConsent>
-        This website uses cookies to enhance the user experience.
-      </CookieConsent>
+      <CookieConsent>This website uses cookies to enhance the user experience.</CookieConsent>
     </>
   );
 }
@@ -44,10 +42,7 @@ export const Header: React.FC<{
   return (
     <nav className="navbar fixed">
       <div className="mx-auto flex w-full max-w-screen-xl justify-between">
-        <NextLink
-          href="/"
-          className="btn btn-ghost text-xl normal-case sm:text-2xl"
-        >
+        <NextLink href="/" className="btn btn-ghost text-xl normal-case sm:text-2xl">
           <span className="hidden sm:block">Community Faucet</span>
           <span className="sm:hidden">CSFaucet</span>
         </NextLink>
@@ -82,10 +77,7 @@ export const CustomConnectButton = () => {
 
         if (chain?.unsupported) {
           return (
-            <button
-              className="btn btn-ghost btn-square"
-              onClick={openChainModal}
-            >
+            <button className="btn btn-ghost btn-square" onClick={openChainModal}>
               <VscDebugDisconnect size="2rem" color="#f21361" />
             </button>
           );
@@ -142,9 +134,7 @@ export const Footer: React.FC<{ type: SupportedContracts }> = ({ type }) => (
   </footer>
 );
 
-export const LogoCyberConnect: React.FC<{ size?: string }> = ({
-  size = "1rem",
-}) => (
+export const LogoCyberConnect: React.FC<{ size?: string }> = ({ size = "1rem" }) => (
   <svg
     width={size}
     height={size}

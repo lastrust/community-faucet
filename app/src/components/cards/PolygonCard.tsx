@@ -9,10 +9,7 @@ const gradients = [
 
 export const PolygonCard: CardComponent = (props) => {
   return (
-    <div
-      style={{ background: "#d1c300" }}
-      tw="flex flex-col h-full w-full items-center px-8 py-24"
-    >
+    <div style={{ background: "#d1c300" }} tw="flex flex-col h-full w-full items-center px-8 py-24">
       <div
         style={{ background: "#ffee00" }}
         tw="flex flex-col h-full w-full items-center shadow-xl"
@@ -42,9 +39,7 @@ export const PolygonCard: CardComponent = (props) => {
         </div>
 
         <div tw="flex flex-1" />
-        <p tw="text-center text-5xl font-bold -mb-4 ">
-          {props.value || "0.0"}MATIC
-        </p>
+        <p tw="text-center text-5xl font-bold -mb-4 ">{props.value || "0.0"}MATIC</p>
         <p tw="mb-4 text-center text-lg">Matic Community Faucet</p>
       </div>
     </div>

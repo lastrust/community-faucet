@@ -34,11 +34,7 @@ const StatsBase: React.FC<{
   const supporter = Number(results?.[1]?.result) || 0;
 
   return (
-    <div
-      className={`stats bg-base-100 shadow ${
-        vertical ? "stats-vertical w-full" : ""
-      }`}
-    >
+    <div className={`stats bg-base-100 shadow ${vertical ? "stats-vertical w-full" : ""}`}>
       <div className="stat place-items-center">
         <div className="stat-title">Faucet Balance</div>
         <div className="stat-value">
@@ -53,9 +49,7 @@ const StatsBase: React.FC<{
           {roundUp(totalDrop)}
           <span className="text-2xl">{symbol}</span>
         </div>
-        <div className="stat-desc text-base font-bold text-secondary">
-          {symbol} from here
-        </div>
+        <div className="stat-desc text-base font-bold text-secondary">{symbol} from here</div>
       </div>
       <div className="stat place-items-center">
         <div className="stat-title">Supporter</div>

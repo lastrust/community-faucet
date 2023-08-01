@@ -11,15 +11,10 @@ type QueryMeta = {
 };
 
 const getGrade = (value: number | string, min = 0, max = 3) =>
-  Math.max(
-    min,
-    Math.min(max, Math.floor(Math.log10(Number(value))))
-  ).toString();
+  Math.max(min, Math.min(max, Math.floor(Math.log10(Number(value))))).toString();
 
 const getQueryUrl = (query: Record<string, string | number>) =>
-  new URLSearchParams(
-    Object.entries(query).map(([key, value]) => [key, String(value)])
-  ).toString();
+  new URLSearchParams(Object.entries(query).map(([key, value]) => [key, String(value)])).toString();
 
 const tokenUri = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id, type = "astar" } = req.query as QueryMeta;

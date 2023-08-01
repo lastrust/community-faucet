@@ -9,14 +9,7 @@ export const UsefulButton: React.FC<
 > = ({ className, isLoading, ...props }) => {
   return (
     <ConnectButton.Custom>
-      {({
-        account,
-        chain,
-        openConnectModal,
-        openChainModal,
-        authenticationStatus,
-        mounted,
-      }) => {
+      {({ account, chain, openConnectModal, openChainModal, authenticationStatus, mounted }) => {
         const ready = mounted && authenticationStatus !== "loading";
         const connected =
           ready &&
@@ -26,10 +19,7 @@ export const UsefulButton: React.FC<
 
         if (chain?.unsupported) {
           return (
-            <button
-              className="btn btn-ghost btn-square"
-              onClick={openChainModal}
-            >
+            <button className="btn btn-ghost btn-square" onClick={openChainModal}>
               <VscDebugDisconnect size="2rem" color="#f21361" />
             </button>
           );

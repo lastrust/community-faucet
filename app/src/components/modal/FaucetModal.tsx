@@ -119,21 +119,15 @@ export const CountDown: React.FC<{ time: number }> = ({ time }) => {
   return (
     <div className="text flex whitespace-nowrap sm:gap-1">
       <div>
-        <span className="countdown font-mono text-4xl">
-          {Math.floor(time / (60 * 60 * 24))}
-        </span>
+        <span className="countdown font-mono text-4xl">{Math.floor(time / (60 * 60 * 24))}</span>
         days
       </div>
       <div>
-        <span className="countdown font-mono text-4xl">
-          {Math.floor(time / (60 * 60)) % 24}
-        </span>
+        <span className="countdown font-mono text-4xl">{Math.floor(time / (60 * 60)) % 24}</span>
         hours
       </div>
       <div>
-        <span className="countdown font-mono text-4xl">
-          {Math.ceil(time / 60) % 60}
-        </span>
+        <span className="countdown font-mono text-4xl">{Math.ceil(time / 60) % 60}</span>
         min
       </div>
     </div>

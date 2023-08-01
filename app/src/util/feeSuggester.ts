@@ -24,9 +24,7 @@ const POLYGON_GAS_STATION_URL = "https://gasstation.polygon.technology/v2";
 export const feeSuggester = async (client: PublicClient) => {
   const { chain } = client;
   if (chain?.id === 137) {
-    const { data } = await axios.get<PolygonGasStationResponse>(
-      POLYGON_GAS_STATION_URL
-    );
+    const { data } = await axios.get<PolygonGasStationResponse>(POLYGON_GAS_STATION_URL);
     return {
       maxPriorityFeePerGas: parseGwei(String(data.fast.maxPriorityFee)),
       maxFeePerGas: parseGwei(String(data.fast.maxFee)),

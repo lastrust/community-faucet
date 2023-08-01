@@ -10,10 +10,7 @@ const gradients = [
 export const AstarCard: CardComponent = (props) => {
   return (
     <div tw="flex w-full h-full bg-black p-10">
-      <div
-        style={{ background: gradients[props.grade] }}
-        tw="flex w-full h-full p-1 rounded-xl"
-      >
+      <div style={{ background: gradients[props.grade] }} tw="flex w-full h-full p-1 rounded-xl">
         <div tw="flex items-center justify-center w-full h-full bg-black rounded-xl">
           <div tw="flex flex-col flex-1 p-8">
             <div tw="flex mb-8 flex items-center">
@@ -27,22 +24,15 @@ export const AstarCard: CardComponent = (props) => {
               <div tw="text-4xl font-bold text-white">{props.title}</div>
             </div>
             <div tw="flex items-center">
-              <div tw="flex text-5xl font-bold text-white mr-2">
-                #{props.id}
-              </div>
-              <div tw="flex text-3xl font-light italic text-gray-300">
-                AStar Community Faucet
-              </div>
+              <div tw="flex text-5xl font-bold text-white mr-2">#{props.id}</div>
+              <div tw="flex text-3xl font-light italic text-gray-300">AStar Community Faucet</div>
             </div>
           </div>
           <div
             style={{ borderLeft: "2px dashed white" }}
             tw="flex h-full text-white text-6xl font-bold w-26"
           >
-            <div
-              style={{ transform: `rotate(90deg) translate(-30px,0)` }}
-              tw="flex items-center"
-            >
+            <div style={{ transform: `rotate(90deg) translate(-30px,0)` }} tw="flex items-center">
               {props.value}
               <span tw="text-5xl">ASTR</span>
             </div>

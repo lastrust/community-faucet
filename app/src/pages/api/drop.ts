@@ -36,10 +36,7 @@ const limiter = rateLimit({
   uniqueTokenPerInterval: 10, // Max 10 requests per 5 minutes
 });
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "POST")
     return res.status(405).json({ error: "Only POST requests are allowed" });
 
@@ -65,11 +62,10 @@ export default async function handler(
 
   // Check the recaptcha
   const { data: recaptchaResult } = await axios<RecaptchaResult>(
-    `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${token}`
+    `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${token}`,
   );
   const { success, score } = recaptchaResult;
-  if (!success || Number(score) < 0.5)
-    return res.status(400).json({ error: "Recaptcha failed." });
+  if (!success || Number(score) < 0.5) return res.status(400).json({ error: "Recaptcha failed." });
 
   // Verify that the signature is within the valid time limit
   const isInTime = Date.now() - Number(time) < ALLOWED_TIME;
@@ -81,8 +77,7 @@ export default async function handler(
     message,
     signature: signature as Hex,
   });
-  if (!valid)
-    return res.status(400).json({ error: "Signature verification failed." });
+  if (!valid) return res.status(400).json({ error: "Signature verification failed." });
 
   // Setup the contract
   const wallet = privateKeyToAccount(process.env.PRIVATE_KEY as Hex);
@@ -102,10 +97,7 @@ export default async function handler(
 
   try {
     // Drop the tokens
-    const tx = await contract.write.drop(
-      [address as Address],
-      await feeSuggester(publicClient)
-    );
+    const tx = await contract.write.drop([address as Address], await feeSuggester(publicClient));
 
     return res.status(200).json({ status: "success", tx });
   } catch (e) {

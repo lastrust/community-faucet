@@ -28,11 +28,7 @@ export const ShidenCard: CardComponent = (props) => {
           <div tw="flex flex-1" />
           <div tw="flex items-center">
             {props.icon && (
-              <img
-                tw="w-20 h-20 mr-4 rounded-full object-cover"
-                src={props.icon}
-                alt=""
-              />
+              <img tw="w-20 h-20 mr-4 rounded-full object-cover" src={props.icon} alt="" />
             )}
             <div tw="text-3xl font-bold">{props.title}</div>
           </div>

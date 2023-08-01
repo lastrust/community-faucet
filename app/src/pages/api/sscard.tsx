@@ -9,7 +9,7 @@ import { join } from "path";
 
 const loadFontFromName = async (name: string) => {
   const font = await fs.readFile(
-    join(url.fileURLToPath(import.meta.url), `../../../assets/${name}`)
+    join(url.fileURLToPath(import.meta.url), `../../../assets/${name}`),
   );
   return font;
 };
@@ -34,10 +34,7 @@ const cards = {
   default: ShidenCard,
 };
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { type } = req.query;
   const fonts = await loadFonts();
 

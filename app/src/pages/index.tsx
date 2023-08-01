@@ -14,21 +14,10 @@ const Home: NextPage = () => {
         <ChainInfo type="astar" symbol="ASTR" href="/astar" theme="light" w={1}>
           AStar Community Faucet
         </ChainInfo>
-        <ChainInfo
-          type="shibuya"
-          symbol="SBY"
-          href="/shibuya"
-          theme="lemonade"
-          w={1}
-        >
+        <ChainInfo type="shibuya" symbol="SBY" href="/shibuya" theme="lemonade" w={1}>
           Shibuya Community Faucet
         </ChainInfo>
-        <ChainInfo
-          type="polygon"
-          symbol="MATIC"
-          href="/polygon"
-          theme="cyberpunk"
-        >
+        <ChainInfo type="polygon" symbol="MATIC" href="/polygon" theme="cyberpunk">
           MATIC Community Faucet
         </ChainInfo>
         <ChainInfo type="shiden" symbol="SDN" href="/shiden" theme="dark">

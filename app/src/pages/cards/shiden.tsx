@@ -29,9 +29,7 @@ const ShidenCard: NextPage = () => {
                 <img src={String(query.icon)} />
               </div>
             )}
-            <p className="break-all text-3xl font-bold">
-              {query.title || "Unknown supporter"}
-            </p>
+            <p className="break-all text-3xl font-bold">{query.title || "Unknown supporter"}</p>
           </div>
         </div>
         <div className="card-body w-40">
