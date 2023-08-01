@@ -1,4 +1,4 @@
-import { PolygonCard } from "@/components/cards/PolygonCard";
+import { ShidenCard } from "@/components/cards/ShidenCard";
 import { unstable_createNodejsStream } from "@vercel/og";
 import { promises as fs } from "fs";
 import { NextApiRequest, NextApiResponse } from "next";
@@ -34,15 +34,15 @@ export default async function handler(
   const props = {
     title: "Unknown supporter",
     grade: 0,
-    value: 0,
+    value: "0.0",
     id: "000",
     icon: "https://pbs.twimg.com/profile_images/1534222359271723009/h-OK92Rp_400x400.jpg",
     ...req.query,
   };
 
-  const stream = await unstable_createNodejsStream(<PolygonCard {...props} />, {
-    width: 400,
-    height: 800,
+  const stream = await unstable_createNodejsStream(<ShidenCard {...props} />, {
+    width: 800,
+    height: 400,
     fonts: [
       {
         name: "NotoSans",

@@ -10,7 +10,7 @@ const gradients = [
 export const AstarCard: FC<{
   title: string;
   grade: number;
-  value: number;
+  value: string;
   id: string;
   icon: string;
 }> = (props) => {
