@@ -1,5 +1,6 @@
 import { SupportedContracts, supportedContracts } from "@/config";
 import { FAUCET_CONTRACT_ABI } from "@/constants/abis";
+import { feeSuggester } from "@/util/feeSuggester";
 import axios from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
 import {
@@ -82,7 +83,10 @@ export default async function handler(
   });
 
   try {
-    const tx = await contract.write.drop([address as Address]);
+    const tx = await contract.write.drop(
+      [address as Address],
+      await feeSuggester(publicClient)
+    );
 
     return res.status(200).json({ status: "success", tx });
   } catch (e) {
