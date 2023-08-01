@@ -9,7 +9,7 @@ import { join } from "path";
 
 const loadFontFromName = async (name: string) => {
   const font = await fs.readFile(
-    join(url.fileURLToPath(import.meta.url), `../../../assets/${name}`),
+    join(url.fileURLToPath(import.meta.url), `../../../../public/assets/${name}`),
   );
   return font;
 };
