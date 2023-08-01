@@ -4,23 +4,16 @@ import { ShidenCard } from "@/components/cards/ShidenCard";
 import { unstable_createNodejsStream } from "@vercel/og";
 import { promises as fs } from "fs";
 import { NextApiRequest, NextApiResponse } from "next";
-import url from "node:url";
-import { join } from "path";
-
-const loadFontFromName = async (name: string) => {
-  const font = await fs.readFile(
-    join(url.fileURLToPath(import.meta.url), `../../../assets/${name}`),
-  );
-  return font;
-};
 
 const loadFonts = async () => {
-  const notoSansRegular = await loadFontFromName("NotoSansJP-Regular.ttf");
-  const notoSansBold = await loadFontFromName("NotoSansJP-Bold.ttf");
-  const robotoRegular = await loadFontFromName("Roboto-Regular.ttf");
-  const robotoBold = await loadFontFromName("Roboto-Bold.ttf");
+  const notoSansBold = await fs.readFile(
+    new URL(`../../assets/NotoSansJP-Bold.ttf`, import.meta.url),
+  );
+  const robotoRegular = await fs.readFile(
+    new URL(`../../assets/Roboto-Regular.ttf`, import.meta.url),
+  );
+  const robotoBold = await fs.readFile(new URL(`../../assets/Roboto-Bold.ttf`, import.meta.url));
   return {
-    notoSansRegular,
     notoSansBold,
     robotoRegular,
     robotoBold,
@@ -53,11 +46,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     width: Card.size.width,
     height: Card.size.height,
     fonts: [
-      {
-        name: "NotoSans",
-        data: fonts.notoSansRegular,
-        weight: 400,
-      },
       {
         name: "NotoSans",
         data: fonts.notoSansBold,
