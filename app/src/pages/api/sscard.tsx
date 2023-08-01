@@ -4,13 +4,10 @@ import { ShidenCard } from "@/components/cards/ShidenCard";
 import { unstable_createNodejsStream } from "@vercel/og";
 import { promises as fs } from "fs";
 import { NextApiRequest, NextApiResponse } from "next";
-import url from "node:url";
-import { join } from "path";
 
 const loadFontFromName = async (name: string) => {
-  const font = await fs.readFile(
-    join(url.fileURLToPath(import.meta.url), `../../../../public/assets/${name}`),
-  );
+  const font = await fs.readFile(new URL(`../../assets/${name}`, import.meta.url));
+
   return font;
 };
 
