@@ -6,9 +6,6 @@ import { promises as fs } from "fs";
 import { NextApiRequest, NextApiResponse } from "next";
 
 const loadFonts = async () => {
-  const notoSansRegular = await fs.readFile(
-    new URL(`../../assets/NotoSansJP-Regular.ttf`, import.meta.url),
-  );
   const notoSansBold = await fs.readFile(
     new URL(`../../assets/NotoSansJP-Bold.ttf`, import.meta.url),
   );
@@ -17,7 +14,6 @@ const loadFonts = async () => {
   );
   const robotoBold = await fs.readFile(new URL(`../../assets/Roboto-Bold.ttf`, import.meta.url));
   return {
-    notoSansRegular,
     notoSansBold,
     robotoRegular,
     robotoBold,
@@ -50,11 +46,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     width: Card.size.width,
     height: Card.size.height,
     fonts: [
-      {
-        name: "NotoSans",
-        data: fonts.notoSansRegular,
-        weight: 400,
-      },
       {
         name: "NotoSans",
         data: fonts.notoSansBold,
