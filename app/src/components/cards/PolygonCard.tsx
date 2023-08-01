@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { CardComponent } from "@/types/util";
 
 const gradients = [
   "linear-gradient(90deg, #16a34a 0%, #3b82f6 100%)",
@@ -7,13 +7,7 @@ const gradients = [
   "linear-gradient(90deg, #eab308 0%, #f97316 50%, #ec4899 100%)",
 ];
 
-export const PolygonCard: FC<{
-  title: string;
-  grade: number;
-  value: string;
-  id: string;
-  icon: string;
-}> = (props) => {
+export const PolygonCard: CardComponent = (props) => {
   return (
     <div
       style={{ background: "#d1c300" }}
@@ -55,4 +49,9 @@ export const PolygonCard: FC<{
       </div>
     </div>
   );
+};
+
+PolygonCard.size = {
+  width: 400,
+  height: 800,
 };

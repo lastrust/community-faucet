@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { CardComponent } from "@/types/util";
 
 const gradients = [
   "linear-gradient(90deg, #16a34a 0%, #3b82f6 100%)",
@@ -7,13 +7,7 @@ const gradients = [
   "linear-gradient(90deg, #eab308 0%, #f97316 50%, #ec4899 100%)",
 ];
 
-export const ShidenCard: FC<{
-  title: string;
-  grade: number;
-  value: string;
-  id: string;
-  icon: string;
-}> = (props) => {
+export const ShidenCard: CardComponent = (props) => {
   return (
     <div style={{ background: "#15191e" }} tw="flex h-full w-full p-12 bg-">
       <div
@@ -50,4 +44,9 @@ export const ShidenCard: FC<{
       </div>
     </div>
   );
+};
+
+ShidenCard.size = {
+  width: 800,
+  height: 400,
 };

@@ -1,3 +1,5 @@
+import { AstarCard } from "@/components/cards/AstarCard";
+import { PolygonCard } from "@/components/cards/PolygonCard";
 import { ShidenCard } from "@/components/cards/ShidenCard";
 import { unstable_createNodejsStream } from "@vercel/og";
 import { promises as fs } from "fs";
@@ -25,10 +27,18 @@ const loadFonts = async () => {
   };
 };
 
+const cards = {
+  astar: AstarCard,
+  shiden: ShidenCard,
+  polygon: PolygonCard,
+  default: ShidenCard,
+};
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  const { type } = req.query;
   const fonts = await loadFonts();
 
   const props = {
@@ -36,13 +46,15 @@ export default async function handler(
     grade: 0,
     value: "0.0",
     id: "000",
-    icon: "https://pbs.twimg.com/profile_images/1534222359271723009/h-OK92Rp_400x400.jpg",
+    icon: "",
     ...req.query,
   };
 
-  const stream = await unstable_createNodejsStream(<ShidenCard {...props} />, {
-    width: 800,
-    height: 400,
+  const Card = cards[type as keyof typeof cards] || cards.default;
+
+  const stream = await unstable_createNodejsStream(<Card {...props} />, {
+    width: Card.size.width,
+    height: Card.size.height,
     fonts: [
       {
         name: "NotoSans",
